@@ -1,0 +1,103 @@
+    html,body {
+        width: 100%;
+        height: 100%;
+        background: none repeat scroll 0% 0% transparent; margin: 0px; padding: 0px; font: 12px Tahoma,Arial,Helvetica,clean,sans-serif; 
+    }
+    #loginShell {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        position: absolute;
+        z-index: 2;
+        overflow:auto;
+    }
+    .errors li {
+        color: #FF0000;
+        font-size: 14px;
+    }
+    /*From Common.css*/
+    .reboot2 .dijitTextBox { 
+        height: 14px;
+        font-family: Tahoma,sans-serif; font-size: 12px; color: rgb(34, 34, 34);
+        background-color: rgb(255, 255, 255); opacity: 1; padding: 2px 5px; border: 1px solid rgb(83, 99, 106);
+        margin: 0px 5px 0px 0px;
+    }
+    /*From dijit.css*/
+    .dijitReset { margin: 0px; border: 0px none; padding: 0px; font: inherit; color: inherit; }
+    .dijitInline { display: inline-block; border: 0px none; padding: 0px; vertical-align: middle; }
+    .dijitBackgroundIframe { position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; z-index: -1; border: 0px none; padding: 0px; margin: 0px; }
+    .dijitContainer { overflow: hidden; }
+    .dijitLeft { background-position: left top; background-repeat: no-repeat; }
+    .dijitStretch { white-space: nowrap; background-repeat: repeat-x; }
+    .dijitTextBox { border: 1px solid black; width: 15em; vertical-align: middle; }
+    .dijitBorderContainerNoGutter { position: relative; overflow: hidden; }
+    .dijitDialogUnderlayWrapper { position: absolute; left: 0px; top: 0px; z-index: 998; display: none; background: none repeat scroll 0% 0% transparent ! important; }
+    .dijitDialogUnderlay { background: none repeat scroll 0% 0% rgb(238, 238, 238); opacity: 0.5; }
+    .dijitToggleButtonIconChar { display: none ! important; }
+     /*From textbutton.css*/
+    .reboot2 .xwtButtonIconOnly { margin: 0px 10px; }
+    .reboot2  .xwt-TextButtonContents{ padding:0px; }
+    .reboot2 .xwt-TextRight .xwt-TextButtonNode { border: none; height: 20px; padding: 0 0 0 0; background: url(/img/xwt/button/new_reboot_btn_right.png) no-repeat right -60px; text-decoration: none; overflow: hidden; text-align:center; vertical-align:middle; }
+    .reboot2 .xwt-TextButtonNode button { background: url(/img/xwt/button/new_reboot_btn_left.png) no-repeat left -60px; border: none; height: 20px; padding: 0px 0px 0px 0px; margin:0px 9px 0px 0px; }
+    .reboot2 .xwt-TextButtonNode .xwt-TextButtonText { color: #454545; line-height: normal; font-size: 12px; font-family:Tahoma; font-weight: normal; text-align:center; text-align:center; padding:0px 1px 2px 8px; }
+    .reboot2 .xwt-TextButtonText { margin-top: 0px; }
+    .reboot2 .xwt-TextButtonNode button { padding: 0px 0px 0px 2px; }
+    .reboot2 .xwt-TextButtonNode button:hover,
+    .reboot2 .xwt-TextButtonNode button:focus { background-position: 0px -80px; cursor: pointer; }
+    .reboot2 .xwt-TextButtonNodeHover  button { background: url(/img/xwt/button/new_reboot_btn_left.png) no-repeat top left; background-position: 0 -60px; }
+    .reboot2 .xwt-TextButtonNode button:active{ background-position: 0px -100px; border:none; }
+    .dj_ie8 .reboot2 .xwt-TextButtonNode button:focus,
+    .dj_ie8 .reboot2 .defaultButton  .xwt-TextButtonNode button:focus{  outline:none; }
+    .reboot2 .defaultButton .xwt-TextRight .xwt-TextButtonNode { background: url(/img/xwt/button/new_reboot_btn_right.png) no-repeat top right; background-position: 100% 0px; }
+    .reboot2 .defaultButton .xwt-TextButtonNode button {  background: url(/img/xwt/button/new_reboot_btn_left.png) no-repeat 0px 0px;; }
+    .reboot2 .defaultButton .xwt-TextButtonNode .xwt-TextButtonText { color:#ffffff;  }
+    .reboot2 .toggleLink A:hover { text-decoration:underline; cursor: pointer; }
+    .reboot2 .toggleLink A:hover { text-decoration:underline !important; }
+    .reboot2 .toggleLink  A.toggleLinkSelected { color : #000000; cursor: default; }
+    .reboot2 .toggleLink  A.toggleLinkSelected:HOVER { color : #000000; cursor: default; }
+    .reboot2 .toggleLink  A.toggleLinkSelected:hover { text-decoration:none !important; color : #000000 !important; }
+    .reboot2 .toggleLink  A.toggleLinkUnselected { color : #0088C2; }
+    .reboot2 .toggleLink  A.toggleLinkFocused { outline: 1px #333 dotted; }
+    .reboot2 .toggleLink  A.toggleLinkDisabled { cursor: not-allowed; color: #969696; text-decoration: none !important; }
+    .reboot2 .toggleLink  A.toggleLinkDisabled:hover { text-decoration: none !important; cursor: not-allowed !important; color: #969696 !important; }
+    .reboot2 .toggleLink  A.toggleLinkDisabled.toggleLinkFocused { outline: none; }
+    /*From reboot2/xwt/login.css*/
+    .reboot2 .loginPage { position: absolute; width: 644px; }
+    .reboot2 .loginPage .loginBackTop { background: url('/static/resources/Images/login.png') no-repeat; height: 460px; padding-left: 0px; width:710px; }
+    .reboot2 .loginPage .loginBackBottom { width:710px; }
+    .reboot2 .loginPage .productInfo { position: relative; top: 108px; height: 65px; left:247px; margin-left:7px; padding-right:0; width:385px; }
+    .reboot2 .loginPage .productLogoContainer { display:block; float:left; height:63px; margin-left:0; padding-left:0; padding-right:56px; width:40px; }
+    .reboot2 .loginPage .productDesc { float: left; margin-top: -2px; }
+    .reboot2 .loginPage .productFamily { font-family: Verdana; font-size: 14px; color: #565656; font-weight: normal; }
+    .reboot2 .loginPage .productName { color:#455A73; font-family:verdana; font-size:15px; font-weight:bold; margin-top:1px; }
+    .reboot2 .loginPage .productVersion { font-family:verdana; font-size: 11px; color: #565656; font-weight: bold; margin-top: 1px; }
+    .reboot2 .loginPage .userFormContainer { position: relative; padding-left:315px;top: 107px; }
+    .reboot2 .loginPage .userForm { font-family: Tahoma; font-size: 11px; font-weight: normal; color: #222222; }
+    .reboot2 .loginPage .userForm input { color: #000000; }
+    .reboot2 .loginPage .userForm > tbody > tr > td { padding-top: 3px; }
+    .reboot2 .loginPage .userFormLabel{ padding-top: 3px; text-align: right; width:85px; }
+    .reboot2 .loginPage .problemsLoggingIn a:HOVER { text-decoration: underline; }
+    .reboot2 .loginPage .problemsLoggingIn span:HOVER { text-decoration: underline; cursor:pointer; }
+    .reboot2 .loginPage .copyright { font-size: 9px; color: #303030; padding:0 0 0 44px; width:527px; display: inline-block; height: 24px; }
+//    .reboot2 .loginPage .copyrightLogo { vertical-align: bottom; background: url('/static/orchestration/images/Cisco_logo_login.png') no-repeat; width: 40px; margin-right:59px; height: 22px; display: inline; float: right; }
+    .reboot2 .loginPage .loginBackBottomContainer { border-spacing: 0px; border-collapse: collapse; }
+//    .reboot2 .loginPage .loginMiddle { background: url('/static/orchestration/images/AboutBox_Login_2.png') repeat-y; width: 710px; }
+    .reboot2 .loginPage .loginMiddleCopyright { padding-top: -50px; }
+    .reboot2 .loginPage .loginMiddleInformation { font-size: 9px; margin: 0 30px; max-height: 65px; overflow: auto; width: 604px; border: 1px solid #CCCCCC; padding-top: 0px; clear:both; }
+    .reboot2 .loginPage .loginMiddleInformationContainer { padding: 0px 5px; color: #000000; background-color: #FFFFFF; }
+    .reboot2 .loginPage .middleContent { padding:0 20px 10px 297px; position:relative; top:-37px; }
+    .reboot2 .loginPage .loginBackBottomContainer .bottom-center { background: transparent url(/static/orchestration/images/AboutBox_Login_3.png) no-repeat; height: 46px; }
+    #loadingIndicator { float: left; }
+    .reboot2 .loginPage .loginButton { float: left; padding-left: 5px; padding-top: 3px; }
+    .reboot2 .loginPage .customContent { padding-right: 25px; }
+	
+     input:focus {
+         outline-color: #46D1F4;
+         outline-style: solid;
+         outline-width: 1px;
+     }
+     #loginShell form {
+        width:100%;
+        height:100%;
+     }

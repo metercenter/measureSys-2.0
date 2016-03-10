@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<root>
+    <Info Version='6' Product='Picture Collage Maker' Company='PearlMountain Soft'/>
+    <PCMPROPage Version='4' ImageSizeX='800.000000' ImageSizeY='600.000000' Landscape='1' BackDPI='300' BackUnitType='0' BackDescription='1024 x 768 pixel' KeepSameSizeInProject='0' MarginLeft='0.000000' MarginRight='0.000000' MarginTop='0.000000' MarginBottom='0.000000' MarginDPI='300' MarginUnitType='0' PageCount='1'/>
+    <SceneGraph Image='Background/Stretch/baby_08.jpg' Type='1' ImageType='1' ColorFillType='0' PredefineIndex='0' BackTextureBrushZoomFactor='1.000000' TextureTransparent='1.000000' FillColor='0' FillColor2='0' ImageSizeX='800.000000' ImageSizeY='600.000000' Landscape='1' BackDPI='300' BackUnitType='0' BackDescription='1024 x 768 pixel'>
+        <SceneObject Version='4' Type='0' Angle='360.000000' BoundingBoxLeft='43.633694' BoundingBoxTop='103.386986' BoundingBoxRight='753.633667' BoundingBoxBottom='530.386963' Visible='1' Transparent='1.000000' Image='/Page1/photo/login.png' EffectName='Vintage' EnableEffect='0' EnableMask='0' MaskName='' EnableFrame='1' FrameName='' BorderType='0' RoundWidth='0' ColorBorderColor='16777215' ColorBorderWidth='4.000000' ColorBorderUnit='0' PhotoRotation='0.000000' CropLeft='0.000000' CropTop='0.891872' CropRight='1.000000' CropBottom='0.108128' EnableShadow='1' ShadowPrecise='2' ShadowColor='0' ShadowAlpha='50.000000' ShadowSmooth='10.000000' ShadowAngle='45.000000' ShadowOffsetX='10.000000' ShadowOffsetY='10.000000'/>
+    </SceneGraph>
+</root>

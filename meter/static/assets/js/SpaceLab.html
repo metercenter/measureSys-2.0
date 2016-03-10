@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<!-- saved from url=(0037)http://127.0.0.1:8000/main#/meterpage -->
+<html class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths"><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style type="text/css">.ng-animate.item:not(.left):not(.right){-webkit-transition:0s ease-in-out left;transition:0s ease-in-out left}</style><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}</style>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>SpaceLab</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<!-- Favicon -->
+<!--  <link rel="shortcut icon" href="/static/assets/img/favicon.ico" type="image/x-icon"> -->
+<!-- Bootstrap core CSS -->
+<link rel="stylesheet" href="http://127.0.0.1:8000/static/assets/plugins/bootstrap/css/bootstrap.min.css">
+<!-- Fonts from Font Awsome -->
+<link rel="stylesheet" href="http://127.0.0.1:8000/static/assets/css/font-awesome.min.css">
+<!-- CSS Animate -->
+<link rel="stylesheet" href="http://127.0.0.1:8000/static/assets/css/animate.css">
+<!-- Custom styles for this theme -->
+<link rel="stylesheet" href="http://127.0.0.1:8000/static/assets/css/main.css">
+<!-- Fonts -->
+<!-- Feature detection -->
+<!-- dataTable-->
+<link rel="stylesheet" href="http://127.0.0.1:8000/static/assets/plugins/angularDataTable/vendor/bootstrap/dist/css/datatables.bootstrap.min.css">
+
+<script src="./SpaceLab_files/modernizr-2.6.2.min.js"></script>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+    <script src="/static/assets/js/html5shiv.js"></script>
+    <script src="/static/assets/js/respond.min.js"></script>
+    <![endif]-->
+<!--Global JS-->
+<script src="./SpaceLab_files/jquery-1.10.2.min.js"></script>
+<script src="./SpaceLab_files/jquery.dataTables.js"></script>
+<script src="./SpaceLab_files/bootstrap.min.js"></script>
+<script src="./SpaceLab_files/angular.min.js"></script>
+<script src="./SpaceLab_files/waypoints.min.js"></script>
+<script src="./SpaceLab_files/angular-datatables.js"></script>
+<script src="./SpaceLab_files/highcharts.js"></script>
+<script src="./SpaceLab_files/highcharts-ng.js"></script>
+
+<script src="./SpaceLab_files/pageSelect.directive.js"></script>
+<script src="./SpaceLab_files/smart-table.js"></script>
+<script src="./SpaceLab_files/ng-table.min.js"></script>
+<script src="./SpaceLab_files/angular-datatables.bootstrap.js"></script>
+
+<script src="./SpaceLab_files/ui-bootstrap-tpls-0.13.0.min.js"></script>
+<script src="./SpaceLab_files/pageRequest.js"></script>
+<script src="./SpaceLab_files/angular-route.min.js"></script>
+
+<script src="./SpaceLab_files/application.js"></script>
+
+</head>
+
+<body ng-app="Application" class="ng-scope">
+	
+	<section id="container">
+
+		<header id="header" class="col-md-12">
+
+
+			<!--logo start-->
+			<div class="brand">
+				<a href="http://127.0.0.1:8000/index.html" class="logo"> <span>计量管理系统</span>
+				</a>
+			</div>
+			<!--logo end-->
+
+
+			<div class="toggle-navigation toggle-left ng-scope ng-hide" ng-controller="headerBtnforsidebar" ng-show="false">
+				<button type="button" class="btn btn-default" id="toggle-left" data-toggle="tooltip" data-placement="right" title="Toggle Navigation" ng-click="toggle()">
+					<i class="fa fa-bars"></i>
+				</button>
+			</div>
+
+
+			<div class="header-menu">
+				<ul>
+					<li><a href="http://127.0.0.1:8000/main#"><i class="fa fa-file"></i><span>首页</span></a></li>
+					<li><a href="http://127.0.0.1:8000/main#"><i class="fa fa-info"></i><span>报警信息</span></a></li>
+					<li><a href="http://127.0.0.1:8000/main#"><i class="fa fa-gears"></i><span>数据分析</span></a></li>
+				</ul>
+			</div>
+
+			<!-- <div class="user-nav"> -->
+			<div class="user-nav">
+				<ul>
+
+					<li>欢迎用户</li>
+
+					<li class="dropdown settings"><a class="dropdown-toggle ng-binding" data-toggle="dropdown" href="http://127.0.0.1:8000/main#"> <i class="fa fa-angle-down"></i>
+					</a>
+						<ul class="dropdown-menu animated fadeInDown">
+							<li><a href="http://127.0.0.1:8000/main#"><i class="fa fa-user"></i> Profile</a></li>
+							<li><a href="http://127.0.0.1:8000/main#"><i class="fa fa-calendar"></i> Calendar</a>
+							</li>
+							<li><a href="http://127.0.0.1:8000/main#"><i class="fa fa-envelope"></i> Inbox <span class="badge badge-danager" id="user-inbox">5</span></a></li>
+							<li><a href="http://127.0.0.1:8000/main#"><i class="fa fa-power-off"></i> 退出</a></li>
+						</ul></li>
+					<li>
+						<div class="toggle-navigation ng-scope" ng-controller="headerBtnforsidebar">
+							<button type="button" class="btn btn-default" id="toggle-right" ng-click="toggle()">
+								<i class="fa fa-bars"></i>
+							</button>
+						</div>
+					</li>
+
+				</ul>
+			</div>
+
+
+
+		</header>
+
+
+		<!--sidebar start-->
+		<aside class="sidebar ng-scope sidebar-toggle" ng-controller="siderbarCtrl" ng-class="{&#39;sidebar-toggle&#39;: sidebarStyle.isActive}">
+			<script type="text/ng-template" id="tree_item_renderer.html">
+  		<a href="#/{{data.page}}" data-ng-click="toggle(data)"> <i class="fa {{data.value}}"></i> <span>{{data.name}}</span><i
+							class="arrow fa fa-angle-right pull-right"></i></a>
+    
+    	<ul>
+        <li ng-show="show(data)" ng-repeat="data in data.nodes" ng-include="'tree_item_renderer.html'"></li>
+    	</ul>
+		</script>
+
+			<div id="leftside-navigation" class="nano">
+				<ul>
+					<!-- ngRepeat: data in tree --><!-- ngInclude: 'tree_item_renderer.html' --><li ng-repeat="data in tree" ng-include="&#39;tree_item_renderer.html&#39;" class="ng-scope">
+  		<a href="http://127.0.0.1:8000/main#/homepage" data-ng-click="toggle(data)" class="ng-scope"> <i class="fa fa-group"></i> <span class="ng-binding">金昇公司</span><i class="arrow fa fa-angle-right pull-right"></i></a>
+    
+    	<ul class="ng-scope">
+        <!-- ngRepeat: data in data.nodes --><!-- ngInclude: 'tree_item_renderer.html' --><li ng-show="show(data)" ng-repeat="data in data.nodes" ng-include="&#39;tree_item_renderer.html&#39;" class="ng-scope ng-hide">
+  		<a href="http://127.0.0.1:8000/main#/companypage" data-ng-click="toggle(data)" class="ng-scope"> <i class="fa fa-group"></i> <span class="ng-binding">马鞍山港华</span><i class="arrow fa fa-angle-right pull-right"></i></a>
+    
+    	<ul class="ng-scope">
+        <!-- ngRepeat: data in data.nodes --><!-- ngInclude: 'tree_item_renderer.html' --><li ng-show="show(data)" ng-repeat="data in data.nodes" ng-include="&#39;tree_item_renderer.html&#39;" class="ng-scope ng-hide">
+  		<a href="http://127.0.0.1:8000/main#/userpage" data-ng-click="toggle(data)" class="ng-scope"> <i class="fa fa-user"></i> <span class="ng-binding">万达广场</span><i class="arrow fa fa-angle-right pull-right"></i></a>
+    
+    	<ul class="ng-scope">
+        <!-- ngRepeat: data in data.nodes --><!-- ngInclude: 'tree_item_renderer.html' --><li ng-show="show(data)" ng-repeat="data in data.nodes" ng-include="&#39;tree_item_renderer.html&#39;" class="ng-scope ng-hide">
+  		<a href="./SpaceLab_files/SpaceLab.html" data-ng-click="toggle(data)" class="ng-scope"> <i class="fa fa-tachometer"></i> <span class="ng-binding">4F-13-小肥羊</span><i class="arrow fa fa-angle-right pull-right"></i></a>
+    
+    	<ul class="ng-scope">
+        <!-- ngRepeat: data in data.nodes -->
+    	</ul>
+		</li><!-- end ngRepeat: data in data.nodes --><!-- ngInclude: 'tree_item_renderer.html' --><li ng-show="show(data)" ng-repeat="data in data.nodes" ng-include="&#39;tree_item_renderer.html&#39;" class="ng-scope ng-hide">
+  		<a href="./SpaceLab_files/SpaceLab.html" data-ng-click="toggle(data)" class="ng-scope"> <i class="fa fa-tachometer"></i> <span class="ng-binding">5F-02-丽华</span><i class="arrow fa fa-angle-right pull-right"></i></a>
+    
+    	<ul class="ng-scope">
+        <!-- ngRepeat: data in data.nodes -->
+    	</ul>
+		</li><!-- end ngRepeat: data in data.nodes -->
+    	</ul>
+		</li><!-- end ngRepeat: data in data.nodes --><!-- ngInclude: 'tree_item_renderer.html' --><li ng-show="show(data)" ng-repeat="data in data.nodes" ng-include="&#39;tree_item_renderer.html&#39;" class="ng-scope ng-hide">
+  		<a href="http://127.0.0.1:8000/main#/userpage" data-ng-click="toggle(data)" class="ng-scope"> <i class="fa fa-user"></i> <span class="ng-binding">金鹰商场</span><i class="arrow fa fa-angle-right pull-right"></i></a>
+    
+    	<ul class="ng-scope">
+        <!-- ngRepeat: data in data.nodes -->
+    	</ul>
+		</li><!-- end ngRepeat: data in data.nodes --><!-- ngInclude: 'tree_item_renderer.html' --><li ng-show="show(data)" ng-repeat="data in data.nodes" ng-include="&#39;tree_item_renderer.html&#39;" class="ng-scope ng-hide">
+  		<a href="http://127.0.0.1:8000/main#/userpage" data-ng-click="toggle(data)" class="ng-scope"> <i class="fa fa-user"></i> <span class="ng-binding">中心医院</span><i class="arrow fa fa-angle-right pull-right"></i></a>
+    
+    	<ul class="ng-scope">
+        <!-- ngRepeat: data in data.nodes --><!-- ngInclude: 'tree_item_renderer.html' --><li ng-show="show(data)" ng-repeat="data in data.nodes" ng-include="&#39;tree_item_renderer.html&#39;" class="ng-scope ng-hide">
+  		<a href="./SpaceLab_files/SpaceLab.html" data-ng-click="toggle(data)" class="ng-scope"> <i class="fa fa-tachometer"></i> <span class="ng-binding">锅炉（西）</span><i class="arrow fa fa-angle-right pull-right"></i></a>
+    
+    	<ul class="ng-scope">
+        <!-- ngRepeat: data in data.nodes -->
+    	</ul>
+		</li><!-- end ngRepeat: data in data.nodes -->
+    	</ul>
+		</li><!-- end ngRepeat: data in data.nodes --><!-- ngInclude: 'tree_item_renderer.html' --><li ng-show="show(data)" ng-repeat="data in data.nodes" ng-include="&#39;tree_item_renderer.html&#39;" class="ng-scope ng-hide">
+  		<a href="http://127.0.0.1:8000/main#/userpage" data-ng-click="toggle(data)" class="ng-scope"> <i class="fa fa-user"></i> <span class="ng-binding">圣戈班管道系统有限公司</span><i class="arrow fa fa-angle-right pull-right"></i></a>
+    
+    	<ul class="ng-scope">
+        <!-- ngRepeat: data in data.nodes --><!-- ngInclude: 'tree_item_renderer.html' --><li ng-show="show(data)" ng-repeat="data in data.nodes" ng-include="&#39;tree_item_renderer.html&#39;" class="ng-scope ng-hide">
+  		<a href="./SpaceLab_files/SpaceLab.html" data-ng-click="toggle(data)" class="ng-scope"> <i class="fa fa-tachometer"></i> <span class="ng-binding">1号流量计</span><i class="arrow fa fa-angle-right pull-right"></i></a>
+    
+    	<ul class="ng-scope">
+        <!-- ngRepeat: data in data.nodes -->
+    	</ul>
+		</li><!-- end ngRepeat: data in data.nodes -->
+    	</ul>
+		</li><!-- end ngRepeat: data in data.nodes --><!-- ngInclude: 'tree_item_renderer.html' --><li ng-show="show(data)" ng-repeat="data in data.nodes" ng-include="&#39;tree_item_renderer.html&#39;" class="ng-scope ng-hide">
+  		<a href="http://127.0.0.1:8000/main#/userpage" data-ng-click="toggle(data)" class="ng-scope"> <i class="fa fa-user"></i> <span class="ng-binding">安徽中杭股份有限公司</span><i class="arrow fa fa-angle-right pull-right"></i></a>
+    
+    	<ul class="ng-scope">
+        <!-- ngRepeat: data in data.nodes --><!-- ngInclude: 'tree_item_renderer.html' --><li ng-show="show(data)" ng-repeat="data in data.nodes" ng-include="&#39;tree_item_renderer.html&#39;" class="ng-scope ng-hide">
+  		<a href="./SpaceLab_files/SpaceLab.html" data-ng-click="toggle(data)" class="ng-scope"> <i class="fa fa-tachometer"></i> <span class="ng-binding">二期（南）</span><i class="arrow fa fa-angle-right pull-right"></i></a>
+    
+    	<ul class="ng-scope">
+        <!-- ngRepeat: data in data.nodes -->
+    	</ul>
+		</li><!-- end ngRepeat: data in data.nodes -->
+    	</ul>
+		</li><!-- end ngRepeat: data in data.nodes -->
+    	</ul>
+		</li><!-- end ngRepeat: data in data.nodes --><!-- ngInclude: 'tree_item_renderer.html' --><li ng-show="show(data)" ng-repeat="data in data.nodes" ng-include="&#39;tree_item_renderer.html&#39;" class="ng-scope ng-hide">
+  		<a href="http://127.0.0.1:8000/main#/companypage" data-ng-click="toggle(data)" class="ng-scope"> <i class="fa fa-group"></i> <span class="ng-binding">镇江华润</span><i class="arrow fa fa-angle-right pull-right"></i></a>
+    
+    	<ul class="ng-scope">
+        <!-- ngRepeat: data in data.nodes --><!-- ngInclude: 'tree_item_renderer.html' --><li ng-show="show(data)" ng-repeat="data in data.nodes" ng-include="&#39;tree_item_renderer.html&#39;" class="ng-scope ng-hide">
+  		<a href="http://127.0.0.1:8000/main#/userpage" data-ng-click="toggle(data)" class="ng-scope"> <i class="fa fa-user"></i> <span class="ng-binding">鼎盛铝业</span><i class="arrow fa fa-angle-right pull-right"></i></a>
+    
+    	<ul class="ng-scope">
+        <!-- ngRepeat: data in data.nodes -->
+    	</ul>
+		</li><!-- end ngRepeat: data in data.nodes --><!-- ngInclude: 'tree_item_renderer.html' --><li ng-show="show(data)" ng-repeat="data in data.nodes" ng-include="&#39;tree_item_renderer.html&#39;" class="ng-scope ng-hide">
+  		<a href="http://127.0.0.1:8000/main#/userpage" data-ng-click="toggle(data)" class="ng-scope"> <i class="fa fa-user"></i> <span class="ng-binding">五里墩门站</span><i class="arrow fa fa-angle-right pull-right"></i></a>
+    
+    	<ul class="ng-scope">
+        <!-- ngRepeat: data in data.nodes -->
+    	</ul>
+		</li><!-- end ngRepeat: data in data.nodes -->
+    	</ul>
+		</li><!-- end ngRepeat: data in data.nodes --><!-- ngInclude: 'tree_item_renderer.html' --><li ng-show="show(data)" ng-repeat="data in data.nodes" ng-include="&#39;tree_item_renderer.html&#39;" class="ng-scope ng-hide">
+  		<a href="http://127.0.0.1:8000/main#/companypage" data-ng-click="toggle(data)" class="ng-scope"> <i class="fa fa-group"></i> <span class="ng-binding">检定中心</span><i class="arrow fa fa-angle-right pull-right"></i></a>
+    
+    	<ul class="ng-scope">
+        <!-- ngRepeat: data in data.nodes -->
+    	</ul>
+		</li><!-- end ngRepeat: data in data.nodes --><!-- ngInclude: 'tree_item_renderer.html' --><li ng-show="show(data)" ng-repeat="data in data.nodes" ng-include="&#39;tree_item_renderer.html&#39;" class="ng-scope ng-hide">
+  		<a href="http://127.0.0.1:8000/main#/companypage" data-ng-click="toggle(data)" class="ng-scope"> <i class="fa fa-group"></i> <span class="ng-binding">南京港华</span><i class="arrow fa fa-angle-right pull-right"></i></a>
+    
+    	<ul class="ng-scope">
+        <!-- ngRepeat: data in data.nodes -->
+    	</ul>
+		</li><!-- end ngRepeat: data in data.nodes -->
+    	</ul>
+		</li><!-- end ngRepeat: data in tree -->
+				</ul>
+			</div>
+
+		</aside>
+		<!--sidebar end-->
+
+
+		<!--main content start-->
+		
+		
+		<section class="main-content-wrapper ng-scope main-content-toggle-left main-content-toggle-right" ng-controller="headerBtnforsidebar" ng-class="{&#39;main-content-toggle-left&#39;: sidebarStyle.isActive, &#39;main-content-toggle-right&#39;:sidebarStyle.isRightActive}">
+			<section id="main-content">
+		<!-- ngView:  --><div ng-view="" class="ng-scope">
+    
+  <div class="jumbotron ng-scope">    
+    <h1>Meter</h1>
+    <p class="lead">lnsdofndson</p>
+  </div>
+
+</div>
+		
+		
+				<div class="row">
+					<div class="col-md-12">
+						<ul class="breadcrumb">
+							<li><a href="http://127.0.0.1:8000/main#">首页</a></li>
+							<li class="active">公司介绍</li>
+						</ul>
+						<!-- <h1 class="h1">公司简介</h1> -->
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<h3 class="panel-title">金昇公司</h3>
+								<div class="actions pull-right">
+									<i class="fa fa-chevron-down"></i> <i class="fa fa-times"></i>
+								</div>
+							</div>
+							<div class="panel-body text-left">
+								<!-- <div id="area-chart"></div> -->
+								<p>南京金昇燃气设备有限公司自2003年12月成立以来，一直专注于提供燃气行业优质、可靠的计量和控制设备，同时提供计量管理、设备成撬及周期检定技术服务等。是ELSTER在中国区授权代理商。公司坚持“准确计量、精确控制”的原则，不断努力为用户提供最佳的产品和服务。公司已建立完整的服务体系，提供从售前、售中到售后全面的技术支持和服务。服务团队由具有丰富实践经验的技术人员组成，具备不同类型的工程和设备安装、调试和应急处理能力。
+								</p>
+								<p>联系电话 ：025-58818283</p>
+								<p>传真 ：025-58822672</p>
+								<p>微信公众号：南京金昇</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="row">
+					<div class="col-md-12">
+						<ul class="breadcrumb">
+							<li><a href="http://127.0.0.1:8000/main#">首页</a></li>
+							<li class="active">重要报警信息</li>
+						</ul>
+						<!-- <h1 class="h1">公司简介</h1> -->
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<h3 class="panel-title">重要报警信息</h3>
+								<div class="actions pull-right">
+									<i class="fa fa-chevron-down"></i> <i class="fa fa-times"></i>
+								</div>
+							</div>
+							<div class="panel-body text-left">
+								<!-- <div ng-controller="BootstrapIntegrationCtrl as showCase">
+									<table datatable="" dt-options="showCase.dtOptions"
+										dt-columns="showCase.dtColumns"
+										class="table table-striped table-bordered"></table>
+								</div> -->
+								<div ng-controller="customersCtrl" class="ng-scope">
+									<button ng-click="addData()">Add Data</button>
+									<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"><div class="fg-toolbar ui-toolbar ui-widget-header ui-helper-clearfix ui-corner-tl ui-corner-tr"><div class="dataTables_length" id="DataTables_Table_0_length"><label>显示 <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-control"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> 记录</label></div><div id="DataTables_Table_0_filter" class="dataTables_filter"><label>查询:<input type="search" class="form-control" placeholder="" aria-controls="DataTables_Table_0"></label></div></div><table my-table="" options="options" class="table table-striped table-bordered ng-isolate-scope dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info"><thead><tr role="row"><th class="sorting ui-state-default sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Surname: activate to sort column ascending" aria-sort="ascending" style="width: 496px;"><div class="DataTables_sort_wrapper">Surname<span class="DataTables_sort_icon css_right ui-icon ui-icon-triangle-1-n"></span></div></th><th class="sorting ui-state-default" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="First Name: activate to sort column ascending" style="width: 584px;"><div class="DataTables_sort_wrapper">First Name<span class="DataTables_sort_icon css_right ui-icon ui-icon-carat-2-n-s"></span></div></th></tr></thead><tbody><tr role="row" class="odd"><td class="sorting_1">Webber</td><td>Adam</td></tr></tbody></table><div class="fg-toolbar ui-toolbar ui-widget-header ui-helper-clearfix ui-corner-bl ui-corner-br"><div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">显示 1 至 1 共 1 记录</div><div class="dataTables_paginate fg-buttonset ui-buttonset fg-buttonset-multi ui-buttonset-multi paging_simple_numbers" id="DataTables_Table_0_paginate"><ul class="pagination"><li class="ui-state-disabled"><a href="http://127.0.0.1:8000/main#" class="previous" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" id="DataTables_Table_0_previous">Previous</a></li><li></li><li class="ui-state-disabled"><a href="http://127.0.0.1:8000/main#" class="" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0">1</a></li><li class="ui-state-disabled"><a href="http://127.0.0.1:8000/main#" class="next" aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0" id="DataTables_Table_0_next">Next</a></li></ul></div></div></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="row">
+					<div class="col-md-12">
+						<ul class="breadcrumb">
+							<li><a href="http://127.0.0.1:8000/main#">首页</a></li>
+							<li class="active">用户反馈信息</li>
+						</ul>
+						<!-- <h1 class="h1">公司简介</h1> -->
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="panel panel-primary">
+							<div class="panel-heading ng-scope" ng-controller="selfCtrl">
+								<h3 class="panel-title">用户反馈信息</h3>
+								<div class="actions pull-right">
+									<i class="fa fa-chevron-down"></i> <i class="fa fa-times"></i>
+								</div>
+							</div>
+							<div class="panel-body text-center">
+								<div ng-controller="BootstrapIntegrationCtrl as showCase" class="ng-scope">
+									<div id="DataTables_Table_1_wrapper" class="dataTables_wrapper form-inline no-footer"><div class="row"><div class="col-xs-6"><div class="dataTables_length" id="DataTables_Table_1_length"><label>显示 <select name="DataTables_Table_1_length" aria-controls="DataTables_Table_1" class="form-control input-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> 记录</label></div></div><div class="col-xs-6"><div id="DataTables_Table_1_filter" class="dataTables_filter"><label>查询:<input type="search" class="form-control input-sm" placeholder="" aria-controls="DataTables_Table_1"></label></div></div></div><table datatable="" dt-options="showCase.dtOptions" dt-columns="showCase.dtColumns" class="table table-striped table-bordered ng-isolate-scope dataTable no-footer" id="DataTables_Table_1" role="grid" aria-describedby="DataTables_Table_1_info" style="display: table; width: 1117px;"><thead><tr role="row"><th class="text-danger sorting_asc" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-label="ID: activate to sort column ascending" aria-sort="ascending" style="width: 127px;">ID</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-label="First name: activate to sort column ascending" style="width: 467px;">First name</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 468px;">Last name</th></tr></thead><tbody><tr role="row" class="odd"><td class="text-danger sorting_1">3</td><td>Cartman</td><td>Whateveryournameis</td></tr><tr role="row" class="even"><td class="text-danger sorting_1">10</td><td>Cartman</td><td>Titi</td></tr><tr role="row" class="odd"><td class="text-danger sorting_1">11</td><td>Toto</td><td>Lara</td></tr><tr role="row" class="even"><td class="text-danger sorting_1">22</td><td>Luke</td><td>Yoda</td></tr><tr role="row" class="odd"><td class="text-danger sorting_1">26</td><td>Foo</td><td>Moliku</td></tr><tr role="row" class="even"><td class="text-danger sorting_1">31</td><td>Luke</td><td>Someone Last Name</td></tr><tr role="row" class="odd"><td class="text-danger sorting_1">32</td><td>Batman</td><td>Lara</td></tr><tr role="row" class="even"><td class="text-danger sorting_1">37</td><td>Zed</td><td>Kyle</td></tr><tr role="row" class="odd"><td class="text-danger sorting_1">39</td><td>Louis</td><td>Whateveryournameis</td></tr><tr role="row" class="even"><td class="text-danger sorting_1">41</td><td>Superman</td><td>Yoda</td></tr></tbody></table><div class="row"><div class="col-xs-6"><div class="dataTables_info" id="DataTables_Table_1_info" role="status" aria-live="polite">显示 1 至 10 共 300 记录</div></div><div class="col-xs-6"><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_1_paginate"><ul class="pagination"><li class="disabled"><a href="http://127.0.0.1:8000/main#" class="previous" aria-controls="DataTables_Table_1" data-dt-idx="0" tabindex="0" id="DataTables_Table_1_previous">Previous</a></li><li></li><li class="active"><a href="http://127.0.0.1:8000/main#" class="" aria-controls="DataTables_Table_1" data-dt-idx="1" tabindex="0">1</a></li><li><a href="http://127.0.0.1:8000/main#" class="" aria-controls="DataTables_Table_1" data-dt-idx="2" tabindex="0">2</a></li><li><a href="http://127.0.0.1:8000/main#" class="" aria-controls="DataTables_Table_1" data-dt-idx="3" tabindex="0">3</a></li><li><a href="http://127.0.0.1:8000/main#" class="" aria-controls="DataTables_Table_1" data-dt-idx="4" tabindex="0">4</a></li><li><a href="http://127.0.0.1:8000/main#" class="" aria-controls="DataTables_Table_1" data-dt-idx="5" tabindex="0">5</a></li><li class="disabled"><a href="http://127.0.0.1:8000/main#" onclick="event.preventDefault()">…</a></li><li><a href="http://127.0.0.1:8000/main#" class="" aria-controls="DataTables_Table_1" data-dt-idx="6" tabindex="0">30</a></li><li><a href="http://127.0.0.1:8000/main#" class="next" aria-controls="DataTables_Table_1" data-dt-idx="7" tabindex="0" id="DataTables_Table_1_next">Next</a></li></ul></div></div></div></div><h3 class="dt-loading" style="display: none;">Loading...</h3>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12">
+						<ul class="breadcrumb">
+							<li><a href="http://127.0.0.1:8000/main#">首页</a></li>
+							<li class="active">数据</li>
+						</ul>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="panel panel-primary">
+							<div class="panel-heading ng-scope" ng-controller="selfCtrl">
+								<h3 class="panel-title">数据</h3>
+								<div class="actions pull-right">
+									<i class="fa fa-chevron-down"></i> <i class="fa fa-times"></i>
+								</div>
+							</div>
+							<div class="panel-body text-left">
+								<div class="page-header">
+									<h1>Export to CSV</h1>
+								</div>
+
+
+
+								<div ng-controller="DemoCtrl" class="ng-scope">
+
+									<a class="btn btn-primary" ng-mousedown="csv.generate()" ng-href="" download="test.csv">Export to
+										CSV</a> <input class="pull-right">
+									<table ng-table="tableParams" class="table table-striped table-bordered ng-scope ng-table" export-csv="csv"><!-- ngInclude: templates.header --><thead ng-include="templates.header" class="ng-scope"><tr class="ng-scope"> <!-- ngRepeat: $column in $columns --><th title="" ng-repeat="$column in $columns" ng-class="{ &#39;sortable&#39;: $column.sortable(this), &#39;sort-asc&#39;: params.sorting()[$column.sortable(this)]==&#39;asc&#39;, &#39;sort-desc&#39;: params.sorting()[$column.sortable(this)]==&#39;desc&#39; }" ng-click="sortBy($column, $event)" ng-show="$column.show(this)" ng-init="template=$column.headerTemplateURL(this)" class="header "> <!-- ngIf: !template --><div ng-if="!template" ng-show="!template" class="ng-table-header ng-scope" ng-class="{&#39;sort-indicator&#39;: params.settings().sortingIndicator==&#39;div&#39;}"> <span ng-bind="$column.title(this)" ng-class="{&#39;sort-indicator&#39;: params.settings().sortingIndicator==&#39;span&#39;}" class="ng-binding sort-indicator">Name</span> </div><!-- end ngIf: !template --> <!-- ngIf: template --> </th><!-- end ngRepeat: $column in $columns --><th title="" ng-repeat="$column in $columns" ng-class="{ &#39;sortable&#39;: $column.sortable(this), &#39;sort-asc&#39;: params.sorting()[$column.sortable(this)]==&#39;asc&#39;, &#39;sort-desc&#39;: params.sorting()[$column.sortable(this)]==&#39;desc&#39; }" ng-click="sortBy($column, $event)" ng-show="$column.show(this)" ng-init="template=$column.headerTemplateURL(this)" class="header "> <!-- ngIf: !template --><div ng-if="!template" ng-show="!template" class="ng-table-header ng-scope" ng-class="{&#39;sort-indicator&#39;: params.settings().sortingIndicator==&#39;div&#39;}"> <span ng-bind="$column.title(this)" ng-class="{&#39;sort-indicator&#39;: params.settings().sortingIndicator==&#39;span&#39;}" class="ng-binding sort-indicator">Age</span> </div><!-- end ngIf: !template --> <!-- ngIf: template --> </th><!-- end ngRepeat: $column in $columns --> </tr> <tr ng-show="show_filter" class="ng-table-filters ng-scope ng-hide"> <!-- ngRepeat: $column in $columns --><th data-title-text="Name" ng-repeat="$column in $columns" ng-show="$column.show(this)" class="filter ng-scope"> <!-- ngRepeat: (name, filter) in $column.filter(this) --> </th><!-- end ngRepeat: $column in $columns --><th data-title-text="Age" ng-repeat="$column in $columns" ng-show="$column.show(this)" class="filter ng-scope"> <!-- ngRepeat: (name, filter) in $column.filter(this) --> </th><!-- end ngRepeat: $column in $columns --> </tr> </thead>
+										<tbody><!-- ngRepeat: user in $data --><tr ng-repeat="user in $data" class="ng-scope">
+											<td data-title="&#39;Name&#39;" class="col-md-6 ng-binding" data-title-text="Name">Moroni</td>
+											<td data-title="&#39;Age&#39;" class="col-md-6 ng-binding" data-title-text="Age">50</td>
+										</tr><!-- end ngRepeat: user in $data --><tr ng-repeat="user in $data" class="ng-scope">
+											<td data-title="&#39;Name&#39;" class="col-md-6 ng-binding" data-title-text="Name">Tiancum</td>
+											<td data-title="&#39;Age&#39;" class="col-md-6 ng-binding" data-title-text="Age">43</td>
+										</tr><!-- end ngRepeat: user in $data --><tr ng-repeat="user in $data" class="ng-scope">
+											<td data-title="&#39;Name&#39;" class="col-md-6 ng-binding" data-title-text="Name">Jacob</td>
+											<td data-title="&#39;Age&#39;" class="col-md-6 ng-binding" data-title-text="Age">27</td>
+										</tr><!-- end ngRepeat: user in $data --><tr ng-repeat="user in $data" class="ng-scope">
+											<td data-title="&#39;Name&#39;" class="col-md-6 ng-binding" data-title-text="Name">Nephi</td>
+											<td data-title="&#39;Age&#39;" class="col-md-6 ng-binding" data-title-text="Age">29</td>
+										</tr><!-- end ngRepeat: user in $data --><tr ng-repeat="user in $data" class="ng-scope">
+											<td data-title="&#39;Name&#39;" class="col-md-6 ng-binding" data-title-text="Name">Enos</td>
+											<td data-title="&#39;Age&#39;" class="col-md-6 ng-binding" data-title-text="Age">34</td>
+										</tr><!-- end ngRepeat: user in $data --><tr ng-repeat="user in $data" class="ng-scope">
+											<td data-title="&#39;Name&#39;" class="col-md-6 ng-binding" data-title-text="Name">Tiancum</td>
+											<td data-title="&#39;Age&#39;" class="col-md-6 ng-binding" data-title-text="Age">43</td>
+										</tr><!-- end ngRepeat: user in $data --><tr ng-repeat="user in $data" class="ng-scope">
+											<td data-title="&#39;Name&#39;" class="col-md-6 ng-binding" data-title-text="Name">Jacob</td>
+											<td data-title="&#39;Age&#39;" class="col-md-6 ng-binding" data-title-text="Age">27</td>
+										</tr><!-- end ngRepeat: user in $data --><tr ng-repeat="user in $data" class="ng-scope">
+											<td data-title="&#39;Name&#39;" class="col-md-6 ng-binding" data-title-text="Name">Nephi</td>
+											<td data-title="&#39;Age&#39;" class="col-md-6 ng-binding" data-title-text="Age">29</td>
+										</tr><!-- end ngRepeat: user in $data --><tr ng-repeat="user in $data" class="ng-scope">
+											<td data-title="&#39;Name&#39;" class="col-md-6 ng-binding" data-title-text="Name">Enos</td>
+											<td data-title="&#39;Age&#39;" class="col-md-6 ng-binding" data-title-text="Age">34</td>
+										</tr><!-- end ngRepeat: user in $data --><tr ng-repeat="user in $data" class="ng-scope">
+											<td data-title="&#39;Name&#39;" class="col-md-6 ng-binding" data-title-text="Name">Tiancum</td>
+											<td data-title="&#39;Age&#39;" class="col-md-6 ng-binding" data-title-text="Age">43</td>
+										</tr><!-- end ngRepeat: user in $data -->
+									</tbody></table><div ng-table-pagination="params" template-url="templates.pagination" class="ng-scope ng-isolate-scope"><!-- ngInclude: templateUrl --><div ng-include="templateUrl" class="ng-scope"><!-- ngIf: params.data.length --><div class="ng-table-pager ng-scope" ng-if="params.data.length"> <!-- ngIf: params.settings().counts.length --><div ng-if="params.settings().counts.length" class="ng-table-counts btn-group pull-right ng-scope"> <!-- ngRepeat: count in params.settings().counts --><button ng-repeat="count in params.settings().counts" type="button" ng-class="{&#39;active&#39;:params.count()==count}" ng-click="params.count(count)" class="btn btn-default ng-scope active"> <span ng-bind="count" class="ng-binding">10</span> </button><!-- end ngRepeat: count in params.settings().counts --><button ng-repeat="count in params.settings().counts" type="button" ng-class="{&#39;active&#39;:params.count()==count}" ng-click="params.count(count)" class="btn btn-default ng-scope"> <span ng-bind="count" class="ng-binding">25</span> </button><!-- end ngRepeat: count in params.settings().counts --><button ng-repeat="count in params.settings().counts" type="button" ng-class="{&#39;active&#39;:params.count()==count}" ng-click="params.count(count)" class="btn btn-default ng-scope"> <span ng-bind="count" class="ng-binding">50</span> </button><!-- end ngRepeat: count in params.settings().counts --><button ng-repeat="count in params.settings().counts" type="button" ng-class="{&#39;active&#39;:params.count()==count}" ng-click="params.count(count)" class="btn btn-default ng-scope"> <span ng-bind="count" class="ng-binding">100</span> </button><!-- end ngRepeat: count in params.settings().counts --> </div><!-- end ngIf: params.settings().counts.length --> <ul class="pagination ng-table-pagination"> <!-- ngRepeat: page in pages --><li ng-class="{&#39;disabled&#39;: !page.active &amp;&amp; !page.current, &#39;active&#39;: page.current}" ng-repeat="page in pages" ng-switch="page.type" class="ng-scope disabled"> <!-- ngSwitchWhen: prev --><a ng-switch-when="prev" ng-click="params.page(page.number)" href="" class="ng-scope">«</a><!-- end ngSwitchWhen: --> <!-- ngSwitchWhen: first --> <!-- ngSwitchWhen: page --> <!-- ngSwitchWhen: more --> <!-- ngSwitchWhen: last --> <!-- ngSwitchWhen: next --> </li><!-- end ngRepeat: page in pages --><li ng-class="{&#39;disabled&#39;: !page.active &amp;&amp; !page.current, &#39;active&#39;: page.current}" ng-repeat="page in pages" ng-switch="page.type" class="ng-scope active"> <!-- ngSwitchWhen: prev --> <!-- ngSwitchWhen: first --><a ng-switch-when="first" ng-click="params.page(page.number)" href="" class="ng-scope"><span ng-bind="page.number" class="ng-binding">1</span></a><!-- end ngSwitchWhen: --> <!-- ngSwitchWhen: page --> <!-- ngSwitchWhen: more --> <!-- ngSwitchWhen: last --> <!-- ngSwitchWhen: next --> </li><!-- end ngRepeat: page in pages --><li ng-class="{&#39;disabled&#39;: !page.active &amp;&amp; !page.current, &#39;active&#39;: page.current}" ng-repeat="page in pages" ng-switch="page.type" class="ng-scope"> <!-- ngSwitchWhen: prev --> <!-- ngSwitchWhen: first --> <!-- ngSwitchWhen: page --> <!-- ngSwitchWhen: more --> <!-- ngSwitchWhen: last --><a ng-switch-when="last" ng-click="params.page(page.number)" href="" class="ng-scope"><span ng-bind="page.number" class="ng-binding">2</span></a><!-- end ngSwitchWhen: --> <!-- ngSwitchWhen: next --> </li><!-- end ngRepeat: page in pages --><li ng-class="{&#39;disabled&#39;: !page.active &amp;&amp; !page.current, &#39;active&#39;: page.current}" ng-repeat="page in pages" ng-switch="page.type" class="ng-scope"> <!-- ngSwitchWhen: prev --> <!-- ngSwitchWhen: first --> <!-- ngSwitchWhen: page --> <!-- ngSwitchWhen: more --> <!-- ngSwitchWhen: last --> <!-- ngSwitchWhen: next --><a ng-switch-when="next" ng-click="params.page(page.number)" href="" class="ng-scope">»</a><!-- end ngSwitchWhen: --> </li><!-- end ngRepeat: page in pages --> </ul> </div><!-- end ngIf: params.data.length --> </div></div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="panel panel-primary">
+							<div class="panel-heading ng-scope" ng-controller="selfCtrl">
+								<h3 class="panel-title">数据</h3>
+								<div class="actions pull-right">
+									<i class="fa fa-chevron-down"></i> <i class="fa fa-times"></i>
+								</div>
+							</div>
+							<div class="panel-body text-left">
+								<div ng-controller="safeCtrl" class="ng-scope">
+									<table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped">
+										<thead>
+											<tr>
+												<th colspan="5"><input st-search="" class="form-control" placeholder="global search ..." type="text"></th>
+											</tr>
+											<tr>
+												<th st-sort="firstName">first name</th>
+												<th st-sort="lastName">last name</th>
+												<th st-sort="birthDate">birth date</th>
+												<th st-sort="balance">balance</th>
+											</tr>
+										</thead>
+										<tbody>
+											<!-- ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">Blandine</td>
+												<td class="ng-binding">Faivre</td>
+												<td class="ng-binding">"1987-05-21T00:00:00.000Z"</td>
+												<td class="ng-binding">347</td>
+												<td>
+													<button type="button" ng-click="removeItem(row)" class="btn btn-sm btn-danger">
+														<i class="glyphicon glyphicon-remove-circle"> </i>
+													</button>
+												</td>
+											</tr><!-- end ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">Blandine</td>
+												<td class="ng-binding">Frere</td>
+												<td class="ng-binding">"1987-04-25T00:00:00.000Z"</td>
+												<td class="ng-binding">1463</td>
+												<td>
+													<button type="button" ng-click="removeItem(row)" class="btn btn-sm btn-danger">
+														<i class="glyphicon glyphicon-remove-circle"> </i>
+													</button>
+												</td>
+											</tr><!-- end ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">Laurent</td>
+												<td class="ng-binding">Renard</td>
+												<td class="ng-binding">"1955-08-27T00:00:00.000Z"</td>
+												<td class="ng-binding">496</td>
+												<td>
+													<button type="button" ng-click="removeItem(row)" class="btn btn-sm btn-danger">
+														<i class="glyphicon glyphicon-remove-circle"> </i>
+													</button>
+												</td>
+											</tr><!-- end ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">Olivier</td>
+												<td class="ng-binding">Renard</td>
+												<td class="ng-binding">"1987-05-21T00:00:00.000Z"</td>
+												<td class="ng-binding">1834</td>
+												<td>
+													<button type="button" ng-click="removeItem(row)" class="btn btn-sm btn-danger">
+														<i class="glyphicon glyphicon-remove-circle"> </i>
+													</button>
+												</td>
+											</tr><!-- end ngRepeat: row in displayedCollection -->
+										</tbody>
+									</table>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="panel panel-primary">
+							<div class="panel-heading ng-scope" ng-controller="selfCtrl">
+								<h3 class="panel-title">重要报警信息</h3>
+								<div class="actions pull-right">
+									<i class="fa fa-chevron-down"></i> <i class="fa fa-times"></i>
+								</div>
+							</div>
+							<div class="panel-body text-left">
+								<div ng-controller="WarnCtrl-1" class="ng-scope">
+									<table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped">
+										<thead>
+											<tr>
+												<th colspan="2"><input st-search="" class="form-control" placeholder="在此搜索。。。" type="text"></th>
+											</tr>
+											<tr>
+												<th st-sort="company">企业名称</th>
+												<th st-sort="user_id">用户信息</th>
+												<th st-sort="meter_info">表计信息</th>
+												<th st-sort="warn_info">报警信息</th>
+												<th st-sort="warn_level">报警级别</th>
+												<th st-sort="solution">处理办法</th>
+												<th st-sort="warn_date">报警时间</th>												
+											</tr>
+										</thead>
+										<tbody>
+											<!-- ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">马鞍山港华</td>
+												<td class="ng-binding">万达广场</td>
+												<td class="ng-binding">4F-13-小肥羊</td>
+												<td class="ng-binding">传感器污染或气流方向</td>
+												<td class="ng-binding">一级警报</td>
+												<td class="ng-binding">做相应控制</td>
+												<td class="ng-binding">07/09/2015 5:17 p.m.</td>
+											</tr><!-- end ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">马鞍山港华</td>
+												<td class="ng-binding">万达广场</td>
+												<td class="ng-binding">4F-13-小肥羊</td>
+												<td class="ng-binding">传感器污染或气流方向</td>
+												<td class="ng-binding">一级警报</td>
+												<td class="ng-binding">做相应控制</td>
+												<td class="ng-binding">07/09/2015 5:22 p.m.</td>
+											</tr><!-- end ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">马鞍山港华</td>
+												<td class="ng-binding">万达广场</td>
+												<td class="ng-binding">5F-02-丽华</td>
+												<td class="ng-binding">传感器污染或气流方向</td>
+												<td class="ng-binding">一级警报</td>
+												<td class="ng-binding">做相应控制</td>
+												<td class="ng-binding">07/09/2015 5:59 p.m.</td>
+											</tr><!-- end ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">马鞍山港华</td>
+												<td class="ng-binding">万达广场</td>
+												<td class="ng-binding">5F-02-丽华</td>
+												<td class="ng-binding">传感器污染或气流方向</td>
+												<td class="ng-binding">一级警报</td>
+												<td class="ng-binding">做相应控制</td>
+												<td class="ng-binding">07/09/2015 6:36 p.m.</td>
+											</tr><!-- end ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">马鞍山港华</td>
+												<td class="ng-binding">万达广场</td>
+												<td class="ng-binding">5F-02-丽华</td>
+												<td class="ng-binding">传感器污染或气流方向</td>
+												<td class="ng-binding">一级警报</td>
+												<td class="ng-binding">做相应控制</td>
+												<td class="ng-binding">07/09/2015 6:39 p.m.</td>
+											</tr><!-- end ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">马鞍山港华</td>
+												<td class="ng-binding">万达广场</td>
+												<td class="ng-binding">5F-02-丽华</td>
+												<td class="ng-binding">传感器污染或气流方向</td>
+												<td class="ng-binding">一级警报</td>
+												<td class="ng-binding">做相应控制</td>
+												<td class="ng-binding">07/10/2015 12:40 a.m.</td>
+											</tr><!-- end ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">马鞍山港华</td>
+												<td class="ng-binding">万达广场</td>
+												<td class="ng-binding">5F-02-丽华</td>
+												<td class="ng-binding">传感器污染或气流方向</td>
+												<td class="ng-binding">一级警报</td>
+												<td class="ng-binding">做相应控制</td>
+												<td class="ng-binding">07/10/2015 6:40 a.m.</td>
+											</tr><!-- end ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">马鞍山港华</td>
+												<td class="ng-binding">万达广场</td>
+												<td class="ng-binding">5F-02-丽华</td>
+												<td class="ng-binding">传感器污染或气流方向</td>
+												<td class="ng-binding">一级警报</td>
+												<td class="ng-binding">做相应控制</td>
+												<td class="ng-binding">07/11/2015 12:42 p.m.</td>
+											</tr><!-- end ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">马鞍山港华</td>
+												<td class="ng-binding">万达广场</td>
+												<td class="ng-binding">5F-02-丽华</td>
+												<td class="ng-binding">传感器污染或气流方向</td>
+												<td class="ng-binding">一级警报</td>
+												<td class="ng-binding">做相应控制</td>
+												<td class="ng-binding">07/11/2015 6:43 p.m.</td>
+											</tr><!-- end ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">马鞍山港华</td>
+												<td class="ng-binding">万达广场</td>
+												<td class="ng-binding">5F-02-丽华</td>
+												<td class="ng-binding">传感器污染或气流方向</td>
+												<td class="ng-binding">一级警报</td>
+												<td class="ng-binding">做相应控制</td>
+												<td class="ng-binding">07/12/2015 12:43 a.m.</td>
+											</tr><!-- end ngRepeat: row in displayedCollection -->
+										</tbody>
+										<tfoot>
+											<tr>
+												<td colspan="10" class="text-center">
+													<div st-items-by-page="10" st-pagination="" st-template="pagination.custom.html" class="ng-isolate-scope">
+<!-- ngIf: pages.length >= 2 --><nav ng-if="pages.length &gt;= 2" class="ng-scope">
+  <ul class="pagination">
+    <li><a ng-click="selectPage(1)">First</a>
+    </li><li><a ng-click="selectPage(currentPage - 1)">&lt;</a>
+    </li><li><a class="ng-binding"><page-select></page-select> of 3</a>
+    </li><li><a ng-click="selectPage(currentPage + 1)">&gt;</a>
+    </li><li><a ng-click="selectPage(numPages)">Last</a></li>
+  </ul>
+</nav><!-- end ngIf: pages.length >= 2 -->
+</div>
+												</td>
+											</tr>
+										</tfoot>
+									</table>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-md-12">
+						<div class="panel panel-primary">
+							<div class="panel-heading ng-scope" ng-controller="selfCtrl">
+								<h3 class="panel-title">所有报警信息</h3>
+								<div class="actions pull-right">
+									<i class="fa fa-chevron-down"></i> <i class="fa fa-times"></i>
+								</div>
+							</div>
+							<div class="panel-body text-left">
+								<div ng-controller="WarnCtrl-all" class="ng-scope">
+									<table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped">
+										<thead>
+											<tr>
+												<th colspan="2"><input st-search="" class="form-control" placeholder="在此搜索。。。" type="text"></th>
+											</tr>
+											<tr>
+												<th st-sort="company">企业名称</th>
+												<th st-sort="user_id">用户信息</th>
+												<th st-sort="meter_info">表计信息</th>
+												<th st-sort="warn_info">报警信息</th>
+												<th st-sort="warn_level">报警级别</th>
+												<th st-sort="solution">处理办法</th>
+												<th st-sort="warn_date">报警时间</th>												
+											</tr>
+										</thead>
+										<tbody>
+											<!-- ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">马鞍山港华</td>
+												<td class="ng-binding">万达广场</td>
+												<td class="ng-binding">4F-13-小肥羊</td>
+												<td class="ng-binding">传感器污染或气流方向</td>
+												<td class="ng-binding">一级警报</td>
+												<td class="ng-binding">做相应控制</td>
+												<td class="ng-binding">07/09/2015 5:17 p.m.</td>
+											</tr><!-- end ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">马鞍山港华</td>
+												<td class="ng-binding">万达广场</td>
+												<td class="ng-binding">4F-13-小肥羊</td>
+												<td class="ng-binding">传感器污染或气流方向</td>
+												<td class="ng-binding">一级警报</td>
+												<td class="ng-binding">做相应控制</td>
+												<td class="ng-binding">07/09/2015 5:22 p.m.</td>
+											</tr><!-- end ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">马鞍山港华</td>
+												<td class="ng-binding">万达广场</td>
+												<td class="ng-binding">5F-02-丽华</td>
+												<td class="ng-binding">传感器污染或气流方向</td>
+												<td class="ng-binding">一级警报</td>
+												<td class="ng-binding">做相应控制</td>
+												<td class="ng-binding">07/09/2015 5:59 p.m.</td>
+											</tr><!-- end ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">马鞍山港华</td>
+												<td class="ng-binding">万达广场</td>
+												<td class="ng-binding">5F-02-丽华</td>
+												<td class="ng-binding">传感器污染或气流方向</td>
+												<td class="ng-binding">一级警报</td>
+												<td class="ng-binding">做相应控制</td>
+												<td class="ng-binding">07/09/2015 6:36 p.m.</td>
+											</tr><!-- end ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">马鞍山港华</td>
+												<td class="ng-binding">万达广场</td>
+												<td class="ng-binding">5F-02-丽华</td>
+												<td class="ng-binding">传感器污染或气流方向</td>
+												<td class="ng-binding">一级警报</td>
+												<td class="ng-binding">做相应控制</td>
+												<td class="ng-binding">07/09/2015 6:39 p.m.</td>
+											</tr><!-- end ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">马鞍山港华</td>
+												<td class="ng-binding">万达广场</td>
+												<td class="ng-binding">5F-02-丽华</td>
+												<td class="ng-binding">传感器污染或气流方向</td>
+												<td class="ng-binding">一级警报</td>
+												<td class="ng-binding">做相应控制</td>
+												<td class="ng-binding">07/10/2015 12:40 a.m.</td>
+											</tr><!-- end ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">马鞍山港华</td>
+												<td class="ng-binding">万达广场</td>
+												<td class="ng-binding">5F-02-丽华</td>
+												<td class="ng-binding">传感器污染或气流方向</td>
+												<td class="ng-binding">一级警报</td>
+												<td class="ng-binding">做相应控制</td>
+												<td class="ng-binding">07/10/2015 6:40 a.m.</td>
+											</tr><!-- end ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">马鞍山港华</td>
+												<td class="ng-binding">万达广场</td>
+												<td class="ng-binding">5F-02-丽华</td>
+												<td class="ng-binding">传感器污染或气流方向</td>
+												<td class="ng-binding">一级警报</td>
+												<td class="ng-binding">做相应控制</td>
+												<td class="ng-binding">07/11/2015 12:42 p.m.</td>
+											</tr><!-- end ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">马鞍山港华</td>
+												<td class="ng-binding">万达广场</td>
+												<td class="ng-binding">5F-02-丽华</td>
+												<td class="ng-binding">传感器污染或气流方向</td>
+												<td class="ng-binding">一级警报</td>
+												<td class="ng-binding">做相应控制</td>
+												<td class="ng-binding">07/11/2015 6:43 p.m.</td>
+											</tr><!-- end ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">马鞍山港华</td>
+												<td class="ng-binding">万达广场</td>
+												<td class="ng-binding">5F-02-丽华</td>
+												<td class="ng-binding">传感器污染或气流方向</td>
+												<td class="ng-binding">一级警报</td>
+												<td class="ng-binding">做相应控制</td>
+												<td class="ng-binding">07/12/2015 12:43 a.m.</td>
+											</tr><!-- end ngRepeat: row in displayedCollection -->
+										</tbody>
+										<tfoot>
+											<tr>
+												<td colspan="10" class="text-center">
+													<div st-items-by-page="10" st-pagination="" st-template="pagination.custom.html" class="ng-isolate-scope">
+<!-- ngIf: pages.length >= 2 --><nav ng-if="pages.length &gt;= 2" class="ng-scope">
+  <ul class="pagination">
+    <li><a ng-click="selectPage(1)">First</a>
+    </li><li><a ng-click="selectPage(currentPage - 1)">&lt;</a>
+    </li><li><a class="ng-binding"><page-select></page-select> of 3</a>
+    </li><li><a ng-click="selectPage(currentPage + 1)">&gt;</a>
+    </li><li><a ng-click="selectPage(numPages)">Last</a></li>
+  </ul>
+</nav><!-- end ngIf: pages.length >= 2 -->
+</div>
+												</td>
+											</tr>
+										</tfoot>
+									</table>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="panel panel-primary">
+							<div class="panel-heading ng-scope" ng-controller="selfCtrl">
+								<h3 class="panel-title">用户反馈信息</h3>
+								<div class="actions pull-right">
+									<i class="fa fa-chevron-down"></i> <i class="fa fa-times"></i>
+								</div>
+							</div>
+							<div class="panel-body text-left">
+								<div ng-controller="UserFeedbackCtrl" class="ng-scope">
+									<table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped">
+										<thead>
+											<tr>
+												<th colspan="2"><input st-search="" class="form-control" placeholder="在此搜索。。。" type="text"></th>
+											</tr>
+											<tr>
+												<th st-sort="user_company">客户名称</th>
+												<th st-sort="report_time">反馈时间</th>
+												<th st-sort="solution_deadline">处理时限</th>
+												<th st-sort="problem">问题描述</th>
+												<th st-sort="solution_result">处理结果</th>											
+											</tr>
+										</thead>
+										<tbody>
+											<!-- ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">镇江华润</td>
+												<td class="ng-binding">04/08/2015 midnight</td>
+												<td class="ng-binding">---</td>
+												<td class="ng-binding">为什么还不给我们上流量计</td>
+												<td class="ng-binding">---</td>
+											</tr><!-- end ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">马鞍山港华</td>
+												<td class="ng-binding">04/08/2015 midnight</td>
+												<td class="ng-binding">--</td>
+												<td class="ng-binding">需要再添加流量计</td>
+												<td class="ng-binding">--</td>
+											</tr><!-- end ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">检定中心</td>
+												<td class="ng-binding">04/08/2015 midnight</td>
+												<td class="ng-binding">--</td>
+												<td class="ng-binding">该检定流量计了</td>
+												<td class="ng-binding"></td>
+											</tr><!-- end ngRepeat: row in displayedCollection -->
+										</tbody>
+										<tfoot>
+											<tr>
+												<td colspan="10" class="text-center">
+													<div st-items-by-page="10" st-pagination="" st-template="pagination.custom.html" class="ng-isolate-scope">
+<!-- ngIf: pages.length >= 2 -->
+</div>
+												</td>
+											</tr>
+										</tfoot>
+									</table>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="panel panel-primary">
+							<div class="panel-heading ng-scope" ng-controller="selfCtrl">
+								<h3 class="panel-title">实时数据</h3>
+								<div class="actions pull-right">
+									<i class="fa fa-chevron-down"></i> <i class="fa fa-times"></i>
+								</div>
+							</div>
+							<div class="panel-body text-left">
+								<div ng-controller="MeterDataCtrl" class="ng-scope">
+									<table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped">
+										<thead>
+											<tr>
+												<th colspan="2"><input st-search="" class="form-control" placeholder="在此搜索。。。" type="text"></th>
+											</tr>
+											<tr>
+												<th st-sort="data_id">数据编号</th>
+												<th st-sort="data_date">接收时间</th>
+												<th st-sort="data_vb">标况总累计(Nm³)</th>
+												<th st-sort="data_vm">工况总累计(Nm³)</th>
+												<th st-sort="data_p">压力(bar)</th>
+												<th st-sort="data_t">温度(℃)</th>
+												<th st-sort="data_qb">标况总累计(Nm³/h)</th>
+												<th st-sort="data_qm">工况总累计(Nm³/h)</th>
+												<th st-sort="data_battery">电量(月)</th>
+
+											</tr>
+										</thead>
+										<tbody>
+											<!-- ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">9188</td>
+												<td class="ng-binding">07/16/2015 12:25 a.m.</td>
+												<td class="ng-binding">17.4794</td>
+												<td class="ng-binding">18.0</td>
+												<td class="ng-binding">100.10900116</td>
+												<td class="ng-binding">27.7900009155</td>
+												<td class="ng-binding">0.0</td>
+												<td class="ng-binding">0.0</td>
+												<td class="ng-binding">47</td>
+												<td>
+													<div ng-controller="ModalDemoCtrl" class="ng-scope">
+														<button type="button" ng-click="open(row)" class="btn btn-sm btn-info">
+															数据分析
+														</button>
+													</div>
+												</td>
+											</tr><!-- end ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">9187</td>
+												<td class="ng-binding">07/16/2015 12:20 a.m.</td>
+												<td class="ng-binding">17.4794</td>
+												<td class="ng-binding">18.0</td>
+												<td class="ng-binding">100.10900116</td>
+												<td class="ng-binding">27.7999992371</td>
+												<td class="ng-binding">0.0</td>
+												<td class="ng-binding">0.0</td>
+												<td class="ng-binding">47</td>
+												<td>
+													<div ng-controller="ModalDemoCtrl" class="ng-scope">
+														<button type="button" ng-click="open(row)" class="btn btn-sm btn-info">
+															数据分析
+														</button>
+													</div>
+												</td>
+											</tr><!-- end ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">9186</td>
+												<td class="ng-binding">07/16/2015 12:14 a.m.</td>
+												<td class="ng-binding">17.4794</td>
+												<td class="ng-binding">18.0</td>
+												<td class="ng-binding">100.126998901</td>
+												<td class="ng-binding">27.7999992371</td>
+												<td class="ng-binding">0.0</td>
+												<td class="ng-binding">0.0</td>
+												<td class="ng-binding">47</td>
+												<td>
+													<div ng-controller="ModalDemoCtrl" class="ng-scope">
+														<button type="button" ng-click="open(row)" class="btn btn-sm btn-info">
+															数据分析
+														</button>
+													</div>
+												</td>
+											</tr><!-- end ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">9185</td>
+												<td class="ng-binding">07/16/2015 12:09 a.m.</td>
+												<td class="ng-binding">17.4794</td>
+												<td class="ng-binding">18.0</td>
+												<td class="ng-binding">100.126998901</td>
+												<td class="ng-binding">27.7900009155</td>
+												<td class="ng-binding">0.0</td>
+												<td class="ng-binding">0.0</td>
+												<td class="ng-binding">47</td>
+												<td>
+													<div ng-controller="ModalDemoCtrl" class="ng-scope">
+														<button type="button" ng-click="open(row)" class="btn btn-sm btn-info">
+															数据分析
+														</button>
+													</div>
+												</td>
+											</tr><!-- end ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">9184</td>
+												<td class="ng-binding">07/16/2015 12:03 a.m.</td>
+												<td class="ng-binding">17.4794</td>
+												<td class="ng-binding">18.0</td>
+												<td class="ng-binding">100.126998901</td>
+												<td class="ng-binding">27.8099994659</td>
+												<td class="ng-binding">0.0</td>
+												<td class="ng-binding">0.0</td>
+												<td class="ng-binding">47</td>
+												<td>
+													<div ng-controller="ModalDemoCtrl" class="ng-scope">
+														<button type="button" ng-click="open(row)" class="btn btn-sm btn-info">
+															数据分析
+														</button>
+													</div>
+												</td>
+											</tr><!-- end ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">9183</td>
+												<td class="ng-binding">07/15/2015 11:57 p.m.</td>
+												<td class="ng-binding">17.4794</td>
+												<td class="ng-binding">18.0</td>
+												<td class="ng-binding">100.126998901</td>
+												<td class="ng-binding">27.7999992371</td>
+												<td class="ng-binding">0.0</td>
+												<td class="ng-binding">0.0</td>
+												<td class="ng-binding">47</td>
+												<td>
+													<div ng-controller="ModalDemoCtrl" class="ng-scope">
+														<button type="button" ng-click="open(row)" class="btn btn-sm btn-info">
+															数据分析
+														</button>
+													</div>
+												</td>
+											</tr><!-- end ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">9182</td>
+												<td class="ng-binding">07/15/2015 11:52 p.m.</td>
+												<td class="ng-binding">17.4794</td>
+												<td class="ng-binding">18.0</td>
+												<td class="ng-binding">100.10900116</td>
+												<td class="ng-binding">27.8099994659</td>
+												<td class="ng-binding">0.0</td>
+												<td class="ng-binding">0.0</td>
+												<td class="ng-binding">47</td>
+												<td>
+													<div ng-controller="ModalDemoCtrl" class="ng-scope">
+														<button type="button" ng-click="open(row)" class="btn btn-sm btn-info">
+															数据分析
+														</button>
+													</div>
+												</td>
+											</tr><!-- end ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">9181</td>
+												<td class="ng-binding">07/15/2015 11:46 p.m.</td>
+												<td class="ng-binding">17.4794</td>
+												<td class="ng-binding">18.0</td>
+												<td class="ng-binding">100.146003723</td>
+												<td class="ng-binding">27.8099994659</td>
+												<td class="ng-binding">0.0</td>
+												<td class="ng-binding">0.0</td>
+												<td class="ng-binding">47</td>
+												<td>
+													<div ng-controller="ModalDemoCtrl" class="ng-scope">
+														<button type="button" ng-click="open(row)" class="btn btn-sm btn-info">
+															数据分析
+														</button>
+													</div>
+												</td>
+											</tr><!-- end ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">9180</td>
+												<td class="ng-binding">07/15/2015 11:41 p.m.</td>
+												<td class="ng-binding">17.4794</td>
+												<td class="ng-binding">18.0</td>
+												<td class="ng-binding">100.126998901</td>
+												<td class="ng-binding">27.8400001526</td>
+												<td class="ng-binding">0.0</td>
+												<td class="ng-binding">0.0</td>
+												<td class="ng-binding">47</td>
+												<td>
+													<div ng-controller="ModalDemoCtrl" class="ng-scope">
+														<button type="button" ng-click="open(row)" class="btn btn-sm btn-info">
+															数据分析
+														</button>
+													</div>
+												</td>
+											</tr><!-- end ngRepeat: row in displayedCollection --><tr ng-repeat="row in displayedCollection" class="ng-scope">
+												<td class="ng-binding">9179</td>
+												<td class="ng-binding">07/15/2015 11:35 p.m.</td>
+												<td class="ng-binding">17.4794</td>
+												<td class="ng-binding">18.0</td>
+												<td class="ng-binding">100.146003723</td>
+												<td class="ng-binding">27.8400001526</td>
+												<td class="ng-binding">0.0</td>
+												<td class="ng-binding">0.0</td>
+												<td class="ng-binding">47</td>
+												<td>
+													<div ng-controller="ModalDemoCtrl" class="ng-scope">
+														<button type="button" ng-click="open(row)" class="btn btn-sm btn-info">
+															数据分析
+														</button>
+													</div>
+												</td>
+											</tr><!-- end ngRepeat: row in displayedCollection -->
+										</tbody>
+										<tfoot>
+											<tr>
+												<td colspan="10" class="text-center">
+													<div st-items-by-page="10" st-pagination="" st-template="pagination.custom.html" class="ng-isolate-scope">
+<!-- ngIf: pages.length >= 2 --><nav ng-if="pages.length &gt;= 2" class="ng-scope">
+  <ul class="pagination">
+    <li><a ng-click="selectPage(1)">First</a>
+    </li><li><a ng-click="selectPage(currentPage - 1)">&lt;</a>
+    </li><li><a class="ng-binding"><page-select></page-select> of 919</a>
+    </li><li><a ng-click="selectPage(currentPage + 1)">&gt;</a>
+    </li><li><a ng-click="selectPage(numPages)">Last</a></li>
+  </ul>
+</nav><!-- end ngIf: pages.length >= 2 -->
+</div>
+												</td>
+											</tr>
+										</tfoot>
+									</table>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<h3 class="panel-title">用户用气曲线图</h3>
+								<div class="actions pull-right">
+									<i class="fa fa-chevron-down"></i> <i class="fa fa-times"></i>
+								</div>
+							</div>
+							<div class="panel-body text-center">
+								<div id="dataChart" ng-controller="UserMeterDataCtrl" class="ng-scope">
+								<div class="btn-toolbar" role="toolbar">
+                                    <div class="btn-group">
+                                        <button id="oneWeekBt" type="button" class="btn btn-default" ng-click="week()">一周</button>
+                                        <button id="oneMonthBt" type="button" class="btn btn-primary" ng-click="month()">一月</button>
+                                        <button id="oneYearBt" type="button" class="btn btn-default" ng-click="year()">一年</button>
+                                        <button id="totalBt" type="button" class="btn btn-default" ng-click="total()">所有</button>
+                                    </div>                          
+                                </div>
+									<div class="row">
+										<div id="chart1" config="chartConfig" class="span10 ng-isolate-scope" style="width:100%; height:500px;" data-highcharts-chart="1"><div class="highcharts-container" id="highcharts-2" style="position: relative; overflow: hidden; width: 1147px; height: 500px; text-align: left; line-height: normal; z-index: 0; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><svg version="1.1" style="font-family:&quot;Lucida Grande&quot;, &quot;Lucida Sans Unicode&quot;, Arial, Helvetica, sans-serif;font-size:12px;" xmlns="http://www.w3.org/2000/svg" width="1147" height="500"><desc>Created with Highcharts 4.1.7</desc><defs><clippath id="highcharts-3"><rect x="0" y="0" width="1057" height="335"></rect></clippath></defs><rect x="0" y="0" width="1147" height="500" strokeWidth="0" fill="#FFFFFF" class=" highcharts-background"></rect><path fill="none" d="M 80 326.5 L 1137 326.5" stroke="#808080" stroke-width="1"></path><g class="highcharts-grid" zIndex="1"></g><g class="highcharts-grid" zIndex="1"><path fill="none" d="M 80 326.5 L 1137 326.5" stroke="#D8D8D8" stroke-width="1" zIndex="1" opacity="1"></path><path fill="none" d="M 80 103.5 L 1137 103.5" stroke="#D8D8D8" stroke-width="1" zIndex="1" opacity="1"></path><path fill="none" d="M 80 382.5 L 1137 382.5" stroke="#D8D8D8" stroke-width="1" zIndex="1" opacity="1"></path><path fill="none" d="M 80 270.5 L 1137 270.5" stroke="#D8D8D8" stroke-width="1" zIndex="1" opacity="1"></path><path fill="none" d="M 80 215.5 L 1137 215.5" stroke="#D8D8D8" stroke-width="1" zIndex="1" opacity="1"></path><path fill="none" d="M 80 159.5 L 1137 159.5" stroke="#D8D8D8" stroke-width="1" zIndex="1" opacity="1"></path><path fill="none" d="M 80 46.5 L 1137 46.5" stroke="#D8D8D8" stroke-width="1" zIndex="1" opacity="1"></path></g><g class="highcharts-axis" zIndex="2"><path fill="none" d="M 200.5 382 L 200.5 392" stroke="#C0D0E0" stroke-width="1" opacity="1"></path><path fill="none" d="M 321.5 382 L 321.5 392" stroke="#C0D0E0" stroke-width="1" opacity="1"></path><path fill="none" d="M 442.5 382 L 442.5 392" stroke="#C0D0E0" stroke-width="1" opacity="1"></path><path fill="none" d="M 562.5 382 L 562.5 392" stroke="#C0D0E0" stroke-width="1" opacity="1"></path><path fill="none" d="M 683.5 382 L 683.5 392" stroke="#C0D0E0" stroke-width="1" opacity="1"></path><path fill="none" d="M 804.5 382 L 804.5 392" stroke="#C0D0E0" stroke-width="1" opacity="1"></path><path fill="none" d="M 925.5 382 L 925.5 392" stroke="#C0D0E0" stroke-width="1" opacity="1"></path><path fill="none" d="M 1046.5 382 L 1046.5 392" stroke="#C0D0E0" stroke-width="1" opacity="1"></path><path fill="none" d="M 79.5 382 L 79.5 392" stroke="#C0D0E0" stroke-width="1" opacity="1"></path><path fill="none" d="M 80 382.5 L 1137 382.5" stroke="#C0D0E0" stroke-width="1" zIndex="7" visibility="visible"></path></g><g class="highcharts-axis" zIndex="2"><text x="24.21875" zIndex="7" text-anchor="middle" transform="translate(0,0) rotate(270 24.21875 214.5)" class=" highcharts-yaxis-title" style="color:#707070;fill:#707070;" visibility="visible" y="214.5">总流量(Nm3)</text></g><g class="highcharts-series-group" zIndex="3"><g class="highcharts-series" visibility="visible" zIndex="0.1" transform="translate(80,47) scale(1 1)" clip-path="url(#highcharts-3)"><path fill="none" d="M 1047.33230428034 279.1666666666667 C 1047.33230428034 279.1666666666667 974.8245863828897 279.1666666666667 926.4861077845896 279.1666666666667 C 878.1476291862895 279.1666666666667 853.9783898871394 278.8763333333333 805.6399112888392 278.83166666666665 C 757.3014326905391 278.787 733.132193391389 278.787 684.7937147930888 278.787 C 636.4552361947888 278.787 612.2859968956387 278.9433333333333 563.9475182973385 278.9433333333333 C 515.6090396990384 278.9433333333333 491.4398003998884 278.9433333333333 443.1013218015882 278.6976666666667 C 394.76284320328807 278.45200000000006 370.5936039041379 261.032 322.2551253058378 261.032 C 273.91664670753767 261.032 249.7474074083876 262.21566666666666 201.40892881008745 262.21566666666666 C 153.07045021178732 262.21566666666666 80.5627323143371 30.574333333333357 80.5627323143371 30.574333333333357" stroke="#7cb5ec" stroke-width="2" zIndex="1" stroke-linejoin="round" stroke-linecap="round"></path><path fill="none" d="M 1037.33230428034 279.1666666666667 L 1047.33230428034 279.1666666666667 C 1047.33230428034 279.1666666666667 974.8245863828897 279.1666666666667 926.4861077845896 279.1666666666667 C 878.1476291862895 279.1666666666667 853.9783898871394 278.8763333333333 805.6399112888392 278.83166666666665 C 757.3014326905391 278.787 733.132193391389 278.787 684.7937147930888 278.787 C 636.4552361947888 278.787 612.2859968956387 278.9433333333333 563.9475182973385 278.9433333333333 C 515.6090396990384 278.9433333333333 491.4398003998884 278.9433333333333 443.1013218015882 278.6976666666667 C 394.76284320328807 278.45200000000006 370.5936039041379 261.032 322.2551253058378 261.032 C 273.91664670753767 261.032 249.7474074083876 262.21566666666666 201.40892881008745 262.21566666666666 C 153.07045021178732 262.21566666666666 80.5627323143371 30.574333333333357 80.5627323143371 30.574333333333357 L 90.5627323143371 30.574333333333357" stroke-linejoin="round" visibility="visible" stroke="rgba(192,192,192,0.0001)" stroke-width="22" zIndex="2" class=" highcharts-tracker" style=""></path></g><g class="highcharts-markers highcharts-tracker" visibility="visible" zIndex="0.1" transform="translate(80,47) scale(1 1)" clip-path="url(#highcharts-4)" style=""><path fill="#7cb5ec" d="M 80 26.574333333333357 C 85.328 26.574333333333357 85.328 34.57433333333336 80 34.57433333333336 C 74.672 34.57433333333336 74.672 26.574333333333357 80 26.574333333333357 Z"></path><path fill="#7cb5ec" d="M 201 258.21566666666666 C 206.328 258.21566666666666 206.328 266.21566666666666 201 266.21566666666666 C 195.672 266.21566666666666 195.672 258.21566666666666 201 258.21566666666666 Z"></path><path fill="#7cb5ec" d="M 322 257.032 C 327.328 257.032 327.328 265.032 322 265.032 C 316.672 265.032 316.672 257.032 322 257.032 Z"></path><path fill="#7cb5ec" d="M 443 274.6976666666667 C 448.328 274.6976666666667 448.328 282.6976666666667 443 282.6976666666667 C 437.672 282.6976666666667 437.672 274.6976666666667 443 274.6976666666667 Z"></path><path fill="#7cb5ec" d="M 563 274.9433333333333 C 568.328 274.9433333333333 568.328 282.9433333333333 563 282.9433333333333 C 557.672 282.9433333333333 557.672 274.9433333333333 563 274.9433333333333 Z"></path><path fill="#7cb5ec" d="M 684 274.787 C 689.328 274.787 689.328 282.787 684 282.787 C 678.672 282.787 678.672 274.787 684 274.787 Z"></path><path fill="#7cb5ec" d="M 805 274.83166666666665 C 810.328 274.83166666666665 810.328 282.83166666666665 805 282.83166666666665 C 799.672 282.83166666666665 799.672 274.83166666666665 805 274.83166666666665 Z"></path><path fill="#7cb5ec" d="M 926 275.1666666666667 C 931.328 275.1666666666667 931.328 283.1666666666667 926 283.1666666666667 C 920.672 283.1666666666667 920.672 275.1666666666667 926 275.1666666666667 Z"></path><path fill="#7cb5ec" d="M 1047 275.1666666666667 C 1052.328 275.1666666666667 1052.328 283.1666666666667 1047 283.1666666666667 C 1041.672 283.1666666666667 1041.672 275.1666666666667 1047 275.1666666666667 Z"></path></g></g><text x="574" text-anchor="middle" class="highcharts-title" zIndex="4" style="color:#333333;font-size:18px;fill:#333333;width:1083px;" y="24">流量计标况统计</text><g class="highcharts-legend" zIndex="7" transform="translate(537,460)"><g zIndex="1"><g><g class="highcharts-legend-item" zIndex="1" transform="translate(8,3)"><path fill="none" d="M 0 11 L 16 11" stroke="#7cb5ec" stroke-width="2"></path><path fill="#7cb5ec" d="M 8 7 C 13.328 7 13.328 15 8 15 C 2.6719999999999997 15 2.6719999999999997 7 8 7 Z"></path><text x="21" style="color:#333333;font-size:12px;font-weight:bold;cursor:pointer;fill:#333333;" text-anchor="start" zIndex="2" y="15">总流量</text></g></g></g></g><g class="highcharts-axis-labels highcharts-xaxis-labels" zIndex="7"><text x="203.43892136010103" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:500px;text-overflow:ellipsis;" text-anchor="end" transform="translate(0,0) rotate(-45 203.43892136010103 398)" y="398" opacity="1"><tspan>2015-07-10</tspan></text><text x="324.28511785585135" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:500px;text-overflow:ellipsis;" text-anchor="end" transform="translate(0,0) rotate(-45 324.28511785585135 398)" y="398" opacity="1"><tspan>2015-07-11</tspan></text><text x="445.13131435160176" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:500px;text-overflow:ellipsis;" text-anchor="end" transform="translate(0,0) rotate(-45 445.13131435160176 398)" y="398" opacity="1"><tspan>2015-07-12</tspan></text><text x="565.977510847352" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:500px;text-overflow:ellipsis;" text-anchor="end" transform="translate(0,0) rotate(-45 565.977510847352 398)" y="398" opacity="1"><tspan>2015-07-13</tspan></text><text x="686.8237073431025" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:500px;text-overflow:ellipsis;" text-anchor="end" transform="translate(0,0) rotate(-45 686.8237073431025 398)" y="398" opacity="1"><tspan>2015-07-14</tspan></text><text x="807.6699038388529" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:500px;text-overflow:ellipsis;" text-anchor="end" transform="translate(0,0) rotate(-45 807.6699038388529 398)" y="398" opacity="1"><tspan>2015-07-15</tspan></text><text x="928.5161003346032" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:500px;text-overflow:ellipsis;" text-anchor="end" transform="translate(0,0) rotate(-45 928.5161003346032 398)" y="398" opacity="1"><tspan>2015-07-16</tspan></text><text x="1049.3622968303534" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:500px;text-overflow:ellipsis;" text-anchor="end" transform="translate(0,0) rotate(-45 1049.3622968303534 398)" y="398" opacity="1"><tspan>2015-07-17</tspan></text><text x="82.59272486435067" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:500px;text-overflow:ellipsis;" text-anchor="end" transform="translate(0,0) rotate(-45 82.59272486435067 398)" y="398" opacity="1"><tspan>2015-07-9</tspan></text></g><g class="highcharts-axis-labels highcharts-yaxis-labels" zIndex="7"><text x="65" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:369px;text-overflow:clip;" text-anchor="end" transform="translate(0,0)" y="331" opacity="1">0k</text><text x="65" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:369px;text-overflow:clip;" text-anchor="end" transform="translate(0,0)" y="107" opacity="1">10k</text><text x="65" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:369px;text-overflow:clip;" text-anchor="end" transform="translate(0,0)" y="387" opacity="1">-2.5k</text><text x="65" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:369px;text-overflow:clip;" text-anchor="end" transform="translate(0,0)" y="275" opacity="1">2.5k</text><text x="65" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:369px;text-overflow:clip;" text-anchor="end" transform="translate(0,0)" y="219" opacity="1">5k</text><text x="65" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:369px;text-overflow:clip;" text-anchor="end" transform="translate(0,0)" y="163" opacity="1">7.5k</text><text x="65" style="color:#606060;cursor:default;font-size:11px;fill:#606060;width:369px;text-overflow:clip;" text-anchor="end" transform="translate(0,0)" y="52" opacity="1">12.5k</text></g><g class="highcharts-tooltip" zIndex="8" style="cursor:default;padding:0;white-space:nowrap;" transform="translate(0,-9999)"><path fill="none" d="M 3.5 0.5 L 13.5 0.5 C 16.5 0.5 16.5 0.5 16.5 3.5 L 16.5 13.5 C 16.5 16.5 16.5 16.5 13.5 16.5 L 3.5 16.5 C 0.5 16.5 0.5 16.5 0.5 13.5 L 0.5 3.5 C 0.5 0.5 0.5 0.5 3.5 0.5" isShadow="true" stroke="black" stroke-opacity="0.049999999999999996" stroke-width="5" transform="translate(1, 1)"></path><path fill="none" d="M 3.5 0.5 L 13.5 0.5 C 16.5 0.5 16.5 0.5 16.5 3.5 L 16.5 13.5 C 16.5 16.5 16.5 16.5 13.5 16.5 L 3.5 16.5 C 0.5 16.5 0.5 16.5 0.5 13.5 L 0.5 3.5 C 0.5 0.5 0.5 0.5 3.5 0.5" isShadow="true" stroke="black" stroke-opacity="0.09999999999999999" stroke-width="3" transform="translate(1, 1)"></path><path fill="none" d="M 3.5 0.5 L 13.5 0.5 C 16.5 0.5 16.5 0.5 16.5 3.5 L 16.5 13.5 C 16.5 16.5 16.5 16.5 13.5 16.5 L 3.5 16.5 C 0.5 16.5 0.5 16.5 0.5 13.5 L 0.5 3.5 C 0.5 0.5 0.5 0.5 3.5 0.5" isShadow="true" stroke="black" stroke-opacity="0.15" stroke-width="1" transform="translate(1, 1)"></path><path fill="rgba(249, 249, 249, .85)" d="M 3.5 0.5 L 13.5 0.5 C 16.5 0.5 16.5 0.5 16.5 3.5 L 16.5 13.5 C 16.5 16.5 16.5 16.5 13.5 16.5 L 3.5 16.5 C 0.5 16.5 0.5 16.5 0.5 13.5 L 0.5 3.5 C 0.5 0.5 0.5 0.5 3.5 0.5"></path><text x="8" zIndex="1" style="font-size:12px;color:#333333;fill:#333333;" y="20"></text></g></svg></div></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			 
+			</section>
+		</section>
+		<!--main content end -->
+		
+		<!--sidebar right start-->
+        <aside class="sidebarRight ng-scope sidebar-toggle-right" ng-controller="rightSiderbarCtrl" ng-class="{&#39;sidebar-toggle-right&#39;:sidebarStyle.isRightActive}">
+            <div id="rightside-navigation ">
+                <div class="sidebar-heading"> <i class="fa fa-gears"></i> 用户控制操作</div>
+               <!--  <div class="sidebar-title">online</div> -->
+                <div class="list-contacts">
+                    <a href="javascript:void(0)" class="list-item ng-scope" ng-controller="AddUserModalCtrl" ng-click="open()">
+                        <div class="list-item-image">
+                            <img src="./SpaceLab_files/avatar1.png" class="img-circle">
+                        </div>
+                        <div class="list-item-content">
+                            <h4>添加用户</h4>
+                            <!-- <p>Los Angeles, CA</p> -->
+                        </div>
+                        <div class="item-status item-status-online"></div>
+                    </a>
+                    <a href="javascript:void(0)" class="list-item ng-scope" ng-controller="AddMeterModalCtrl" ng-click="open()">
+                        <div class="list-item-image">
+                            <img src="./SpaceLab_files/avatar.png" class="img-circle">
+                        </div>
+                        <div class="list-item-content">
+                            <h4>添加流量计</h4>
+                            <!-- <p>New York, NY</p> -->
+                        </div>
+                        <div class="item-status item-status-online"></div>
+                    </a>
+                    <a href="javascript:void(0)" class="list-item ng-scope" ng-controller="AddFeedbackModalCtrl" ng-click="open()">
+                      <div class="list-item-image">
+                            <img src="./SpaceLab_files/avatar2.png" class="img-circle">
+                        </div>
+                        <div class="list-item-content">
+                            <h4>添加反馈信息</h4>
+                           <!--  <p>Dallas, TX</p> -->
+                        </div>
+                        <div class="item-status item-status-online"></div>
+                    </a>
+                    <a href="javascript:void(0)" class="list-item">
+                         <div class="list-item-image">
+                            <img src="./SpaceLab_files/avatar3.png" class="img-circle">
+                        </div> 
+                        <div class="list-item-content">
+                            <h4>导出数据</h4>
+                            <!-- <p>London</p> -->
+                        </div>
+                        <div class="item-status item-status-away"></div>
+                    </a>
+                </div>
+            </div>
+        </aside>
+        <!--sidebar right end-->
+</section>
+
+<script type="text/ng-template" id="pagination.custom.html">
+<nav ng-if="pages.length >= 2">
+  <ul class="pagination">
+    <li><a ng-click="selectPage(1)">First</a>
+    </li><li><a ng-click="selectPage(currentPage - 1)">&lt;</a>
+    </li><li><a><page-select></page-select> of {{numPages}}</a>
+    </li><li><a ng-click="selectPage(currentPage + 1)">&gt;</a>
+    </li><li><a ng-click="selectPage(numPages)">Last</a></li>
+  </ul>
+</nav>
+</script>
+
+<script type="text/ng-template" id="myModalContent.html">
+	<div class="modal-body" class="col-md-10">
+		<div ng-controller="DeviationCtrl" >
+			<div class="row"  class="col-md-8">
+				<highchart id="chart1" config="chartConfig" class="span10" style="width:580px; height:500px;"></highchart>
+			</div>
+		</div>
+	</div>
+			
+	<div class="modal-footer">
+		<button class="btn btn-primary" ng-click="ok()">OK</button>
+	</div>
+</script>
+
+	
+
+	<script type="text/ng-template" id="AddMeterModal.html">
+  <div class="modal-body" class="col-md-10">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">添加流量计</h3>
+					<div class="actions pull-right">
+						<i class="fa fa-chevron-down"></i> <i class="fa fa-times" ng-click="cancel()"></i>
+					</div>
+				</div>
+				<div class="panel-body text-center">
+
+					<form class="form-horizontal" role="form" ng-sumbit="submit()">
+						<div class="form-group">
+							<label for="inputStandard" class="col-lg-3 control-label">用户/流量计名：</label>
+							<div class="col-lg-8">
+								<div class="bs-component">
+									<input type="text" id="user" ng-model="user" class="form-control" required="该项不能为空"
+										placeholder="新建用户登录该系统的用户名">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputStandard" class="col-lg-3 control-label">流量计标示：</label>
+							<div class="col-lg-8">
+								<div class="bs-component">
+									<input type="text" id="user" ng-model="user" class="form-control" required="该项不能为空"
+										placeholder="新建用户登录该系统的用户名">
+								</div>
+							</div>
+						</div>
+            <div class="form-group">
+							<label for="inputSelect" class="col-lg-3 control-label">流量计品牌：</label>
+							<div class="col-lg-8">
+								<div class="bs-component">
+									<select class="form-control input-sm" ng-options="key as value for (key , value) in selectData" ng-model="company" id="company">
+										
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputSelect" class="col-lg-3 control-label">隶属客户：</label>
+							<div class="col-lg-8">
+								<div class="bs-component">
+									<select class="form-control input-sm" ng-options="key as value for (key , value) in selectData" ng-model="company" id="company">
+										
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputSelect" class="col-lg-3 control-label">修正仪：</label>
+							<div class="col-lg-8">
+								<div class="bs-component">
+									<select class="form-control input-sm" ng-options="key as value for (key , value) in selectData" ng-model="company" id="company">
+										
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputStandard" class="col-lg-3 control-label">修正仪：</label>
+							<div class="col-lg-8">
+								<div class="bs-component">
+									<input type="text" id="userName"  ng-model="userName" class="form-control" required="该项不能为空"
+										placeholder="客户名称">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputStandard" class="col-lg-3 control-label">流量计型号：</label>
+							<div class="col-lg-8">
+								<div class="bs-component">
+									<input type="text" id="userPhone"  ng-model="userPhone" class="form-control" required="该项不能为空"
+										placeholder="客户电话">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputStandard" class="col-lg-3 control-label">铅封编号：</label>
+							<div class="col-lg-8">
+								<div class="bs-component">
+									<input type="password" id="password" ng-model="password" class="form-control" required="该项不能为空"
+										placeholder="新建用户密码">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputStandard" class="col-lg-3 control-label">压力范围：</label>
+							<div class="col-lg-8">
+								<div class="bs-component">
+									<input type="password" id="confirmpassword" ng-model="confirmpassword" class="form-control" required="该项不能为空"
+										placeholder="新建用户确认密码">
+								</div>
+							</div>
+						</div>
+            <div class="form-group">
+							<label for="inputStandard" class="col-lg-3 control-label">温度范围：</label>
+							<div class="col-lg-8">
+								<div class="bs-component">
+									<input type="password" id="password" ng-model="password" class="form-control" required="该项不能为空"
+										placeholder="">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputStandard" class="col-lg-3 control-label">流量范围：</label>
+							<div class="col-lg-8">
+								<div class="bs-component">
+									<input type="password" id="confirmpassword" ng-model="confirmpassword" class="form-control" required="该项不能为空"
+										placeholder="">
+								</div>
+							</div>
+						</div>
+            <div class="form-group">
+							<label for="inputStandard" class="col-lg-3 control-label">检定有效期：</label>
+							<div class="col-lg-8">
+								<div class="bs-component">
+									<input type="password" id="password" ng-model="password" class="form-control" required="该项不能为空"
+										placeholder="新建用户密码">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputStandard" class="col-lg-3 control-label">通讯方式：</label>
+							<div class="col-lg-8">
+								<div class="bs-component">
+									<input type="password" id="confirmpassword" ng-model="confirmpassword" class="form-control" required="该项不能为空"
+										placeholder="新建用户确认密码">
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-primary" ng-click="submit()">保存</button>
+							<button class="btn btn-primary" ng-click="cancel()">取消</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+</div>
+</script>
+
+<script type="text/ng-template" id="AddUserModal.html">
+  <div class="modal-body" class="col-md-10">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">添加用户</h3>
+					<div class="actions pull-right">
+						<i class="fa fa-chevron-down"></i> <i class="fa fa-times" ng-click="cancel()"></i>
+					</div>
+				</div>
+				<div class="panel-body text-center">
+
+					<form class="form-horizontal" role="form" ng-sumbit="submit()">
+						<div class="form-group">
+							<label for="inputStandard" class="col-lg-3 control-label">登录用户名：</label>
+							<div class="col-lg-8">
+								<div class="bs-component">
+									<input type="text" id="user" ng-model="user" class="form-control" required="该项不能为空"
+										placeholder="新建用户登录该系统的用户名">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputStandard" class="col-lg-3 control-label">密码：</label>
+							<div class="col-lg-8">
+								<div class="bs-component">
+									<input type="password" id="password" ng-model="password" class="form-control" required="该项不能为空"
+										placeholder="新建用户密码">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputStandard" class="col-lg-3 control-label">确认密码：</label>
+							<div class="col-lg-8">
+								<div class="bs-component">
+									<input type="password" id="confirmpassword" ng-model="confirmpassword" class="form-control" required="该项不能为空"
+										placeholder="新建用户确认密码">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputStandard" class="col-lg-3 control-label">客户名称：</label>
+							<div class="col-lg-8">
+								<div class="bs-component">
+									<input type="text" id="userName"  ng-model="userName" class="form-control" required="该项不能为空"
+										placeholder="客户名称">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputStandard" class="col-lg-3 control-label">客户电话：</label>
+							<div class="col-lg-8">
+								<div class="bs-component">
+									<input type="text" id="userPhone"  ng-model="userPhone" class="form-control" required="该项不能为空"
+										placeholder="客户电话">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputSelect" class="col-lg-3 control-label">主管单位：</label>
+							<div class="col-lg-8">
+								<div class="bs-component">
+									<select class="form-control input-sm" ng-options="key as value for (key , value) in selectData" ng-model="company" id="company">
+										
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-primary" ng-click="submit()">保存</button>
+							<button class="btn btn-primary" ng-click="cancel()">取消</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</script>
+
+<script type="text/ng-template" id="AddFeedbackModal.html">
+  <div class="modal-body" class="col-md-10">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">添加用户反馈信息</h3>
+					<div class="actions pull-right">
+						<i class="fa fa-chevron-down"></i> <i class="fa fa-times" ng-click="cancel()"></i>
+					</div>
+				</div>
+				<div class="panel-body text-center">
+
+					<form class="form-horizontal" role="form" ng-sumbit="submit()">
+						<div class="form-group">
+							<label for="inputStandard" class="col-lg-3 control-label">客户名称：</label>
+							<div class="col-lg-8">
+								<div class="bs-component">
+									<input type="text" id="user" ng-model="user" class="form-control" required="该项不能为空"
+										placeholder="新建用户登录该系统的用户名">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputStandard" class="col-lg-3 control-label">反馈时间：</label>
+							<div class="col-lg-8">
+								<div class="bs-component">
+									<input type="password" id="password" ng-model="password" class="form-control" required="该项不能为空"
+										placeholder="新建用户密码">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputStandard" class="col-lg-3 control-label">处理时间：</label>
+							<div class="col-lg-8">
+								<div class="bs-component">
+									<input type="password" id="confirmpassword" ng-model="confirmpassword" class="form-control" required="该项不能为空"
+										placeholder="新建用户确认密码">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputStandard" class="col-lg-3 control-label">问题描述：</label>
+							<div class="col-lg-8">
+								<div class="bs-component">
+									<input type="text" id="userName"  ng-model="userName" class="form-control" required="该项不能为空"
+										placeholder="客户名称">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputStandard" class="col-lg-3 control-label">处理结果：</label>
+							<div class="col-lg-8">
+								<div class="bs-component">
+									<input type="text" id="userPhone"  ng-model="userPhone" class="form-control" required="该项不能为空"
+										placeholder="客户电话">
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-primary" ng-click="submit()">保存</button>
+							<button class="btn btn-primary" ng-click="cancel()">取消</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</script>
+
+<!-- HOMEPAGE VIEW -->
+<script type="text/ng-template" id="partial/homepage.html">
+    
+  <div class="jumbotron">    
+    <h1>{{title}}</h1>
+    <p class="lead">{{news}}</p>
+  </div>
+
+</script>
+
+<script type="text/ng-template" id="company.html">
+    
+  <div class="jumbotron">    
+    <h1>Company</h1>
+    <p class="lead">lnsdofndson</p>
+  </div>
+
+</script>
+
+<script type="text/ng-template" id="user.html">
+    
+  <div class="jumbotron">    
+    <h1>User</h1>
+    <p class="lead">lnsdofndson</p>
+  </div>
+
+</script>
+<script type="text/ng-template" id="meter.html">
+    
+  <div class="jumbotron">    
+    <h1>Meter</h1>
+    <p class="lead">lnsdofndson</p>
+  </div>
+
+</script>
+<!-- <option ng-repeat="(key,value) in selectData" value="{{key}}">{{value}}</option> -->
+		
+
+
+
+</body></html>

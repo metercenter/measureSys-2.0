@@ -1,0 +1,2297 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>计量管理系统</title>
+    <meta name="description" content="">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <!-- Favicon -->
+    <!--  <link rel="shortcut icon" href="/static/assets/img/favicon.ico" type="image/x-icon"> -->
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet"
+          href="/static/assets/plugins/bootstrap/css/bootstrap.min.css">
+    <!-- Fonts from Font Awsome -->
+    <link rel="stylesheet" href="/static/assets/css/font-awesome.min.css">
+    <!-- CSS Animate -->
+    <link rel="stylesheet" href="/static/assets/css/animate.css">
+    <!-- Custom styles for this theme -->
+    <link rel="stylesheet" href="/static/assets/css/main.css">
+
+    <!-- Fonts -->
+    <!-- Feature detection -->
+    <!-- dataTable-->
+    <link rel="stylesheet"
+          href="/static/assets/plugins/angularDataTable/vendor/bootstrap/dist/css/datatables.bootstrap.min.css">
+
+    <script src="/static/assets/js/modernizr-2.6.2.min.js"></script>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/static/assets/js/html5shiv.js"></script>
+    <script src="/static/assets/js/respond.min.js"></script>
+    <![endif]-->
+    <!--Global JS-->
+    <script src="/static/assets/js/jquery-1.10.2.min.js"></script>
+    <script
+            src="/static/assets/plugins/angularDataTable/vendor/datatables/media/js/jquery.dataTables.js"></script>
+    <script src="/static/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script
+            src="/static/assets/js/angular.min.js"></script>
+    <script src="/static/assets/plugins/waypoints/waypoints.min.js"></script>
+    <script
+            src="/static/assets/plugins/angularDataTable/angular-datatables.js"></script>
+    <script src="/static/assets/plugins/highchart/highcharts.js"></script>
+    <script src="/static/assets/plugins/highchart/highcharts-ng.js"></script>
+
+    <script src="/static/assets/js/pageSelect.directive.js"></script>
+    <script src="/static/assets/plugins/smart-table/smart-table.js"></script>
+    <script src="/static/assets/plugins/smart-table/ng-table.min.js"></script>
+    <script
+            src="/static/assets/plugins/angularDataTable/plugins/bootstrap/angular-datatables.bootstrap.js"></script>
+
+    <!--<script src="/static/assets/js/ui-bootstrap-tpls-0.13.0.min.js"></script>-->
+    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.10.0.js"></script>
+    <script src="/static/assets/js/pageRequest.js"></script>
+    <script src="/static/assets/js/angular-route.min.js"></script>
+
+    <!--map related-->
+    <script src="/static/assets/plugins/angular-ui-utils/event.js "></script>
+    <!--<script src="/static/assets/plugins/angular-bootstrap/ui-bootstrap.min.js"></script>-->
+    <script src="http://webapi.amap.com/maps?v=1.2&key=53f7e239ddb8ea62ba552742a233ed1f"></script>
+    <script src="/static/assets/plugins/angular-map/ui-map.js"></script>
+    <!--map related -->
+
+    <script src="/static/assets/js/application.js"></script>
+
+
+</head>
+
+<body ng-app="Application">
+{% verbatim %}
+<section id="container">
+
+    <header id="header" class="col-md-12">
+
+
+        <!--logo start-->
+        <div class="brand">
+            <a href="#/homepage/00" class="logo"> <span>计量管理系统</span>
+            </a>
+        </div>
+        <!--logo end-->
+
+
+        <div class="toggle-navigation toggle-left"
+             ng-controller="headerBtnforsidebar" ng-show="false">
+            <button type="button" class="btn btn-default" id="toggle-left"
+                    data-toggle="tooltip" data-placement="right"
+                    title="Toggle Navigation" ng-click="toggle()">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+
+        <div class="header-menu" ng-controller="headerUserCtrl">
+            <ul>
+                <li><a href={{homepageTitle}}><i class="fa fa-file"></i><span>首页</span></a></li>
+                <li><a href={{warnpageTile}}><i class="fa fa-info"></i><span>报警信息</span></a></li>
+                <li><a href="#/datacenter/00"><i class="fa fa-gears"></i><span>数据分析</span></a></li>
+                <!--<li ng-controller="testModalCtrl" ng-click="open('lg')"><a href="#"><i class="fa fa-bar-chart-o"></i><span>气量抄收</span></a></li>-->
+                <li><a href="{{gascollectionpageTile}}"><i class="fa fa-bar-chart-o"></i><span>气量抄收</span></a></li>
+            </ul>
+        </div>
+
+        <!-- <div class="user-nav"> -->
+        <div class="user-nav" ng-controller="headerUserCtrl">
+            <ul>
+
+                <li>欢迎用户</li>
+
+                <li class="dropdown settings"><a class="dropdown-toggle"
+                                                 data-toggle="dropdown"> {{headerName}}<i
+                        class="fa fa-caret-down"></i>
+                </a>
+                    <ul class="dropdown-menu animated fadeInDown">
+                        <li><a href="/logout"><i class="fa fa-power-off"></i> 退出</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <div class="toggle-navigation" ng-controller="headerBtnforsidebar">
+                        <button type="button" class="btn btn-default" id="toggle-right"
+                                ng-click="toggle()">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+
+
+    </header>
+
+
+    <!--sidebar start-->
+    <aside class="sidebar" ng-controller="siderbarCtrl"
+           ng-class="{'sidebar-toggle': sidebarStyle.isActive}">
+        <script type="text/ng-template" id="tree_item_renderer.html">
+            <a ng-href="#/{{data.page}}/{{data.user_id}}" data-ng-click="toggle(data)" data-toggle="tooltip"
+               data-placement="right" title="点击可以展开或收缩"> <i class="fa {{data.value}}"></i> <span>{{data.name}}</span><i
+                    class="arrow fa fa-angle-right pull-right"></i></a>
+
+            <ul>
+                <li ng-show="show(data)" ng-repeat="data in data.nodes" ng-include="'tree_item_renderer.html'"
+                    data-toggle="tooltip" data-placement="right" title="点击可以展开或收缩"></li>
+            </ul>
+        </script>
+
+        <div id="leftside-navigation" class="nano">
+            <ul>
+                <li ng-repeat="data in tree" ng-include="'tree_item_renderer.html'"></li>
+            </ul>
+        </div>
+
+    </aside>
+    <!--sidebar end-->
+
+
+    <!--main content start-->
+    <section class="main-content-wrapper"
+             ng-controller="headerBtnforsidebar"
+             ng-class="{'main-content-toggle-left': sidebarStyle.isActive, 'main-content-toggle-right':sidebarStyle.isRightActive}">
+        <section id="main-content">
+            <div ng-view></div>
+        </section>
+    </section>
+    <!--main content end -->
+
+    <!--sidebar right start-->
+    <aside class="sidebarRight" ng-controller="rightSiderbarCtrl"
+           ng-class="{'sidebar-toggle-right':sidebarStyle.isRightActive}">
+        <div id="rightside-navigation ">
+            <div class="sidebar-heading">
+                <i class="fa fa-gears"></i> 用户控制操作
+            </div>
+            <!--  <div class="sidebar-title">online</div> -->
+            <div class="list-contacts">
+                <a href="javascript:void(0)" class="list-item"
+                   ng-controller="AddUserModalCtrl" ng-click="open()">
+                    <div class="list-item-image">
+                        <img src="/static/assets/img/avatar1.png" class="img-circle">
+                    </div>
+                    <div class="list-item-content">
+                        <h4>添加用户</h4>
+                        <!-- <p>Los Angeles, CA</p> -->
+                    </div>
+                    <div class="item-status item-status-online"></div>
+                </a> <a href="javascript:void(0)" class="list-item"
+                        ng-controller="AddMeterModalCtrl" ng-click="open()">
+                <div class="list-item-image">
+                    <img src="/static/assets/img/avatar.png" class="img-circle">
+                </div>
+                <div class="list-item-content">
+                    <h4>添加流量计</h4>
+                    <!-- <p>New York, NY</p> -->
+                </div>
+                <div class="item-status item-status-online"></div>
+            </a> <a href="javascript:void(0)" class="list-item"
+                    ng-controller="AddFeedbackModalCtrl" ng-click="open()">
+                <div class="list-item-image">
+                    <img src="/static/assets/img/avatar2.png" class="img-circle">
+                </div>
+                <div class="list-item-content">
+                    <h4>添加反馈信息</h4>
+                    <!--  <p>Dallas, TX</p> -->
+                </div>
+                <div class="item-status item-status-online"></div>
+            </a> <a href="javascript:void(0)" class="list-item"
+                    ng-controller="ExportData" ng-click="open()">
+                <div class="list-item-image">
+                    <img src="/static/assets/img/avatar3.png" class="img-circle">
+                </div>
+                <div class="list-item-content">
+                    <h4>导出数据</h4>
+                    <!-- <p>London</p> -->
+                </div>
+                <div class="item-status item-status-away"></div>
+            </a>
+            </div>
+        </div>
+    </aside>
+    <!--sidebar right end-->
+</section>
+
+<script type="text/ng-template" id="pagination.custom.html">
+    <nav ng-if="pages.length >= 2">
+        <ul class="pagination">
+            <li><a ng-click="selectPage(1)">First</a>
+            </li>
+            <li><a ng-click="selectPage(currentPage - 1)">&lt;</a>
+            </li>
+            <li><a>
+                <page-select></page-select>
+                of {{numPages}}</a>
+            </li>
+            <li><a ng-click="selectPage(currentPage + 1)">&gt;</a>
+            </li>
+            <li><a ng-click="selectPage(numPages)">Last</a></li>
+        </ul>
+    </nav>
+</script>
+
+
+<script type="text/ng-template" id="AddMeterModal.html">
+    <div class="modal-body" class="col-md-10">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">添加流量计</h3>
+                    </div>
+                    <div class="panel-body text-center">
+
+                        <form class="form-horizontal" role="form" ng-sumbit="submit()">
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-3 control-label">流量计名：</label>
+
+                                <div class="col-lg-8">
+                                    <div class="bs-component">
+                                        <input type="text" id="user" ng-model="meterName"
+                                               class="form-control" required="该项不能为空"
+                                               placeholder="流量计名称">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-3 control-label">节点编号：</label>
+
+                                <div class="col-lg-8">
+                                    <div class="bs-component">
+                                        <input type="text" id="user" ng-model="eui"
+                                               class="form-control" required="该项不能为空"
+                                               placeholder="流量计采集节点编号">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputSelect" class="col-lg-3 control-label">隶属客户：</label>
+
+                                <div class="col-lg-8">
+                                    <div class="bs-component">
+                                        <select class="form-control input-sm"
+                                                ng-options="key as value for (key , value) in companys"
+                                                ng-model="company" id="company">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputSelect" class="col-lg-3 control-label">流量计品牌：</label>
+
+                                <div class="col-lg-3">
+                                    <div class="bs-component">
+                                        <select class="form-control input-sm"
+                                                ng-options="key as value for (key , value) in metertypes"
+                                                ng-model="meter_type1" id="meter_type1">
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <label for="inputSelect" class="col-lg-2 control-label">修正仪：</label>
+
+                                <div class="col-lg-3">
+                                    <div class="bs-component">
+                                        <select class="form-control input-sm"
+                                                ng-options="key as value for (key , value) in metertypes"
+                                                ng-model="meter_type2" id="meter_type2">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-3 control-label">流量计型号：</label>
+
+                                <div class="col-lg-8">
+                                    <div class="bs-component">
+                                        <input type="text" id="userPhone" ng-model="meterVersion"
+                                               class="form-control" placeholder="流量计型号">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-3 control-label">序列号：</label>
+
+                                <div class="col-lg-8">
+                                    <div class="bs-component">
+                                        <input type="text" id="userPhone" ng-model="meterIndex"
+                                               class="form-control" placeholder="序列号">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-3 control-label">铅封编号：</label>
+
+                                <div class="col-lg-8">
+                                    <div class="bs-component">
+                                        <input ng-model="wrapCode" class="form-control" placeholder="铅封编号">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-3 control-label">流量范围(Nm³/h):</label>
+
+                                <div class="col-lg-3">
+                                    <div class="bs-component">
+                                        <input ng-model="outMin" class="form-control" placeholder="最小值">
+                                    </div>
+                                </div>
+                                <label for="inputStandard" class="col-lg-1 control-label">-</label>
+
+                                <div class="col-lg-3">
+                                    <div class="bs-component">
+                                        <input ng-model="outMax" class="form-control" placeholder="最大值">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-3 control-label">压力范围(bar):</label>
+
+                                <div class="col-lg-3">
+                                    <div class="bs-component">
+                                        <input ng-model="pressMin" class="form-control" placeholder="最小值">
+                                    </div>
+                                </div>
+                                <label for="inputStandard" class="col-lg-1 control-label">-</label>
+
+                                <div class="col-lg-3">
+                                    <div class="bs-component">
+                                        <input ng-model="pressMax" class="form-control" placeholder="最大值">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-3 control-label">温度范围(℃):</label>
+
+                                <div class="col-lg-3">
+                                    <div class="bs-component">
+                                        <input ng-model="tempMin" class="form-control" placeholder="最小值">
+                                    </div>
+                                </div>
+                                <label for="inputStandard" class="col-lg-1 control-label">-</label>
+
+                                <div class="col-lg-3">
+                                    <div class="bs-component">
+                                        <input ng-model="tempMax" class="form-control" placeholder="最大值">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputSelect" class="col-lg-3 control-label">所在区域：</label>
+
+                                <div class="col-lg-3">
+                                    <div class="bs-component">
+                                        <select class="form-control input-sm"
+                                                ng-options="key as value for (key , value) in provinces"
+                                                ng-model="province" id="province" ng-change="province_update(province)">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="bs-component">
+                                        <select class="form-control input-sm"
+                                                ng-options="key as value for (key , value) in cities"
+                                                ng-model="city" id="city" ng-change="city_update(city)">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="bs-component">
+                                        <select class="form-control input-sm"
+                                                ng-options="key as value for (key , value) in districts"
+                                                ng-model="district" id="district">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <label for="inputStandard" style="color:red" class="col-lg-6 control-label text-left">{{
+                                    warning }}</label>
+                                <button class="btn btn-primary" ng-click="submit()">保存</button>
+                                <button class="btn btn-primary" ng-click="cancel()">取消</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</script>
+<script type="text/ng-template" id="deviationCtrl.html">
+    <div class="modal-body" class="col-md-10">
+        <div ng-controller="DeviationCtrl">
+            <div class="row" class="col-md-8">
+                <highchart id="chart1" config="chartConfig" class="span10"
+                           style="margin-left:14px; width:594px; height:350px;"></highchart>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">OK</button>
+    </div>
+</script>
+
+
+<!-- -------------------------Add Modal-------------------------------------------- -->
+
+
+<script type="text/ng-template" id="AddUserModal.html">
+    <div class="modal-body" class="col-md-10">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">添加用户</h3>
+                    </div>
+                    <div class="panel-body text-center">
+
+                        <form class="form-horizontal" role="form" ng-sumbit="submit()">
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-3 control-label">登录用户名：</label>
+
+                                <div class="col-lg-8">
+                                    <div class="bs-component">
+                                        <input type="text" id="user" ng-model="user"
+                                               class="form-control" required="该项不能为空"
+                                               placeholder="新建用户登录该系统的用户名">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-3 control-label">密码：</label>
+
+                                <div class="col-lg-8">
+                                    <div class="bs-component">
+                                        <input type="password" id="password" ng-model="password"
+                                               class="form-control" required="该项不能为空" placeholder="新建用户密码">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-3 control-label">确认密码：</label>
+
+                                <div class="col-lg-8">
+                                    <div class="bs-component">
+                                        <input type="password" id="confirmpassword"
+                                               ng-model="confirmpassword" class="form-control"
+                                               required="该项不能为空" placeholder="新建用户确认密码">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-3 control-label">客户名称：</label>
+
+                                <div class="col-lg-8">
+                                    <div class="bs-component">
+                                        <input type="text" id="userName" ng-model="userName"
+                                               class="form-control" required="该项不能为空" placeholder="客户名称">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-3 control-label">客户电话：</label>
+
+                                <div class="col-lg-8">
+                                    <div class="bs-component">
+                                        <input type="text" id="userPhone" ng-model="userPhone"
+                                               class="form-control" required="该项不能为空" placeholder="客户电话">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputSelect" class="col-lg-3 control-label">主管单位：</label>
+
+                                <div class="col-lg-8">
+                                    <div class="bs-component">
+                                        <select class="form-control input-sm"
+                                                ng-options="key as value for (key , value) in companys"
+                                                ng-model="company" id="company">
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" style="color:red" class="col-lg-6 control-label text-left">{{
+                                    warning }}</label>
+                                <button class="btn btn-primary" ng-click="submit()">保存</button>
+                                <button class="btn btn-primary" ng-click="cancel()">取消</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/ng-template" id="AddFeedbackModal.html">
+    <div class="modal-body" class="col-md-10">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">添加用户反馈信息</h3>
+                    </div>
+                    <div class="panel-body text-center">
+
+                        <form class="form-horizontal" role="form" ng-sumbit="submit()">
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-3 control-label">客户名称：</label>
+
+                                <div class="col-lg-8">
+                                    <div class="bs-component">
+                                        <input type="text" id="user" ng-model="user" class="form-control"
+                                               required="该项不能为空"
+                                               placeholder="新建用户登录该系统的用户名">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-3 control-label">反馈时间：</label>
+
+                                <div class="col-lg-8">
+                                    <div class="bs-component">
+                                        <input type="password" id="password" ng-model="password" class="form-control"
+                                               required="该项不能为空"
+                                               placeholder="新建用户密码">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-3 control-label">处理时间：</label>
+
+                                <div class="col-lg-8">
+                                    <div class="bs-component">
+                                        <input type="password" id="confirmpassword" ng-model="confirmpassword"
+                                               class="form-control" required="该项不能为空"
+                                               placeholder="新建用户确认密码">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-3 control-label">问题描述：</label>
+
+                                <div class="col-lg-8">
+                                    <div class="bs-component">
+                                        <input type="text" id="userName" ng-model="userName" class="form-control"
+                                               required="该项不能为空"
+                                               placeholder="客户名称">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-3 control-label">处理结果：</label>
+
+                                <div class="col-lg-8">
+                                    <div class="bs-component">
+                                        <input type="text" id="userPhone" ng-model="userPhone" class="form-control"
+                                               required="该项不能为空"
+                                               placeholder="客户电话">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" ng-click="submit()">保存</button>
+                                <button class="btn btn-primary" ng-click="cancel()">取消</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+
+<!-- -------------------------Add Modal end-------------------------------------------- -->
+
+<!-- HOMEPAGE VIEW 公司简介 用户信息反馈 重要报警信息 地图-->
+<script type=text/ng-template id=homepage.html>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">南京金昇燃气设备有限公司</h3>
+                </div>
+                <div class="panel-body text-left">
+                    <!-- <div id="area-chart"></div> -->
+                    <p>
+                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp南京金昇燃气设备有限公司自2003年12月成立以来，一直专注于提供燃气行业优质、可靠的计量和控制设备，同时提供计量管理、设备成撬及周期检定技术服务等。是ELSTER在中国区授权代理商。公司坚持“准确计量、精确控制”的原则，不断努力为用户提供最佳的产品和服务。</p>
+
+                    <p>
+                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp公司已建立完整的服务体系，提供从售前、售中到售后全面的技术支持和服务。服务团队由具有丰富实践经验的技术人员组成，具备不同类型的工程和设备安装、调试和应急处理能力。
+                    </p>
+
+                    <p><b>联系电话：</b>025-58818283</p>
+
+                    <p><b>传真：</b>025-58822672</p>
+
+                    <p><b>微信公众号：</b>南京金昇</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">流量计分布</h3>
+                </div>
+                <div class="panel-body text-left">
+                    <section id="map" ng-cloak>
+                        <div class="well" ng-controller="MapCtrl">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <!--list的形式，列出来标示所有的markers-->
+                                    <ul class="list-unstyled">
+                                        <li ng-repeat="marker in myMarkers" class="line-item">
+                                            <!--<a class="btn btn-default" ng-click="myMap.panTo(marker.marker.getPosition())">
+                                                Pan to Marker {{$index}}
+                                            </a>-->
+                                            <div class="top">
+                                                <div class="top-title" ng-click="myMap.panTo(marker.marker.getPosition())">
+                                                    {{ $index +1 }}
+                                                </div>
+                                            </div>
+                                                <a ng-click="myMap.panTo(marker.marker.getPosition())">{{ marker.meter_name }}</a> <br><a>{{ marker.meter_version }}</a>>
+                                        </li>
+                                    </ul>
+                                    <!--在地图上标明位置-->
+                                    <!-- this is the confusing part. we have to point the map marker directive
+                                        at an existing google.maps.Marker object, so it can hook up events -->
+                                    <div ng-repeat="marker in myMarkers" ui-map-marker="myMarkers[$index].marker"
+                                         ui-event="{'map-click': 'openBasicInfo(marker)'}">
+                                    </div>
+
+                                    <div ui-map-info-window="myInfoWindow">
+                                        <h1>Marker</h1>
+                                        Lat: <input ng-model="currentMarkerLat">, Lng: <input
+                                            ng-model="currentMarkerLng">
+                                        <a class="btn btn-primary"
+                                           ng-click="setMarkerPosition(currentMarker, currentMarkerLat, currentMarkerLng)">Set
+                                            Position</a>
+                                    </div>
+
+                                    <div ui-map-info-window="ShowBasicInfoWindow">
+                                        <!--<h1>Marker</h1>
+                                        Lat: <input ng-model="currentMarkerLat">, Lng: <input
+                                            ng-model="currentMarkerLng">
+                                        <a class="btn btn-primary"
+                                           ng-click="setMarkerPosition(currentMarker, currentMarkerLat, currentMarkerLng)">Set
+                                            Position</a>-->
+                                        <ul>
+                                            <li><b>接收时间:</b>: {{meter_data.data_date}} </li>
+                                            <li><b>标况累计:</b> {{ meter_data.data_vb }} (Nm³)</li>
+                                            <li><b>工况累计:</b> {{ meter_data.data_vm }} (Nm³)</li>
+                                            <li><b>压力:</b> {{ meter_data.data_p }} (bar)</li>
+                                            <li><b>温度:</b> {{ meter_data.data_t }} (℃)</li>
+                                            <li><b>标况瞬时流量:</b> {{ meter_data.data_qb }} (Nm³/h)</li>
+                                            <li><b>工况瞬时流量:</b> {{ meter_data.data_qm }} (Nm³/h)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!--Giving the div an id="map_canvas" fix problems with twitter bootstrap affecting
+                                google maps-->
+                                <div class="col-md-8 map">
+                                    <div id="map_canvas" ui-map="myMap"
+                                         ui-event="{'map-dblclick': 'addMarker($event, $params)', 'map-zoomend': 'setZoomMessage(myMap.getZoom())' }"
+                                         ui-options="mapOptions">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">用户反馈信息</h3>
+                </div>
+                <div class="panel-body text-left">
+                    <div ng-controller="UserFeedbackCtrl">
+                        <table st-table="displayedCollection" st-safe-src="rowCollection"
+                               class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th colspan="2"><input st-search="" class="form-control"
+                                                       placeholder="在此搜索。。。" type="text"/></th>
+                            </tr>
+                            <tr>
+                                <th st-sort="user_company">客户名称</th>
+                                <th st-sort="report_time">反馈时间</th>
+                                <th st-sort="solution_deadline">处理时限</th>
+                                <th st-sort="problem">问题描述</th>
+                                <th st-sort="solution_result">处理结果</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="row in displayedCollection">
+                                <td>{{row.user_company}}</td>
+                                <td>{{row.report_time}}</td>
+                                <td>{{row.solution_deadline}}</td>
+                                <td>{{row.problem}}</td>
+                                <td>{{row.solution_result}}</td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="10" class="text-center">
+                                    <div st-items-by-page="10" st-pagination=""
+                                         st-template="pagination.custom.html"></div>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">重要报警信息</h3>
+                </div>
+                <div class="panel-body text-left">
+                    <div ng-controller="WarnCtrl-1">
+                        <table st-table="displayedCollection" st-safe-src="rowCollection"
+                               class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th colspan="2"><input st-search="" class="form-control"
+                                                       placeholder="在此搜索。。。" type="text"/></th>
+                            </tr>
+                            <tr>
+                                <th st-sort="company">企业名称</th>
+                                <th st-sort="user_id">用户信息</th>
+                                <th st-sort="meter_info">表计信息</th>
+                                <th st-sort="warn_info">报警信息</th>
+                                <th st-sort="warn_level">报警级别</th>
+                                <th st-sort="solution">处理办法</th>
+                                <th st-sort="warn_date">报警时间</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="row in displayedCollection">
+                                <td>{{row.company}}</td>
+                                <td>{{row.user_id}}</td>
+                                <td>{{row.meter_info}}</td>
+                                <td>{{row.warn_info}}</td>
+                                <td>{{row.warn_level}}</td>
+                                <td>{{row.solution}}</td>
+                                <td>{{row.warn_date}}</td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="10" class="text-center">
+                                    <div st-items-by-page="10" st-pagination=""
+                                         st-template="pagination.custom.html"></div>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</script>
+
+
+<!--  设备信息统计 重要报警信息-->
+<script type=text/ng-template id=company.html>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">流量计分布</h3>
+                </div>
+                <div class="panel-body text-left">
+                    <section id="map" ng-cloak>
+                        <div class="well" ng-controller="MapCtrl">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <!--list的形式，列出来标示所有的markers-->
+                                    <ul class="list-unstyled">
+                                        <li ng-repeat="marker in myMarkers" class="line-item">
+                                            <!--<a class="btn btn-default" ng-click="myMap.panTo(marker.marker.getPosition())">
+                                                Pan to Marker {{$index}}
+                                            </a>-->
+                                            <div class="top">
+                                                <div class="top-title" ng-click="myMap.panTo(marker.marker.getPosition())">
+                                                    {{ $index +1 }}
+                                                </div>
+                                            </div>
+                                                <a ng-click="myMap.panTo(marker.marker.getPosition())">{{ marker.meter_name }}</a> <br><a>{{ marker.meter_version }}</a>>
+                                        </li>
+                                    </ul>
+                                    <!--在地图上标明位置-->
+                                    <!-- this is the confusing part. we have to point the map marker directive
+                                        at an existing google.maps.Marker object, so it can hook up events -->
+                                    <div ng-repeat="marker in myMarkers" ui-map-marker="myMarkers[$index].marker"
+                                         ui-event="{'map-click': 'openBasicInfo(marker)'}">
+                                    </div>
+
+                                    <div ui-map-info-window="myInfoWindow">
+                                        <h1>Marker</h1>
+                                        Lat: <input ng-model="currentMarkerLat">, Lng: <input
+                                            ng-model="currentMarkerLng">
+                                        <a class="btn btn-primary"
+                                           ng-click="setMarkerPosition(currentMarker, currentMarkerLat, currentMarkerLng)">Set
+                                            Position</a>
+                                    </div>
+
+                                    <div ui-map-info-window="ShowBasicInfoWindow">
+                                        <!--<h1>Marker</h1>
+                                        Lat: <input ng-model="currentMarkerLat">, Lng: <input
+                                            ng-model="currentMarkerLng">
+                                        <a class="btn btn-primary"
+                                           ng-click="setMarkerPosition(currentMarker, currentMarkerLat, currentMarkerLng)">Set
+                                            Position</a>-->
+                                        <ul>
+                                            <li><b>接收时间:</b>: {{meter_data.data_date}} </li>
+                                            <li><b>标况累计:</b> {{ meter_data.data_vb }} (Nm³)</li>
+                                            <li><b>工况累计:</b> {{ meter_data.data_vm }} (Nm³)</li>
+                                            <li><b>压力:</b> {{ meter_data.data_p }} (bar)</li>
+                                            <li><b>温度:</b> {{ meter_data.data_t }} (℃)</li>
+                                            <li><b>标况瞬时流量:</b> {{ meter_data.data_qb }} (Nm³/h)</li>
+                                            <li><b>工况瞬时流量:</b> {{ meter_data.data_qm }} (Nm³/h)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!--Giving the div an id="map_canvas" fix problems with twitter bootstrap affecting
+                                google maps-->
+                                <div class="col-md-8 map">
+                                    <div id="map_canvas" ui-map="myMap"
+                                         ui-event="{'map-dblclick': 'addMarker($event, $params)', 'map-zoomend': 'setZoomMessage(myMap.getZoom())' }"
+                                         ui-options="mapOptions">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">设备基本信息统计</h3>
+                </div>
+                <div class="panel-body text-center">
+                    <div class="row form-group" ng-controller="NodeNumCtrl">
+                        <label class="col-md-3 text-right glyphicon glyphicon-home">
+                            设备接入总数:
+                            <button type="button" class="btn btn-sm btn-info">{{nums.all_node_num}}</button>
+                        </label> <label
+                            class="col-md-3 text-right glyphicon glyphicon-cloud-upload">
+                        正常上报设备数:
+                        <button type="button" class="btn btn-sm btn-success">{{nums.valid_node_num}}</button>
+                    </label> <label
+                            class="col-md-3 text-right glyphicon glyphicon-remove-circle">
+                        超24小时未上报设备数:
+                        <button type="button" class="btn btn-sm btn-danger">{{nums.all_node_num
+                            - nums.valid_node_num}}
+                        </button>
+                    </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-controller="DataPickerCtrl">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">输差信息统计</h3>
+                </div>
+                <div class="panel-body text-left">
+                    <div class="col-md-4">
+                        <form class="form-horizontal" role="form" ng-sumbit="submit()">
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-6 control-label">客户名称:</label>
+
+                                <div class="col-lg-6">
+                                    <div class="bs-component">
+                                        <input class="form-control" required="该项不能为空"
+                                               placeholder="客户名称">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-6 control-label">统计日期:</label>
+
+                                <div class="col-lg-6">
+                                    <div class="bs-component">
+                                        <input type="date" class="form-control" datepicker-popup
+                                               ng-model="dt" is-open="opened"
+                                               datepicker-options="dateOptions"
+                                               date-disabled="disabled(date, mode)" ng-required="true"
+                                               close-text="Close"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-6 control-label">上游进气量(Nm³):</label>
+
+                                <div class="col-lg-6">
+                                    <div class="bs-component">
+                                        <input class="form-control" required="该项不能为空"
+                                               placeholder="上游进气量">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-6 control-label">工业用户售气量(Nm³):</label>
+
+                                <div class="col-lg-6">
+                                    <div class="bs-component">
+                                        <input class="form-control" required="该项不能为空"
+                                               placeholder="工业用户售气量">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-6 control-label">居民用气总量(Nm³):</label>
+
+                                <div class="col-lg-6">
+                                    <div class="bs-component">
+                                        <input class="form-control" required="该项不能为空"
+                                               placeholder=居民用气总量">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-6 control-label">其他气量统计(Nm³):</label>
+
+                                <div class="col-lg-6">
+                                    <div class="bs-component">
+                                        <input class="form-control" required="该项不能为空"
+                                               placeholder=其他气量统计">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-6 control-label">输差计算结果(Nm³):</label>
+
+                                <div class="col-lg-6">
+                                    <div class="bs-component">
+                                        <input class="form-control" required="该项不能为空"
+                                               placeholder="输差计算结果">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" ng-click="submit()">保存当前统计值</button>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="row" ng-controller="OutdiffChartCtrl">
+                            <highchart id="chart1" config="chartConfig" class="span10"
+                                       style="width:100%; height:420px;"></highchart>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">重要报警信息</h3>
+                </div>
+                <div class="panel-body text-left">
+                    <div ng-controller="WarnCtrl-1">
+                        <table st-table="displayedCollection" st-safe-src="rowCollection"
+                               class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th colspan="2"><input st-search="" class="form-control"
+                                                       placeholder="在此搜索。。。" type="text"/></th>
+                            </tr>
+                            <tr>
+                                <th st-sort="company">企业名称</th>
+                                <th st-sort="user_id">用户信息</th>
+                                <th st-sort="meter_info">表计信息</th>
+                                <th st-sort="warn_info">报警信息</th>
+                                <th st-sort="warn_level">报警级别</th>
+                                <th st-sort="solution">处理办法</th>
+                                <th st-sort="warn_date">报警时间</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="row in displayedCollection">
+                                <td>{{row.company}}</td>
+                                <td>{{row.user_id}}</td>
+                                <td>{{row.meter_info}}</td>
+                                <td>{{row.warn_info}}</td>
+                                <td>{{row.warn_level}}</td>
+                                <td>{{row.solution}}</td>
+                                <td>{{row.warn_date}}</td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="10" class="text-center">
+                                    <div st-items-by-page="10" st-pagination=""
+                                         st-template="pagination.custom.html"></div>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</script>
+
+
+<!--  工艺图， 用户曲线图 重要报警信息-->
+<script type=text/ng-template id=user.html>
+
+    <div class="row" ng-controller="artworkCtrl">
+        <div ng-include="threePiplePath" ng-show="artworkShow == 0"></div>
+        <div ng-include="twoPiplePath" ng-show="artworkShow == 2"></div>
+        <div ng-include="onePiplePath" ng-show="artworkShow == 1"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">用户用气曲线图</h3>
+                </div>
+                <div class="panel-body text-center">
+                    <div id="dataChart" ng-controller="UserMeterDataCtrl">
+                        <div class="btn-toolbar" role="toolbar">
+                            <div class="btn-group">
+                                <button id="oneWeekBt" type="button" class="btn btn-primary" ng-click="week()">一周
+                                </button>
+                                <button id="oneMonthBt" type="button" class="btn btn-default" ng-click="month()">一月
+                                </button>
+                                <button id="oneYearBt" type="button" class="btn btn-default" ng-click="year()">一年
+                                </button>
+                                <button id="totalBt" type="button" class="btn btn-default" ng-click="total()">所有
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <highchart id="chart1" config="chartConfig" class="span10"
+                                       style="width:100%; height:500px;"></highchart>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">重要报警信息</h3>
+                </div>
+                <div class="panel-body text-left">
+                    <div ng-controller="WarnCtrl-1">
+                        <table st-table="displayedCollection"
+                               st-safe-src="rowCollection" class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th colspan="2"><input st-search=""
+                                                       class="form-control" placeholder="在此搜索。。。"
+                                                       type="text"/></th>
+                            </tr>
+                            <tr>
+                                <th st-sort="company">企业名称</th>
+                                <th st-sort="user_id">用户信息</th>
+                                <th st-sort="meter_info">表计信息</th>
+                                <th st-sort="warn_info">报警信息</th>
+                                <th st-sort="warn_level">报警级别</th>
+                                <th st-sort="solution">处理办法</th>
+                                <th st-sort="warn_date">报警时间</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="row in displayedCollection">
+                                <td>{{row.company}}</td>
+                                <td>{{row.user_id}}</td>
+                                <td>{{row.meter_info}}</td>
+                                <td>{{row.warn_info}}</td>
+                                <td>{{row.warn_level}}</td>
+                                <td>{{row.solution}}</td>
+                                <td>{{row.warn_date}}</td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="10" class="text-center">
+                                    <div st-items-by-page="10" st-pagination=""
+                                         st-template="pagination.custom.html"></div>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<!--  基本信息 实时数据-->
+<script type=text/ng-template id=meter.html>
+    <div class="row" ng-controller="MeterInfoCtrl">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">流量计基本信息</h3>
+
+                    <div class="actions pull-right">
+                        <button type="button" class="btn btn-sm btn-primary">更新信息</button>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row form-group">
+                        <label class="col-lg-1 control-label text-right">名称:</label> <label
+                            class="col-lg-3 control-label text-left"
+                            style="font-weight: bold">{{ meter.meter_name }}</label> <label
+                            class="col-lg-1 control-label text-right">品牌:</label> <label
+                            class="col-lg-3 control-label text-left"
+                            style="font-weight: bold">{{ meter.meter_type }}</label>
+                        <label class="col-lg-1 control-label text-right">修正仪:</label> <label
+                            class="col-lg-3 control-label text-left"
+                            style="font-weight: bold">{{ meter.meter_revisetype }}</label>
+                    </div>
+                    <div class="row form-group">
+                        <label class="col-lg-1 control-label text-right">型号: </label> <label
+                            class="col-lg-3 control-label text-left"
+                            style="font-weight: bold">{{ meter.meter_version }}</label> <label
+                            class="col-lg-1 control-label text-right">序列号:</label> <label
+                            class="col-lg-3 control-label text-left"
+                            style="font-weight: bold">{{ meter.meter_index }}</label> <label
+                            class="col-lg-1 control-label text-right">流量范围:</label> <label
+                            class="col-lg-3 control-label text-left"
+                            style="font-weight: bold">{{ meter.outputMin }} -- {{
+                        meter.outputMax }} Nm³/h</label>
+                    </div>
+                    <div class="row form-group">
+                        <label class="col-lg-1 control-label text-right">所在区域:</label> <label
+                            class="col-lg-3 control-label text-left"
+                            style="font-weight: bold">{{ meter.meter_district }}</label> <label
+                            class="col-lg-1 control-label text-right">检定有效期:</label> <label
+                            class="col-lg-3 control-label text-left"
+                            style="font-weight: bold">{{ meter.valid_time }}</label> <label
+                            class="col-lg-1 control-label text-right">压力范围:</label> <label
+                            class="col-lg-3 control-label text-left"
+                            style="font-weight: bold">{{ meter.pressureMin }} --
+                        {{ meter.pressureMax }} bar</label>
+                    </div>
+                    <div class="row form-group">
+                        <label class="col-lg-1 control-label text-right">节点编号:</label> <label
+                            class="col-lg-3 control-label text-left"
+                            style="font-weight: bold">{{ meter.meter_eui }}</label> <label
+                            class="col-lg-1 control-label text-right">铅封编号:</label> <label
+                            class="col-lg-3 control-label text-left"
+                            style="font-weight: bold">{{ meter.wrapCode }}</label> <label
+                            class="col-lg-1 control-label text-right">温度范围:</label> <label
+                            class="col-lg-3 control-label text-left"
+                            style="font-weight: bold">{{ meter.temperatureMin }}
+                        -- {{ meter.temperatureMax }} ℃ </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-controller="MeterInfoCtrl">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">实时数据</h3>
+                </div>
+                <div class="panel-body text-left">
+                    <div ng-controller="MeterDataCtrl" st-table="displayedCollection"
+                         st-safe-src="rowCollection">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="btn-group">
+                                    <button id="oneWeekBt" type="button" class="btn btn-primary"
+                                            ng-click="week()">一周
+                                    </button>
+                                    <button id="oneMonthBt" type="button" class="btn btn-default"
+                                            ng-click="month()">一月
+                                    </button>
+                                    <button id="oneYearBt" type="button" class="btn btn-default"
+                                            ng-click="year()">一年
+                                    </button>
+                                    <button id="totalBt" type="button" class="btn btn-default"
+                                            ng-click="total()">所有
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-xs-3 pull-right">
+                                <input st-search="" class="form-control" placeholder="在此搜索。。。" type="text"/>
+                            </div>
+                        </div>
+
+
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th st-sort="data_id">数据编号</th>
+                                <th st-sort="data_date">接收时间</th>
+                                <th st-sort="data_vb">标况总累计(Nm³)</th>
+                                <th st-sort="data_vm" ng-if="meter.meter_type != '卓度'">工况总累计(Nm³)</th>
+                                <th st-sort="data_p" ng-if="meter.meter_type != '卓度'">压力(bar)</th>
+                                <th st-sort="data_t" ng-if="meter.meter_type != '卓度'">温度(℃)</th>
+                                <th st-sort="data_qb">标况瞬时流量(Nm³/h)</th>
+                                <th st-sort="data_qm" ng-if="meter.meter_type != '卓度'">工况瞬时流量(Nm³/h)</th>
+                                <th st-sort="data_battery" ng-if="meter.meter_type != '卓度'">电量(月)</th>
+                                <th st-sort="data_battery" ng-if="meter.meter_type == '卓度'">电量(V)</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="row in displayedCollection">
+                                <td>{{row.data_id}}</td>
+                                <td>{{row.data_date}}</td>
+                                <td>{{row.data_vb}}</td>
+                                <td ng-if="meter.meter_type != '卓度'">{{row.data_vm}}</td>
+                                <td ng-if="meter.meter_type != '卓度'">{{row.data_p}}</td>
+                                <td ng-if="meter.meter_type != '卓度'">{{row.data_t}}</td>
+                                <td>{{row.data_qb}}</td>
+                                <td ng-if="meter.meter_type != '卓度'">{{row.data_qm}}</td>
+                                <td>{{row.data_battery}}</td>
+                                <td ng-if="meter.meter_type != '卓度'">
+                                    <div ng-controller="deviationCtrl">
+                                        <button type="button" ng-click="open(row)"
+                                                class="btn btn-sm btn-info">数据分析
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="10" class="text-center">
+                                    <div st-items-by-page="10" st-pagination=""
+                                         st-template="pagination.custom.html"></div>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</script>
+
+<script type=text/ng-template id=warn.html>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">所有报警信息</h3>
+                </div>
+                <div class="panel-body text-left">
+                    <div ng-controller="WarnCtrl-all">
+                        <table st-table="displayedCollection"
+                               st-safe-src="rowCollection" class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th colspan="2"><input st-search=""
+                                                       class="form-control" placeholder="在此搜索。。。"
+                                                       type="text"/></th>
+                            </tr>
+                            <tr>
+                                <th st-sort="company">企业名称</th>
+                                <th st-sort="user_id">用户信息</th>
+                                <th st-sort="meter_info">表计信息</th>
+                                <th st-sort="warn_info">报警信息</th>
+                                <th st-sort="warn_level">报警级别</th>
+                                <th st-sort="solution">处理办法</th>
+                                <th st-sort="warn_date">报警时间</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="row in displayedCollection">
+                                <td>{{row.company}}</td>
+                                <td>{{row.user_id}}</td>
+                                <td>{{row.meter_info}}</td>
+                                <td>{{row.warn_info}}</td>
+                                <td>{{row.warn_level}}</td>
+                                <td>{{row.solution}}</td>
+                                <td>{{row.warn_date}}</td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="10" class="text-center">
+                                    <div st-items-by-page="10" st-pagination=""
+                                         st-template="pagination.custom.html"></div>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type=text/ng-template id=gascollection.html>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">气量抄收</h3>
+                </div>
+                <div class="panel-body text-left">
+                    <div class="col-md-12" ng-controller="gasCollectionbyDistrictCtrl">
+                        <div class="col-md-2">
+                            <div class="panel panel-primary">
+                                <form class="form-horizontal" role="form">
+                                    <legend class="righter">区域选择</legend>
+                                    <div class="form-group">
+                                        <label for="province" class="col-md-2 control-label">省</label>
+
+                                        <div class="col-md-10">
+                                            <select class="form-control input-sm"
+                                                    ng-options="key as value for (key , value) in provinces"
+                                                    ng-model="province" id="province"
+                                                    ng-change="province_update(province)">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="city" class="col-md-2 control-label">市</label>
+
+                                        <div class="col-md-10">
+                                            <select class="form-control input-sm"
+                                                    ng-options="key as value for (key , value) in cities"
+                                                    ng-model="city" id="city" ng-change="city_update(city)">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="district" class="col-md-2 control-label">区</label>
+
+                                        <div class="col-md-10">
+                                            <select class="form-control input-sm"
+                                                    ng-options="key as value for (key , value) in districts"
+                                                    ng-model="district" id="district"
+                                                    ng-change="district_update(district)">
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="inputStandard" style="color: red"
+                                               class="col-lg-10 control-label text-left">{{ warning }}</label>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <div st-table="displayedCollection"
+                                 st-safe-src="rowCollection">
+                                <div class="row">
+                                    <div class="col-xs-6 pull-left">
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">查询日期</label>
+
+                                            <div class="col-md-4">
+                                                <div class="bs-component">
+                                                    <input type="date" class="form-control" datepicker-popup
+                                                           ng-model="startDate"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1">----</div>
+                                            <div class="col-md-4">
+                                                <input type="date" class="form-control" datepicker-popup
+                                                       ng-model="stopDate"/>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-3 pull-right">
+                                        <input st-search="" class="form-control" placeholder="在此搜索。。。" type="text"/>
+                                    </div>
+                                </div>
+
+
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th st-sort="data_id">用户名称</th>
+                                        <th st-sort="data_date">流量计品牌</th>
+                                        <th st-sort="data_date">流量计型号</th>
+                                        <th st-sort="data_vb">标况总累计(Nm³)</th>
+                                        <th st-sort="data_vm" ng-if="meter.meter_type != '卓度'">工况总累计(Nm³)</th>
+                                        <th st-sort="data_p" ng-if="meter.meter_type != '卓度'">压力(bar)</th>
+                                        <th st-sort="data_t" ng-if="meter.meter_type != '卓度'">温度(℃)</th>
+                                        <th st-sort="data_t" ng-if="meter.meter_type != '卓度'">用气曲线</th>
+                                        <th st-sort="data_vb">报表</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="row in displayedCollection">
+                                        <td>{{row.meter_company}}</td>
+                                        <td>{{row.meter_type}}</td>
+                                        <td>{{row.meter_version}}</td>
+                                        <td>{{row.meter_data_vb}}</td>
+                                        <td ng-if="meter.meter_type != '卓度'">{{row.meter_data_vm}}</td>
+                                        <td ng-if="meter.meter_type != '卓度'">{{row.meter_data_p}}</td>
+                                        <td ng-if="meter.meter_type != '卓度'">{{row.meter_data_t}}</td>
+                                        <td ng-if="meter.meter_type != '卓度'">
+                                            <div ng-controller="deviationCtrl">
+                                                <button type="button" ng-click="open(row)"
+                                                        class="btn btn-sm btn-info">曲线图
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td ng-if="meter.meter_type != '卓度'">
+                                            <div>
+                                                <button type="button" ng-click="open()"
+                                                        class="btn btn-sm btn-info">生成报表
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <td colspan="10" class="text-center">
+                                            <div st-items-by-page="10" st-pagination=""
+                                                 st-template="pagination.custom.html"></div>
+                                        </td>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <h3 class="panel-title">结算单设置</h3>
+
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <label for="district" class="col-md-2 control-label">结算依据</label>
+
+                                                <div class="col-md-2">
+                                                    <select class="form-control input-sm"
+                                                            ng-options="key as value for (key , value) in dependents"
+                                                            ng-model="dependent" id="dependent">
+                                                    </select>
+                                                </div>
+                                                <label for="district" class="col-md-2 control-label">用户选择</label>
+
+                                                <div class="col-md-2">
+                                                    <input ng-model="userSelections" class="form-control" type="text"/>
+                                                </div>
+
+                                                <label for="district" class="col-md-2 control-label">估值</label>
+
+                                                <div class="col-md-2">
+                                                    <input ng-model="compensate" class="form-control"
+                                                           placeholder="无估值为0" type="text"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+
+<script type=text/ng-template id=identification.html>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">检定信息总览</h3>
+                </div>
+                <div class="panel-body text-left">
+                    <div ng-controller="IdentificationShowCtrl">
+                        <table st-table="displayedCollection" st-safe-src="rowCollection"
+                               class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th colspan="2"><input st-search="" class="form-control"
+                                                       placeholder="在此搜索。。。" type="text"/></th>
+                            </tr>
+                            <tr>
+                                <th width="10%" st-sort="user_company">用户</th>
+                                <th width="10%" st-sort="meter_type">品牌</th>
+                                <th width="10%" st-sort="meter_version">型号</th>
+                                <th width="5%" st-sort="meter_index">序列号</th>
+                                <th width="8%" st-sort="output_range">流量范围</th>
+                                <th width="9%" st-sort="identify_date">检定日期</th>
+                                <th width="9%" st-sort="next_identify_date">下次检定</th>
+                                <th width="7%" st-sort="medium">介质</th>
+                                <th width="4%" st-sort="pressure">压力</th>
+                                <th width="4%" st-sort="temperature">温度</th>
+                                <th width="3%" st-sort="Qmax100">100%Qmax</th>
+                                <th width="3%" st-sort="Qmax60">60%Qmax</th>
+                                <th width="3%" st-sort="Qmax40">40%Qmax</th>
+                                <th width="3%" st-sort="Qmax20">10%Qmax</th>
+                                <th width="3%" st-sort="Qmax10">10%Qmax</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="row in displayedCollection">
+                                <td>{{row.user_company}}</td>
+                                <td>{{row.meter_type}}</td>
+                                <td>{{row.meter_version}}</td>
+                                <td>{{row.meter_index}}</td>
+                                <td>{{row.output_range_min}}~{{row.output_range_max}}</td>
+                                <td>{{row.identify_date}}</td>
+                                <td>{{row.next_identify_date}}</td>
+                                <td>{{row.medium}}</td>
+                                <td>{{row.pressure_min}}~{{row.pressure_max}}</td>
+                                <td>{{row.temperature_min}}~{{row.temperature_max}}</td>
+                                <td>{{row.Qmax100}}</td>
+                                <td>{{row.Qmax60}}</td>
+                                <td>{{row.Qmax40}}</td>
+                                <td>{{row.Qmax20}}</td>
+                                <td>{{row.Qmax10}}</td>
+
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="10" class="text-center">
+                                    <div st-items-by-page="10" st-pagination=""
+                                         st-template="pagination.custom.html"></div>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" ng-controller="AddIdentificationCtrl">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">检定信息录入</h3>
+                </div>
+                <div class="panel-body text-left">
+                    <!-- <div class="col-md-4"> -->
+                    <form name="identification" class="form-horizontal" role="form">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="inputStandard" class="col-lg-5 control-label">燃气公司:
+                                    </label>
+
+                                    <div class="col-lg-7">
+                                        <div class="bs-component">
+                                            <select name="companyID" class="form-control input-sm"
+                                                    ng-options="company.value for company in companys"
+                                                    ng-model="company" id="company" required
+                                                    ng-change="company_update(company.key)">
+                                            </select>
+                                            <span style="color:red" ng-show=isCompanyShow>请先选择燃气公司</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="inputStandard" class="col-lg-5 control-label">检定日期:</label>
+
+                                    <div class="col-lg-7">
+                                        <div class="bs-component">
+                                            <input type="date" class="form-control" datepicker-popup
+                                                   ng-model="identDate"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="inputStandard" class="col-lg-5 control-label">100%Qmax偏差:</label>
+
+                                    <div class="col-lg-6">
+                                        <div class="bs-component">
+                                            <input type="text" id="Qmax100" ng-model="Qmax100"
+                                                   class="form-control" placeholder="-1~1">
+                                        </div>
+                                    </div>
+                                    <label for="inputStandard" class="col-lg-1 control-label">%</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="inputStandard" class="col-lg-5 control-label">燃气用户:
+                                    </label>
+
+                                    <div class="col-lg-7">
+                                        <div class="bs-component">
+                                            <select class="form-control input-sm"
+                                                    ng-options="user.value for user in users"
+                                                    ng-model="user" id="user" ng-change="user_update(user.key)">
+                                            </select>
+                                            <span style="color:red" ng-show=isUserShow>请先选择燃气用户</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="inputStandard" class="col-lg-5 control-label">下次检定:</label>
+
+                                    <div class="col-lg-7">
+                                        <div class="bs-component">
+                                            <input type="date" class="form-control" datepicker-popup
+                                                   ng-model="nextDate"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="col-lg-5 control-label">60%Qmax偏差:</label>
+
+                                    <div class="col-lg-6">
+                                        <div class="bs-component">
+                                            <input type="text" id="Qmax60" ng-model="Qmax60"
+                                                   class="form-control" placeholder="-1~1">
+                                        </div>
+                                    </div>
+                                    <label for="inputStandard" class="col-lg-1 control-label">%</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="inputStandard" class="col-lg-5 control-label">流量计名称:
+                                    </label>
+
+                                    <div class="col-lg-7">
+                                        <div class="bs-component">
+                                            <select class="form-control input-sm"
+                                                    ng-options="meter.value for meter in meters"
+                                                    ng-model="meter" id="meter" ng-change="meter_update(meter)">
+                                            </select>
+                                            <span style="color:red" ng-show=isMeterShow>请先选择流量计</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="inputStandard" class="col-lg-5 control-label">流量范围(Nm³/h):</label>
+
+                                    <div class="col-lg-3">
+                                        <div class="bs-component">
+                                            <input type="text" id="outputMin" ng-model="outputMin"
+                                                   class="form-control" placeholder="最小值">
+                                        </div>
+                                    </div>
+                                    <label for="inputStandard" class="col-lg-1 control-label">-</label>
+
+                                    <div class="col-lg-3">
+                                        <div class="bs-component">
+                                            <input type="text" id="outputMax" ng-model="outputMax"
+                                                   class="form-control" placeholder="最大值">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="inputStandard" class="col-lg-5 control-label">40%Qmax偏差:</label>
+
+                                    <div class="col-lg-6">
+                                        <div class="bs-component">
+                                            <input type="text" id="Qmax40" ng-model="Qmax40"
+                                                   class="form-control" placeholder="-1~1">
+                                        </div>
+                                    </div>
+                                    <label for="inputStandard" class="col-lg-1 control-label">%</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="inputStandard" class="col-lg-5 control-label">流量计品牌:
+                                    </label>
+
+                                    <div class="col-lg-7">
+                                        <div class="bs-component">
+                                            <input class="form-control" ng-model="meterType" disabled="true">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="inputStandard" class="col-lg-5 control-label">压力范围(bar):</label>
+
+                                    <div class="col-lg-3">
+                                        <div class="bs-component">
+                                            <input type="text" id="presureMin" ng-model="presureMin"
+                                                   class="form-control" placeholder="最小值" required>
+                                        </div>
+                                    </div>
+                                    <label for="inputStandard" class="col-lg-1 control-label">-</label>
+
+                                    <div class="col-lg-3">
+                                        <div class="bs-component">
+                                            <input type="text" id="presureMax" ng-model="presureMax"
+                                                   class="form-control" placeholder="最大值">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="inputStandard" class="col-lg-5 control-label">20%Qmax偏差:</label>
+
+                                    <div class="col-lg-6">
+                                        <div class="bs-component">
+                                            <input type="text" id="Qmax20" ng-model="Qmax20"
+                                                   class="form-control" placeholder="-1~1">
+                                        </div>
+                                    </div>
+                                    <label for="inputStandard" class="col-lg-1 control-label">%</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="inputStandard" class="col-lg-5 control-label">型号:</label>
+
+                                    <div class="col-lg-7">
+                                        <div class="bs-component">
+                                            <input type="text" id="meterVersion" ng-model="meterVersion"
+                                                   class="form-control" placeholder="型号">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="inputStandard" class="col-lg-5 control-label">温度范围(℃):</label>
+
+                                    <div class="col-lg-3">
+                                        <div class="bs-component">
+                                            <input type="text" id="temperatureMin" ng-model="temperatureMin"
+                                                   class="form-control" placeholder="最小值">
+                                        </div>
+                                    </div>
+                                    <label for="inputStandard" class="col-lg-1 control-label">-</label>
+
+                                    <div class="col-lg-3">
+                                        <div class="bs-component">
+                                            <input type="text" id="temperatureMax" ng-model="temperatureMax"
+                                                   class="form-control" placeholder="最大值">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="inputStandard" class="col-lg-5 control-label">10%Qmax偏差:</label>
+
+                                    <div class="col-lg-6">
+                                        <div class="bs-component">
+                                            <input type="text" id="Qmax10" ng-model="Qmax10"
+                                                   class="form-control" placeholder="-1~1">
+                                        </div>
+                                    </div>
+                                    <label for="inputStandard" class="col-lg-1 control-label">%</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="inputStandard" class="col-lg-5 control-label">序列号:</label>
+
+                                    <div class="col-lg-7">
+                                        <div class="bs-component">
+                                            <input type="text" id="seqNo" ng-model="seqNo"
+                                                   class="form-control" placeholder="序列号">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="inputStandard" class="col-lg-5 control-label">介质:</label>
+
+                                    <div class="col-lg-7">
+                                        <div class="bs-component">
+                                            <input type="text" id="medium" ng-model="medium"
+                                                   class="form-control" placeholder="介质">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="inputStandard" class="col-lg-5 control-label">出厂检定参数:</label>
+
+                                    <div class="col-lg-5">
+                                        <div class="bs-component">
+                                            <input type="radio" value=1 ng-model="checkboxSelection"/> 是
+                                            <input type="radio" value=0 ng-model="checkboxSelection"/> 否
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary" ng-click="submit()">保存</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+
+<script type=text/ng-template id=datacenter.html>
+    <div class="row" ng-controller="DCOutDiffCtrl-shunshi">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">实时输差分析-瞬时输差</h3>
+                </div>
+                <div class="panel-body text-left">
+                    <div class="col-md-4">
+                        <form class="form-horizontal" role="form" ng-sumbit="submit()">
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-5 control-label">燃气公司:
+                                </label>
+
+                                <div class="col-lg-6">
+                                    <div class="bs-component">
+                                        <select class="form-control input-sm"
+                                                ng-options="key as value for (key , value) in companys"
+                                                ng-model="company" id="company"
+                                                ng-change="company_update(company)">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-5 control-label">燃气用户:
+                                </label>
+
+                                <div class="col-lg-6">
+                                    <div class="bs-component">
+                                        <select class="form-control input-sm"
+                                                ng-options="key as value for (key , value) in users"
+                                                ng-model="user_selected" id="user" ng-change="user_update()">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-5 control-label">流量计名称:
+                                </label>
+
+                                <div class="col-lg-6">
+                                    <div class="bs-component">
+                                        <select class="form-control input-sm"
+                                                ng-options="key as value for (key , value) in meters"
+                                                ng-model="meter_selected" id="meter"
+                                                ng-change="meter_update()">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-5 control-label">瞬时工况流量(Nm³/h):</label>
+
+                                <div class="col-lg-6">
+                                    <div class="bs-component">
+                                        <input class="form-control" ng-model="qm_edit"
+                                               placeholder="瞬时工况流量" ng-change="update()">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-5 control-label">温度(℃):</label>
+
+                                <div class="col-lg-6">
+                                    <div class="bs-component">
+                                        <input class="form-control" ng-model="temp_edit"
+                                               ng-change="update_diff()">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-5 control-label">压力(bar):</label>
+
+                                <div class="col-lg-6">
+                                    <div class="bs-component">
+                                        <input class="form-control" ng-model="pressure_edit"
+                                               ng-change="update_diff()">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button class="col-lg-11 btn btn-primary">瞬时偏差: {{
+                                    outdiff }} (Nm³/h)
+                                </button>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" style="color: red"
+                                       class="col-lg-10 control-label text-left">{{ warning }}</label>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="row">
+                            <highchart id="chart1" config="chartConfig" class="span10"
+                                       style="width:100%; height:420px;"></highchart>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" ng-controller="DCOutDiffCtrl-total">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">实时输差分析-累计输差</h3>
+                </div>
+                <div class="panel-body text-left">
+                    <div class="col-md-4">
+                        <form class="form-horizontal" role="form" ng-sumbit="submit()">
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-5 control-label">燃气公司:
+                                </label>
+
+                                <div class="col-lg-6">
+                                    <div class="bs-component">
+                                        <select class="form-control input-sm"
+                                                ng-options="key as value for (key , value) in companys"
+                                                ng-model="company" id="company"
+                                                ng-change="company_update(company)">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-5 control-label">燃气用户:
+                                </label>
+
+                                <div class="col-lg-6">
+                                    <div class="bs-component">
+                                        <select class="form-control input-sm"
+                                                ng-options="key as value for (key , value) in users"
+                                                ng-model="user_selected" id="user" ng-change="user_update()">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-5 control-label">流量计名称:
+                                </label>
+
+                                <div class="col-lg-6">
+                                    <div class="bs-component">
+                                        <select class="form-control input-sm"
+                                                ng-options="key as value for (key , value) in meters"
+                                                ng-model="meter_selected" id="meter"
+                                                ng-change="meter_update()">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-controller="DataPickerCtrl">
+                                <label for="inputStandard" class="col-lg-5 control-label">开始日期:</label>
+
+                                <div class="col-lg-6">
+                                    <div class="bs-component">
+                                        <input type="date" class="form-control" datepicker-popup
+                                               ng-model="start_date" is-open="opened"
+                                               datepicker-options="dateOptions"
+                                               date-disabled="disabled(date, mode)" ng-required="true"
+                                               close-text="Close"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-controller="DataPickerCtrl">
+                                <label for="inputStandard" class="col-lg-5 control-label">结束日期:</label>
+
+                                <div class="col-lg-6">
+                                    <div class="bs-component">
+                                        <input type="date" class="form-control" datepicker-popup
+                                               ng-model="stop_date" is-open="opened" min-date="minDate"
+                                               max-date="'2015-06-22'" datepicker-options="dateOptions"
+                                               date-disabled="disabled(date, mode)" ng-required="true"
+                                               close-text="Close"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="form-group">
+                            <button class="col-lg-6 btn btn-primary" ng-click="submit()">计算累计输差(Nm³):</button>
+                            <div class="col-lg-5">
+                                <div class="bs-component">
+                                    <input class="form-control" ng-model="total_diff">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputStandard" style="color: red"
+                                   class="col-lg-10 control-label text-left">{{ warning }}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="row" ng-controller="DCDeviationCtrl">
+                            <highchart id="chart1" config="chartConfig" class="span10"
+                                       style="width:100%; height:420px;"></highchart>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" ng-controller="DistrictAnalyseCtrl">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">区域性分析</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="col-md-4">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-5 control-label">分析数据类型:
+                                </label>
+
+                                <div class="col-lg-6">
+                                    <div class="bs-component">
+                                        <select class="form-control input-sm"
+                                                ng-options="key as value for (key , value) in analysetypes"
+                                                ng-model="analyse_type" id="analyse_type">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-5 control-label">区域选择:</label>
+
+                                <div class="col-lg-6">
+                                    <div class="bs-component">
+                                        <select class="form-control input-sm"
+                                                ng-options="key as value for (key , value) in provinces"
+                                                ng-model="province" id="province"
+                                                ng-change="province_update(province)">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-5 control-label"></label>
+
+                                <div class="col-lg-6">
+                                    <div class="bs-component">
+                                        <select class="form-control input-sm"
+                                                ng-options="key as value for (key , value) in cities"
+                                                ng-model="city" id="city" ng-change="city_update(city)">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-5 control-label"></label>
+
+                                <div class="col-lg-6">
+                                    <div class="bs-component">
+                                        <select class="form-control input-sm"
+                                                ng-options="key as value for (key , value) in districts"
+                                                ng-model="district" id="district"
+                                                ng-change="district_update(district)">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-5 control-label">流量计名称:
+                                </label>
+
+                                <div class="col-lg-6">
+                                    <div class="bs-component">
+                                        <select class="form-control input-sm"
+                                                ng-options="key as value for (key , value) in meters"
+                                                ng-model="meter" id="meter">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-5 control-label">时间范围:
+                                </label>
+
+                                <div class="col-lg-6">
+                                    <div class="bs-component">
+                                        <select class="form-control input-sm"
+                                                ng-options="key as value for (key , value) in periods"
+                                                ng-model="period" id="period" ng-change="period_update(period)">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" class="col-lg-1 control-label">
+                                </label>
+                                <button class="col-lg-2 btn btn-primary" ng-click="add_meter()">添加</button>
+                                <label for="inputStandard" class="col-lg-1 control-label">
+                                </label>
+                                <button class="col-lg-2 btn btn-primary" ng-click="clear_meter()">清空</button>
+                                <label for="inputStandard" class="col-lg-1 control-label">
+                                </label>
+                                <button class="col-lg-4 btn btn-primary" ng-click="start_analyse()">开始分析</button>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-10">
+                                    <div class="bs-component">
+                                        <label for="inputStandard" style="color: red"
+                                               class="control-label text-left">{{ warning }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-10">
+                                    <div class="bs-component">
+                                        <label for="inputStandard"
+                                               class="control-label text-left">已添加对象（最多5个，还可以选择{{left_count}}个）:</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" style="color: blue"
+                                       class="text-left col-lg-4 control-label">{{ names[0] }}</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" style="color: blue"
+                                       class="text-left col-lg-4 control-label">{{ names[1] }}</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" style="color: blue"
+                                       class="text-left col-lg-4 control-label">{{ names[2] }}</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" style="color: blue"
+                                       class="text-left col-lg-4 control-label">{{ names[3] }}</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputStandard" style="color: blue"
+                                       class="text-left col-lg-4 control-label">{{ names[4] }}</label>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="row">
+                            <highchart id="chart1" config="chartConfig" class="span10"
+                                       style="width:100%; height:420px;"></highchart>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+
+<script type="text/ng-template" id="testModal.html">
+    <div class="modal-body" class="col-md-10">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">打印报表</h3>
+                    </div>
+                    <div class="panel-body text-center">
+                        <div id="reportContent" ng-include="reportPath"></div>
+                        <form class="form-horizontal" role="form" ng-sumbit="submit()">
+
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" ng-click="ok()">打印</button>
+                                <button class="btn btn-primary" ng-click="cancel()">取消</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<!-- <option ng-repeat="(key,value) in selectData" value="{{key}}">{{value}}</option> -->
+{% endverbatim %}
+</body>
+
+</html>

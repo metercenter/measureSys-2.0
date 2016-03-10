@@ -1,0 +1,21 @@
+div {    
+    width: 200px;
+    height: 200px;
+    text-align: center;
+    margin: 0 0 20px;
+}
+div p {
+    position: relative;
+    top: 50%;
+}
+
+.div1{
+  background: green;
+  }  
+.div2{
+  background: white;
+  border: 1px solid #ccc;
+}
+.div3{
+  background: orange;
+}
