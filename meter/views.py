@@ -974,7 +974,6 @@ def getWarnInfo(request):
         for i in range (0, len(meterSet)):
             warnInfoSet = WarnInfo.objects.filter(meter_eui = meterSet[i].meter_eui)
             for j in range(0,len(warnInfoSet)):
-                print 'warn info set'+ str(warnInfoSet[j].data_warn)
                 warnData = DataWarnType.objects.get(data_warn = warnInfoSet[j].data_warn)
                 if 'warn_level' in request.GET:
                     if warnData.data_warn_level == request.GET['warn_level']:
@@ -1260,7 +1259,10 @@ def meterDataChart(request):
         vb_total = 0      
         while((today-preday).days<period):
             for eachMeter in meterEUISet:
-                valuelist = Data.objects.filter(meter_eui = eachMeter).filter(data_date__startswith = preday.date()).order_by('-data_date')
+                valuelist = Data.objects.raw(
+                    "select * from meter_data where meter_eui = %s and data_date > %s order by data_date limit 1",
+                    [eachMeter, preday.date()])
+                print valuelist
                 if valuelist:
                     value1 = valuelist[0].data_vb
                 else:
