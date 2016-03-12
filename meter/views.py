@@ -1260,11 +1260,12 @@ def meterDataChart(request):
         while((today-preday).days<period):
             for eachMeter in meterEUISet:
                 valuelist = Data.objects.raw(
-                    "select * from meter_data where meter_eui = %s and data_date > %s order by data_date limit 1",
+                    "select data_vb from meter_data where meter_eui = %s and data_date > %s order by data_date limit 1",
                     [eachMeter, preday.date()])
-                print valuelist
+                for a in valuelist:
+                    print "------->" , a
                 if valuelist:
-                    value1 = valuelist[0].data_vb
+                    value1 = valuelist[0]
                 else:
                     continue
                     
