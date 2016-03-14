@@ -1245,37 +1245,11 @@ def meterDataChart(request):
     responsedata = []
     if 'user_id' in request.GET:
         userID = request.GET['user_id']
-        if 'period' in request.GET:
-            period = int(request.GET['period'])
-        else:
-            period = 30
+        period = int(request.GET['period']) if 'period' in request.GET else 30
+        today = datetime.datetime.now().date()
+        before = today -  datetime.timedelta(days=period)
 
-        meterEUISet = Meter.objects.filter(user_id__startswith = userID).values_list('meter_eui', flat=True)
-        dataList = Data.objects.filter(meter_eui__in = meterEUISet)
-
-        #TODO bugfixed
-        if not len(dataList):
-            return HttpResponse(json.dumps(responsedata),content_type ="application/json")
-
-        today=datetime.datetime.now().replace(hour=23,minute=59,second=59,microsecond=999999)
-        totalperiod = (today - dataList[0].data_date).days
-        if totalperiod < period:
-            period = totalperiod
-        preday = today
-
-        vb_total = 0
-        while((today-preday).days<period):
-            for eachMeter in meterEUISet:
-                vb_total = vb_total + _calAmountPerDay(eachMeter,preday.date())
-
-            each_dict = {
-                "data_date": time.mktime(preday.timetuple())*1000 - 85680000,
-                "data_qb": vb_total
-            }
-            responsedata.append(each_dict)
-            preday = preday - datetime.timedelta(days=1)
-            vb_total = 0
-
+        responsedata = _calAmountByPeriod(userID,before,today)
     return HttpResponse(json.dumps(responsedata),content_type ="application/json")
 
 
@@ -1293,6 +1267,31 @@ def _calAmountPerDay(eachMeter, date):
         [eachMeter, date, dayAfter])
     re = cursor.fetchone()
     return re[0] if re[0] else 0
+
+
+def _calAmountByPeriod(userID, startDay, endDay):
+    cursor = connection.cursor()
+    cursor.execute(
+        '''
+        select data_date , max(data_vb) - min(data_vb) as data_qb  from meter_data
+            where meter_eui  in ( select meter_eui from meter_meter where user_id like  %s )
+                 and data_date > %s and data_date < %s
+                 group by date(data_date)
+                 order by data_date desc
+        ''',
+        [userID + "%", startDay, endDay])
+    data = cursor.fetchall()
+    result = []
+    day = startDay
+    while day <= endDay:
+        result.append({
+            "data_date": time.mktime(day.timetuple()) * 1000 - 85680000,
+            "data_qb": 0
+        })
+        day = day + datetime.timedelta(days=1)
+    for e in data:
+        result[(e[0].date()- startDay).days]["data_qb"] = e[1]
+    return result
 
 
 def retrieveCurUser(request):
