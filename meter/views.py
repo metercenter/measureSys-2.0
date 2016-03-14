@@ -1256,19 +1256,6 @@ def meterDataChart(request):
 """
 optimized calculation
 """
-
-
-def _calAmountPerDay(eachMeter, date):
-    dayAfter = date + datetime.timedelta(days=1)
-    cursor = connection.cursor()
-    cursor.execute(
-        # "select max(data_vb)-min(data_vb) from meter_data where meter_eui = %s and data_date > %s and data_date < %s",
-        "select max(data_vb)-min(data_vb) from meter_data where meter_eui = %s and data_date > %s and data_date < %s",
-        [eachMeter, date, dayAfter])
-    re = cursor.fetchone()
-    return re[0] if re[0] else 0
-
-
 def _calAmountByPeriod(userID, startDay, endDay):
     cursor = connection.cursor()
     cursor.execute(
@@ -1277,7 +1264,6 @@ def _calAmountByPeriod(userID, startDay, endDay):
             where meter_eui  in ( select meter_eui from meter_meter where user_id like  %s )
                  and data_date > %s and data_date < %s
                  group by date(data_date)
-                 order by data_date desc
         ''',
         [userID + "%", startDay, endDay])
     data = cursor.fetchall()
