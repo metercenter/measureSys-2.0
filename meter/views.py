@@ -968,7 +968,7 @@ def getGasCompany(meterEUI):
     user = User.objects.get(user_id = userID)
     return user.user_company
 
-def getWarnInfo(request):
+def getWarnInfoOld(request):
     if 'user_id' in request.GET:
         responsedata = []
         userID = request.GET['user_id']
@@ -1008,6 +1008,94 @@ def getWarnInfo(request):
                     }
                     responsedata.append(each_dict)
         return HttpResponse(json.dumps(responsedata),content_type ="application/json")
+
+def getWarnInfo(request):
+    if 'user_id' in request.GET:
+        responsedata = []
+        userID = request.GET['user_id']
+        cursor = connection.cursor()
+        cursor.execute(
+            '''
+            select data_warn, warn_date,meter_eui,warn_other from meter_warninfo where meter_eui in (select meter_eui from meter_meter where user_id like %s)
+            ''',
+            [userID + "%"])
+        data = cursor.fetchall()
+        print data[0]
+        for d in data:
+            meter_eui = d[2]
+            responsedata.append({
+                "data_warn": d[0],
+                "warn_date": d[1].strftime("%Y/%m/%d %H:%M:%S"),
+                "meter_info": "getMeterName(meter_eui)",
+                "other": d[3],
+                "solution": "",
+                "warn_level": "",
+                "warn_info": "",
+                "company": "getGasCompany(meter_eui)",
+                "user_id": "getUserName(meter_eui)",
+            })
+        # meterSet = Meter.objects.filter(user_id__startswith = userID)
+        # for i in range (0, len(meterSet)):
+        #     warnInfoSet = WarnInfo.objects.filter(meter_eui = meterSet[i].meter_eui)
+        #     print "shit->" , warnInfoSet
+        #     for j in range(0,len(warnInfoSet)):
+        #         warnData = DataWarnType.objects.get(data_warn = warnInfoSet[j].data_warn)
+        #         if 'warn_level' in request.GET:
+        #             if warnData.data_warn_level == request.GET['warn_level']:
+        #                 each_dict = {
+        #                     "data_warn": warnInfoSet[j].data_warn,
+        #                     "warn_date": warnInfoSet[j].warn_date.strftime("%Y/%m/%d %H:%M:%S"),
+        #                     "meter_info": getMeterName(warnInfoSet[j].meter_eui),
+        #                     "other": warnInfoSet[j].warn_other,
+        #                     "solution": warnData.data_warn_solution,
+        #                     "warn_level": warnData.data_warn_level,
+        #                     "warn_info" : warnData.data_warn_reason,
+        #                     "company": getGasCompany(warnInfoSet[j].meter_eui),
+        #                     "user_id": getUserName(warnInfoSet[j].meter_eui),
+        #                 }
+        #                 responsedata.append(each_dict)
+        #             else:
+        #                 continue
+        #         else:
+        #             each_dict = {
+        #                 "data_warn": warnInfoSet[j].data_warn,
+        #                 "warn_date": warnInfoSet[j].warn_date.strftime("%Y/%m/%d %H:%M:%S"),
+        #                 "meter_info": getMeterName(warnInfoSet[j].meter_eui),
+        #                 "other": warnInfoSet[j].warn_other,
+        #                 "solution": warnData.data_warn_solution,
+        #                 "warn_level": warnData.data_warn_level,
+        #                 "warn_info" : warnData.data_warn_reason,
+        #                 "company": getGasCompany(warnInfoSet[j].meter_eui),
+        #                 "user_id": getUserName(warnInfoSet[j].meter_eui),
+        #             }
+        #             responsedata.append(each_dict)
+        return HttpResponse(json.dumps(responsedata),content_type ="application/json")
+
+"""
+optimized calculation
+"""
+def _getWarnInfo(userID, startDay, endDay):
+    cursor = connection.cursor()
+    cursor.execute(
+        '''
+        select data_date , max(data_vb) - min(data_vb) as data_qb  from meter_data
+            where meter_eui  in ( select meter_eui from meter_meter where user_id like  %s )
+                 and data_date > %s and data_date < %s
+                 group by date(data_date)
+        ''',
+        [userID + "%", startDay, endDay])
+    data = cursor.fetchall()
+    result = []
+    day = startDay
+    while day <= endDay:
+        result.append({
+            "data_date": time.mktime(day.timetuple()) * 1000 - 85680000,
+            "data_qb": 0
+        })
+        day = day + datetime.timedelta(days=1)
+    for e in data:
+        result[(e[0].date()- startDay).days]["data_qb"] = e[1]
+    return result
 
 def changeCompanyIntro(request):
     if  not 'user_id' in request.session:
