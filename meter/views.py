@@ -1034,7 +1034,7 @@ def getWarnInfo(request):
               inner join meter_user uu
                           on  uu.user_id= substr(m.user_id,1,8)
               left join meter_datawarntype warnType
-                          on warnType.data_warn = w.data_warn ;
+                          on warnType.data_warn = w.data_warn limit 1000;
             ''',
             [userID + "%"])
         data = cursor.fetchall()
