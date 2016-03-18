@@ -1013,6 +1013,9 @@ def getWarnInfo(request):
     if 'user_id' in request.GET:
         responsedata = []
         userID = request.GET['user_id']
+        print "page" , request.GET['page_num']
+        page =int(request.GET['pageNum']) if request.GET['pageNum'] else 1
+        pageSize = int(request.GET['pageSize']) if request.GET['pageSize'] else 100
         cursor = connection.cursor()
         cursor.execute(
             '''
@@ -1034,9 +1037,9 @@ def getWarnInfo(request):
               inner join meter_user uu
                           on  uu.user_id= substr(m.user_id,1,8)
               left join meter_datawarntype warnType
-                          on warnType.data_warn = w.data_warn limit 1000;
+                          on warnType.data_warn = w.data_warn limit %s , %s;
             ''',
-            [userID + "%"])
+            [userID + "%" , (page-1)*pageSize,pageSize])
         data = cursor.fetchall()
         for d in data:
             responsedata.append({
