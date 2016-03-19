@@ -375,19 +375,19 @@ function ___________dataAnalyzeModal________end(){};
 
 function ___________importantWarnData________start(){};
 app.controller('WarnCtrl-1', function ($scope, $http, globalParams) {
-	$http({
-		url:'/getWarnInfo',
-		method:'GET',
-		params:{user_id: globalParams.user_id,
-			warn_level: "一级警报"}
-	}).success(function(response) {
-
-	  $scope.rowCollection = response;
-
-	  //copy the references (you could clone ie angular.copy but then have to go through a dirty checking for the matches)
-	  $scope.displayedCollection = [].concat($scope.rowCollection);
-
-	  });
+	//$http({
+	//	url:'/getWarnInfo',
+	//	method:'GET',
+	//	params:{user_id: globalParams.user_id,
+	//		warn_level: "一级警报"}
+	//}).success(function(response) {
+    //
+	//  $scope.rowCollection = response;
+    //
+	//  //copy the references (you could clone ie angular.copy but then have to go through a dirty checking for the matches)
+	//  $scope.displayedCollection = [].concat($scope.rowCollection);
+    //
+	//  });
     $scope.paginationConf = {
         currentPage: 1,
         totalItems: 8000,
@@ -400,8 +400,12 @@ app.controller('WarnCtrl-1', function ($scope, $http, globalParams) {
             $http({
                 url:'/getWarnInfo',
                 method:'GET',
-                params:{user_id: globalParams.user_id,
-                    warn_level: "一级警报",page_num:THIS.currentPage,page_size:THIS.pagesLength}
+                params: {
+                    user_id: globalParams.user_id,
+                    warn_level: "一级警报",
+                    pageNum: THIS.currentPage,
+                    pageSize:  THIS.pagesLength
+                }
             }).success(function(response) {
 
                 $scope.rowCollection = response;

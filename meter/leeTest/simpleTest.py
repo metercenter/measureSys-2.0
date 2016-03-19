@@ -7,3 +7,6 @@ s = {}
 for e in a:
     s[e[1].date()] = e
 print s
+
+ss='1'
+print int(ss)

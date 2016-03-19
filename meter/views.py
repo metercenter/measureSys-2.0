@@ -1013,9 +1013,8 @@ def getWarnInfo(request):
     if 'user_id' in request.GET:
         responsedata = []
         userID = request.GET['user_id']
-        print "page" , request.GET['page_num']
-        page =int(request.GET['pageNum']) if request.GET['pageNum'] else 1
-        pageSize = int(request.GET['pageSize']) if request.GET['pageSize'] else 100
+        page =int(request.GET['pageNum'])
+        pageSize = int(request.GET['pageSize'])
         cursor = connection.cursor()
         cursor.execute(
             '''
