@@ -390,12 +390,11 @@ app.controller('WarnCtrl-1', function ($scope, $http, globalParams) {
 	//  });
     $scope.paginationConf = {
         currentPage: 1,
-        totalItems: 8000,
+        totalItems: 1,
         itemsPerPage: 15,
         pagesLength: 15,
         perPageOptions: [10, 20, 30, 40, 50],
         onChange: function(){
-            console.log($scope.paginationConf.currentPage);
             THIS = $scope.paginationConf;
             $http({
                 url:'/getWarnInfo',
@@ -404,15 +403,15 @@ app.controller('WarnCtrl-1', function ($scope, $http, globalParams) {
                     user_id: globalParams.user_id,
                     warn_level: "一级警报",
                     pageNum: THIS.currentPage,
-                    pageSize:  THIS.pagesLength
+                    pageSize:  THIS.itemsPerPage
                 }
             }).success(function(response) {
 
-                $scope.rowCollection = response;
+                $scope.rowCollection = response.data;
+                THIS.totalItems = response.count
 
                 //copy the references (you could clone ie angular.copy but then have to go through a dirty checking for the matches)
                 $scope.displayedCollection = [].concat($scope.rowCollection);
-
             });
         }
     };

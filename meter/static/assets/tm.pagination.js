@@ -166,8 +166,10 @@ angular.module('tm.pagination', []).directive('tmPagination',[function(){
 
             // 跳转页
             scope.jumpToPage = function(){
-                scope.jumpPageNum = scope.jumpPageNum.replace(/[^0-9]/g,'');
-                if(scope.jumpPageNum !== ''){
+                if (scope.jumpPageNum == null || scope.jumpPageNum==undefined)
+                    return;
+                scope.jumpPageNum = scope.jumpPageNum.replace(/[^0-9]/g, '');
+                if (scope.jumpPageNum !== '') {
                     scope.conf.currentPage = scope.jumpPageNum;
                 }
             };

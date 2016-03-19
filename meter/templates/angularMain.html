@@ -779,6 +779,30 @@
                 </div>
                 <div class="panel-body text-left">
                     <div ng-controller="WarnCtrl-1">
+                        <table   class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th  >企业名称</th>
+                                <th  >用户信息</th>
+                                <th  >表计信息</th>
+                                <th  >报警信息</th>
+                                <th  >报警级别</th>
+                                <th  >处理办法</th>
+                                <th  >报警时间</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="row in displayedCollection">
+                                <td>{{row.company}}</td>
+                                <td>{{row.user_id}}</td>
+                                <td>{{row.meter_info}}</td>
+                                <td>{{row.warn_info}}</td>
+                                <td>{{row.warn_level}}</td>
+                                <td>{{row.solution}}</td>
+                                <td>{{row.warn_date}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
                         <tm-pagination conf="paginationConf"></tm-pagination>
                         <table st-table="displayedCollection" st-safe-src="rowCollection"
                                class="table table-striped">

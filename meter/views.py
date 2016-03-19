@@ -21,6 +21,8 @@ import xlsxwriter
 # from django.core.servers.basehttp import FileWrapper
 from wsgiref.util import FileWrapper
 import unicodedata
+from meter.service.RockService import PageModal, DataService
+
 
 def unicode_csv_reader(unicode_csv_data, dialect=csv.excel, **kwargs):
     # csv.py doesn't do Unicode; encode temporarily as UTF-8:
@@ -1011,48 +1013,11 @@ def getWarnInfoOld(request):
 
 def getWarnInfo(request):
     if 'user_id' in request.GET:
-        responsedata = []
         userID = request.GET['user_id']
-        page =int(request.GET['pageNum'])
+        page = int(request.GET['pageNum'])
         pageSize = int(request.GET['pageSize'])
-        cursor = connection.cursor()
-        cursor.execute(
-            '''
-            select
-            w.data_warn,
-            w.warn_date,
-            m.meter_name,
-            w.warn_other,
-            warnType.data_warn_solution ,
-            warnType.data_warn_level ,
-            warnType.data_warn_reason ,
-            u.user_company,
-            uu.user_company
-              from meter_warninfo w
-              inner join meter_meter m
-                          on  m.user_id like %s and w.meter_eui = m.meter_eui
-              inner join meter_user u
-                          on  u.user_id= substr(m.user_id,1,4)
-              inner join meter_user uu
-                          on  uu.user_id= substr(m.user_id,1,8)
-              left join meter_datawarntype warnType
-                          on warnType.data_warn = w.data_warn limit %s , %s;
-            ''',
-            [userID + "%" , (page-1)*pageSize,pageSize])
-        data = cursor.fetchall()
-        for d in data:
-            responsedata.append({
-                "data_warn": d[0],
-                "warn_date": d[1].strftime("%Y/%m/%d %H:%M:%S"),
-                "meter_info":d[2],
-                "other": d[3],
-                "solution": d[4],
-                "warn_level": d[5],
-                "warn_info": d[6],
-                "company": d[7],
-                "user_id": d[8],
-            })
-        return HttpResponse(json.dumps(responsedata),content_type ="application/json")
+        re = DataService.getWarnInfo(userID, page, pageSize)
+        return HttpResponse(json.dumps(re.__dict__), content_type="application/json")
 
 def changeCompanyIntro(request):
     if  not 'user_id' in request.session:
