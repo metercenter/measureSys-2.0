@@ -1267,16 +1267,14 @@ def meterDataChart(request):
 optimized calculation
 """
 def _calAmountByPeriod(userID, startDay, endDay):
-    cursor = connection.cursor()
-    cursor.execute(
+    data = DataService.execSqlFetchAll(
         '''
         select data_date , max(data_vb) - min(data_vb) as data_qb  from meter_data
             where meter_eui  in ( select meter_eui from meter_meter where user_id like  %s )
                  and data_date > %s and data_date < %s
                  group by date(data_date)
         ''',
-        [userID + "%", startDay, endDay])
-    data = cursor.fetchall()
+        userID + "%", startDay, endDay)
     result = []
     day = startDay
     while day <= endDay:

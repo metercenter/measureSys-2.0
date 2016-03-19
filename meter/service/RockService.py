@@ -4,12 +4,7 @@ from django.db import connection
 __author__ = 'peng'
 
 
-class PageModal(JSONEncoder):
-    def __init__(self):
-        pass
-
-    def default(self, o):
-        return o.__dict__
+class PageModal:
 
     pageNum = 1
     pageSize = 1000
@@ -19,10 +14,25 @@ class PageModal(JSONEncoder):
 
 class DataService:
     @staticmethod
+    def execSqlFetchAll(sql, *args):
+        cursor = connection.cursor()
+        cursor.execute(sql, args)
+        re = cursor.fetchall()
+        cursor.close()
+        return re
+
+    @staticmethod
+    def execSqlFetchOnel(sql, *args):
+        cursor = connection.cursor()
+        cursor.execute(sql, args)
+        re = cursor.fetchone()
+        cursor.close()
+        return re
+
+    @staticmethod
     def getWarnInfo(user_id, page, page_size):
         responsedata = []
-        cursor = connection.cursor()
-        cursor.execute(
+        data = DataService.execSqlFetchAll(
             '''
             select
             w.data_warn,
@@ -46,9 +56,8 @@ class DataService:
             order by  w.warn_date desc
             limit %s , %s
             ''',
-            [user_id + "%", (page - 1) * page_size, page_size])
-        data = cursor.fetchall()
-        cursor.execute(
+            user_id + "%", (page - 1) * page_size, page_size)
+        count = DataService.execSqlFetchOnel(
             '''
             select
             count(1)
@@ -62,8 +71,7 @@ class DataService:
               left join meter_datawarntype warnType
                           on warnType.data_warn = w.data_warn
             ''',
-            [user_id + "%"])
-        count = cursor.fetchone()
+            user_id + "%")
         for d in data:
             responsedata.append({
                 "data_warn": d[0],
