@@ -3,3 +3,4 @@
 .DS_Store
 .pydevproject
 .settings/
+db.sqlite3
