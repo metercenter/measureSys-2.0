@@ -5,3 +5,4 @@
 .settings/
 *.sqlite3
 testpy.iml
+db.sqlite3
