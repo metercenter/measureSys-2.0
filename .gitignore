@@ -4,3 +4,4 @@
 .pydevproject
 .settings/
 db.sqlite3
+*.sqlite3
