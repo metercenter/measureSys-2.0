@@ -5,7 +5,7 @@
 angular.module('tm.pagination', []).directive('tmPagination',[function(){
     return {
         restrict: 'EA',
-        template: '<div class="page-list">' +
+        template: '<div class="page-list" align="center">' +
         '<ul class="pagination" ng-show="conf.totalItems > 0">' +
         '<li ng-class="{disabled: conf.currentPage == 1}" ng-click="prevPage()"><span>&laquo;</span></li>' +
         '<li ng-repeat="item in pageList track by $index" ng-class="{active: item == conf.currentPage, separate: item == \'...\'}" ' +
@@ -15,7 +15,7 @@ angular.module('tm.pagination', []).directive('tmPagination',[function(){
         '<li ng-class="{disabled: conf.currentPage == conf.numberOfPages}" ng-click="nextPage()"><span>&raquo;</span></li>' +
         '</ul>' +
         '<div class="page-total" ng-show="conf.totalItems > 0">' +
-        '第<input type="text" ng-model="jumpPageNum"  ng-keyup="jumpToPage($event)"/>页 ' +
+        '第<input type="text" ng-model="jumpPageNum"  ng-keyup="jumpToPage($event)"  style="width:50px;height:20px"/>页 ' +
         '每页<select ng-model="conf.itemsPerPage" ng-options="option for option in conf.perPageOptions "></select>' +
         '/共<strong>{{ conf.totalItems }}</strong>条' +
         '</div>' +

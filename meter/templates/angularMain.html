@@ -804,43 +804,6 @@
                             </tbody>
                         </table>
                         <tm-pagination conf="paginationConf"></tm-pagination>
-                        <table st-table="displayedCollection" st-safe-src="rowCollection"
-                               class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th colspan="2"><input st-search="" class="form-control"
-                                                       placeholder="在此搜索。。。" type="text"/></th>
-                            </tr>
-                            <tr>
-                                <th st-sort="company">企业名称</th>
-                                <th st-sort="user_id">用户信息</th>
-                                <th st-sort="meter_info">表计信息</th>
-                                <th st-sort="warn_info">报警信息</th>
-                                <th st-sort="warn_level">报警级别</th>
-                                <th st-sort="solution">处理办法</th>
-                                <th st-sort="warn_date">报警时间</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr ng-repeat="row in displayedCollection">
-                                <td>{{row.company}}</td>
-                                <td>{{row.user_id}}</td>
-                                <td>{{row.meter_info}}</td>
-                                <td>{{row.warn_info}}</td>
-                                <td>{{row.warn_level}}</td>
-                                <td>{{row.solution}}</td>
-                                <td>{{row.warn_date}}</td>
-                            </tr>
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <td colspan="10" class="text-center">
-                                    <div st-items-by-page="10" st-pagination=""
-                                         st-template="pagination.custom.html"></div>
-                                </td>
-                            </tr>
-                            </tfoot>
-                        </table>
 
                     </div>
                 </div>
