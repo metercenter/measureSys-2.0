@@ -1,27 +1,25 @@
 #coding=utf8
-from django.db import connection
+import json
+import datetime
+import csv
+import os
+import time
+
 from django.shortcuts import render_to_response
-import transaction as transaction
+from django.http import HttpResponse
+from django.template import RequestContext
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
+import xlsxwriter
+
 from meter.models import Meter, MeterType, DataWarnType
 from meter.models import User
 from meter.models import Data, WarnInfo
 from meter.models import Company, UserFeedback, IdentificationMeter, outputDiff, District, valveManagement, meterManagement, filterManagement
-from django.http import HttpResponse
-from django.utils import formats
-import json
-import datetime
-from django.template import RequestContext
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
-import csv
-import sys, os
-import time
-from django.db.models import Sum
-import xlsxwriter
+
 # from django.core.servers.basehttp import FileWrapper
 from wsgiref.util import FileWrapper
-import unicodedata
-from meter.service.RockService import PageModal, DataService
+from meter.service.RockService import DataService
 
 
 def unicode_csv_reader(unicode_csv_data, dialect=csv.excel, **kwargs):
