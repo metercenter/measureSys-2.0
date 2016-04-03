@@ -37,14 +37,14 @@ class MeterAdmin(admin.ModelAdmin):
 class Data(models.Model):
     data_id = models.IntegerField(default=0)
     meter_eui = models.CharField(max_length=200)
-    data_warn = models.IntegerField(default=0)
     data_date = models.DateTimeField('date published')
-    data_vb = models.CharField(max_length=200)
-    data_vm = models.CharField(max_length=200)
-    data_p = models.CharField(max_length=200)
-    data_t = models.CharField(max_length=200)
-    data_qb = models.CharField(max_length=200)
-    data_qm = models.CharField(max_length=200)
+    data_warn = models.IntegerField(default=0)
+    data_vb = models.DecimalField(max_digits=20, decimal_places=4)
+    data_vm = models.DecimalField(max_digits=20, decimal_places=4)
+    data_p = models.DecimalField(max_digits=20, decimal_places=4)
+    data_t = models.DecimalField(max_digits=20, decimal_places=4)
+    data_qb = models.DecimalField(max_digits=20, decimal_places=4)
+    data_qm = models.DecimalField(max_digits=20, decimal_places=4)
     data_battery = models.CharField(max_length=200)
 
 class DataAdmin(admin.ModelAdmin):
