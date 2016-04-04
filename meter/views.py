@@ -216,40 +216,7 @@ def getData(request):
 
             page = int(request.GET['pageNum'])
             pageSize = int(request.GET['pageSize'])
-            data =DataService.execSqlFetchAll('''
-            select id ,data_id , meter_eui,data_date , data_vb,data_vm,data_p,data_t,data_qb , data_qm,data_battery
-                from meter_data
-                where meter_eui in ( SELECT meter_eui from meter_meter where user_id = %s)
-                and data_date >= %s
-                order by data_date DESC
-                limit %s,%s
-            ''',user_id,preday.date() ,page*pageSize,pageSize)
-            count =DataService.execSqlFetchOnel('''
-            select count(1)
-                from meter_data
-                where meter_eui in ( SELECT meter_eui from meter_meter where user_id = %s)
-                and data_date >= %s
-            ''',user_id,preday.date() )
-            for each in data:
-                each_dict = {
-                    "id": each[0],
-                    "data_id": each[1],
-                    "meter_eui":  each[2],
-                    "data_date": each[3].strftime("%Y/%m/%d %H:%M:%S"),
-                    "data_vb": each[4],
-                    "data_vm": each[5],
-                    "data_p":     each[6],
-                    "data_t": each[7],
-                    "data_qb": each[8],
-                    "data_qm": each[9],
-                    "data_battery": each[10],
-                }
-                responsedata.append(each_dict)
-            re = PageModal()
-            re.pageNum = page
-            re.pageSize = pageSize
-            re.count = count
-            re.data = responsedata
+            re= DataService.getData(user_id,preday.date(),page,pageSize)
         if 'meter_eui' in request.GET:
 
             meter_eui = request.GET['meter_eui']
