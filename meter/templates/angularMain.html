@@ -1239,8 +1239,7 @@
                     <h3 class="panel-title">实时数据</h3>
                 </div>
                 <div class="panel-body text-left">
-                    <div ng-controller="MeterDataCtrl" st-table="displayedCollection"
-                         st-safe-src="rowCollection">
+                    <div ng-controller="MeterDataCtrl"  >
                         <div class="row">
                             <div class="col-xs-6">
                                 <div class="btn-group">
@@ -1259,7 +1258,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-3 pull-right">
-                                <input st-search="" class="form-control" placeholder="在此搜索。。。" type="text"/>
+                                <input   class="form-control" placeholder="在此搜索。。。" type="text"/>
                             </div>
                         </div>
 
@@ -1267,16 +1266,16 @@
                         <table class="table table-striped">
                             <thead>
                             <tr>
-                                <th st-sort="data_id">数据编号</th>
-                                <th st-sort="data_date">接收时间</th>
-                                <th st-sort="data_vb">标况总累计(Nm³)</th>
-                                <th st-sort="data_vm" ng-if="meter.meter_type != '卓度'">工况总累计(Nm³)</th>
-                                <th st-sort="data_p" ng-if="meter.meter_type != '卓度'">压力(bar)</th>
-                                <th st-sort="data_t" ng-if="meter.meter_type != '卓度'">温度(℃)</th>
-                                <th st-sort="data_qb">标况瞬时流量(Nm³/h)</th>
-                                <th st-sort="data_qm" ng-if="meter.meter_type != '卓度'">工况瞬时流量(Nm³/h)</th>
-                                <th st-sort="data_battery" ng-if="meter.meter_type != '卓度'">电量(月)</th>
-                                <th st-sort="data_battery" ng-if="meter.meter_type == '卓度'">电量(V)</th>
+                                <th >数据编号</th>
+                                <th >接收时间</th>
+                                <th  >标况总累计(Nm³)</th>
+                                <th   ng-if="meter.meter_type != '卓度'">工况总累计(Nm³)</th>
+                                <th  ng-if="meter.meter_type != '卓度'">压力(bar)</th>
+                                <th  ng-if="meter.meter_type != '卓度'">温度(℃)</th>
+                                <th  >标况瞬时流量(Nm³/h)</th>
+                                <th  ng-if="meter.meter_type != '卓度'">工况瞬时流量(Nm³/h)</th>
+                                <th  ng-if="meter.meter_type != '卓度'">电量(月)</th>
+                                <th   ng-if="meter.meter_type == '卓度'">电量(V)</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -1302,8 +1301,7 @@
                             <tfoot>
                             <tr>
                                 <td colspan="10" class="text-center">
-                                    <div st-items-by-page="10" st-pagination=""
-                                         st-template="pagination.custom.html"></div>
+                                    <tm-pagination conf="paginationConf"></tm-pagination>
                                 </td>
                             </tr>
                             </tfoot>

@@ -19,7 +19,7 @@ from meter.models import Company, UserFeedback, IdentificationMeter, outputDiff,
 
 # from django.core.servers.basehttp import FileWrapper
 from wsgiref.util import FileWrapper
-from meter.service.RockService import DataService
+from meter.service.RockService import DataService, PageModal
 
 
 def unicode_csv_reader(unicode_csv_data, dialect=csv.excel, **kwargs):
@@ -213,22 +213,43 @@ def getData(request):
             period = request.GET['period']
             today=datetime.datetime.now()
             preday = today - datetime.timedelta(days=(int)(period))
-            meter = Meter.objects.get(user_id = user_id)
-            for each in Data.objects.filter(meter_eui = meter.meter_eui).filter(data_date__gt = preday.date()).order_by('-data_date'):
+
+            page = int(request.GET['pageNum'])
+            pageSize = int(request.GET['pageSize'])
+            data =DataService.execSqlFetchAll('''
+            select id ,data_id , meter_eui,data_date , data_vb,data_vm,data_p,data_t,data_qb , data_qm,data_battery
+                from meter_data
+                where meter_eui in ( SELECT meter_eui from meter_meter where user_id = %s)
+                and data_date >= %s
+                order by data_date DESC
+                limit %s,%s
+            ''',user_id,preday.date() ,page*pageSize,pageSize)
+            count =DataService.execSqlFetchOnel('''
+            select count(1)
+                from meter_data
+                where meter_eui in ( SELECT meter_eui from meter_meter where user_id = %s)
+                and data_date >= %s
+            ''',user_id,preday.date() )
+            for each in data:
                 each_dict = {
-                    "id": each.pk,
-                    "data_id": each.data_id,
-                    "meter_eui":  each.meter_eui,
-                    "data_date": each.data_date.strftime("%Y/%m/%d %H:%M:%S"),
-                    "data_vb": each.data_vb,
-                    "data_vm": each.data_vm,
-                    "data_p":     each.data_p,
-                    "data_t": each.data_t,
-                    "data_qb": each.data_qb,
-                    "data_qm": each.data_qm,
-                    "data_battery": each.data_battery,
+                    "id": each[0],
+                    "data_id": each[1],
+                    "meter_eui":  each[2],
+                    "data_date": each[3].strftime("%Y/%m/%d %H:%M:%S"),
+                    "data_vb": each[4],
+                    "data_vm": each[5],
+                    "data_p":     each[6],
+                    "data_t": each[7],
+                    "data_qb": each[8],
+                    "data_qm": each[9],
+                    "data_battery": each[10],
                 }
                 responsedata.append(each_dict)
+            re = PageModal()
+            re.pageNum = page
+            re.pageSize = pageSize
+            re.count = count
+            re.data = responsedata
         if 'meter_eui' in request.GET:
 
             meter_eui = request.GET['meter_eui']
@@ -254,8 +275,10 @@ def getData(request):
                 }
                 responsedata.append(each_dict)
 
-        return HttpResponse(json.dumps(responsedata),content_type ="application/json")
-    except:
+        return HttpResponse(json.dumps(re.__dict__), content_type="application/json")
+
+    except Exception,e:
+        print Exception,":",e
         print('getData:user is not existed')
     response = {}
     response['status'] = 'SUCESS'

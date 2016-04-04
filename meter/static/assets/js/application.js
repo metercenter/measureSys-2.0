@@ -460,23 +460,53 @@ function ___________userFeedback________end(){};
 
 function ___________MeterDataCtrl________start(){};  
 app.controller('MeterDataCtrl', function ($scope, $http, globalParams) {
-	  var periodTime = 7;
-	  
-	  update();
+    var periodTime = 7;
+    $scope.paginationConf = {
+        currentPage: 1,
+        totalItems: 1,
+        itemsPerPage: 15,
+        pagesLength: 15,
+        perPageOptions: [10, 20, 30, 40, 50],
+        onChange: function () {
+            THIS = $scope.paginationConf;
+            $http({
+                url: '/get-data',
+                method: 'GET',
+                params: {
+                    user_id: globalParams.user_id,
+                    period: periodTime,
+                    pageNum: THIS.currentPage,
+                    pageSize: THIS.itemsPerPage
+                }
+            }).success(function (response) {
+
+                $scope.rowCollection = response.data;
+                THIS.totalItems = response.count
+
+                //copy the references (you could clone ie angular.copy but then have to go through a dirty checking for the matches)
+                $scope.displayedCollection = [].concat($scope.rowCollection);
+            });
+        }
+    };
+	  //update();
 	  
 	  function update() {
-			$http({
-				url:'/get-data',
-				method:'GET',
-				params:{user_id: globalParams.user_id,
-					period:periodTime}
-			}).success(function(response) {
-
-			  $scope.rowCollection = response;
-			  //copy the references (you could clone ie angular.copy but then have to go through a dirty checking for the matches)
-			  $scope.displayedCollection = [].concat($scope.rowCollection);
-			  });
+           $scope.paginationConf.onChange();
+			//$http({
+			//	url:'/get-data',
+			//	method:'GET',
+			//	params:{user_id: globalParams.user_id,
+			//		period:periodTime,
+             //       pageNum: THIS.currentPage,
+             //       pageSize:  THIS.itemsPerPage}
+			//}).success(function(response) {
+            //
+			//  $scope.rowCollection = response;
+			//  //copy the references (you could clone ie angular.copy but then have to go through a dirty checking for the matches)
+			//  $scope.displayedCollection = [].concat($scope.rowCollection);
+			//  });
 	  }
+
 
 	  $scope.week = function () {
 	    $("#oneWeekBt").attr("class","btn btn-primary");
