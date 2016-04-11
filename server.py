@@ -81,7 +81,7 @@ while True:
         qb_s = str(qb/1000.0)
         vb_s = str(vb1)+'.'+str(vb2)
         battery_s = str(battery/1000.0)
-        new_data = Data(data_id=new_id, meter_eui=eui_str, data_battery=battery_s, data_vb=vb_s, data_qb=qb_s)
+        new_data = Data(data_id=new_id, meter_eui=eui_str, data_battery=float(battery_s), data_vb=float(vb_s), data_qb=float(qb_s))
         new_data.data_date = datetime.datetime.now()
         try:
             new_data.save()
@@ -114,7 +114,7 @@ while True:
         t_s = str("%.3f" % temp)
         qb_s = str(qb)
         qm_s = str(qm)
-        new_data = Data(data_id=new_id, meter_eui=eui_str, data_battery=battery_s, data_vb=vb_s, data_vm=vm_s, data_p=p_s, data_t=t_s, data_qb=qb_s, data_qm=qm_s)
+        new_data = Data(data_id=new_id, meter_eui=eui_str, data_battery=float(battery_s), data_vb=float(vb_s), data_vm=float(vm_s), data_p=float(p_s), data_t=float(t_s), data_qb=float(qb_s), data_qm=float(qm_s))
         new_data.data_date = datetime.datetime.now()
         try:
             new_data.save()
@@ -148,7 +148,7 @@ while True:
         t_s = str("%.3f" % temp)
         qb_s = str(qb)
         qm_s = str(qm)
-        new_data = Data(data_id=new_id, meter_eui=eui_str, data_battery=battery_s, data_vb=vb_s, data_vm=vm_s, data_p=p_s, data_t=t_s, data_qb=qb_s, data_qm=qm_s)
+        new_data = Data(data_id=new_id, meter_eui=eui_str, data_battery=float(battery_s), data_vb=float(vb_s), data_vm=float(vm_s), data_p=float(p_s), data_t=float(t_s), data_qb=float(qb_s), data_qm=float(qm_s))
         new_data.data_date = datetime.datetime.now()
         try:
             new_data.save()
@@ -186,7 +186,7 @@ while True:
         vb_s = str("%.3f" % vb)
         vm_s = str("%.3f" % vm)
         battery_s="-"
-        new_data = Data(data_id=new_id, meter_eui=eui_str, data_battery=battery_s, data_vb=vb_s, data_vm=vm_s, data_p=p_s, data_t=t_s, data_qb=qb_s, data_qm=qm_s)
+        new_data = Data(data_id=new_id, meter_eui=eui_str, data_battery=float(battery_s), data_vb=float(vb_s), data_vm=float(vm_s), data_p=float(p_s), data_t=float(t_s), data_qb=float(qb_s), data_qm=float(qm_s))
         new_data.data_date = datetime.datetime.now()
         try:
             new_data.save()
