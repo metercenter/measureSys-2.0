@@ -29,7 +29,7 @@ def unicode_csv_reader(unicode_csv_data, dialect=csv.excel, **kwargs):
     csv.writer
     for row in csv_reader:
         # decode UTF-8 back to Unicode, cell by cell:
-        yield [unicode(cell, 'utf-8') for cell in row]
+        yield [str(cell, 'utf-8') for cell in row]
 
 def utf_8_encoder(unicode_csv_data):
     for line in unicode_csv_data:
@@ -178,7 +178,7 @@ def warnList(request):
                     }
                     responsedata.append(data_dict)
     except:
-        print "user is not exsited"
+        print ("user is not existed")
     response = {}
     response['status'] = 'SUCESS'
     response['data'] = responsedata
@@ -199,7 +199,7 @@ def userList(request):
             }
             responsedata.append(user_dict)
     except:
-        print "user is not exsited"
+        print ("user is not existed")
     response = {}
     response['status'] = 'SUCESS'
     response['data'] = responsedata
@@ -220,7 +220,6 @@ def getData(request):
         if 'meter_eui' in request.GET:
 
             meter_eui = request.GET['meter_eui']
-            print '++++++++++'+meter_eui
             # period = request.GET['period']
             # today=datetime.datetime.now()
             # preday = today - datetime.timedelta(days=(int)(period))
@@ -244,8 +243,7 @@ def getData(request):
 
         return HttpResponse(json.dumps(re.__dict__), content_type="application/json")
 
-    except Exception,e:
-        print Exception,":",e
+    except Exception as e:
         print('getData:user is not existed')
     response = {}
     response['status'] = 'SUCESS'
@@ -258,8 +256,6 @@ def submit(request):
         try:
             dbuser = User.objects.get(user_name = request.POST['login-username'], user_password = request.POST['login-password'])
             print(dbuser.user_addr)
-            print request.POST['login-username']
-            print request.POST['login-password']
             return render_to_response('index.html', context_instance=RequestContext(request))
         except User.DoesNotExist:
             print('user does not exist')
@@ -317,7 +313,6 @@ def user_group_show(request):
     if  not 'user_id' in request.session:
         loginPage(request)
         return render_to_response('login.html', context_instance=RequestContext(request))
-    print request.session['user_id']
     userID = User.objects.get(user_id = request.session['user_id']).user_id
     #     userID = '0001'
     user_group_json = '['+generateTreeJSON(userID)+']';
@@ -497,7 +492,6 @@ def meter_level(request):
 
 def generateID(userName):
     user = User.objects.filter(user_company__exact = userName)
-    print user
     brother = User.objects.filter(user_id__startswith = user[0].user_id).extra(where = ['LENGTH(user_id) <= ' + str(len(user[0].user_id)+4)]).extra(where = ['LENGTH(user_id) > ' + str(len(user[0].user_id))]).order_by('user_id')
     if len(brother) == 0:
         if user[0].user_id == '00':
@@ -529,7 +523,6 @@ def register_company(request):
         return render_to_response('login.html', context_instance=RequestContext(request))
     #     data = request.body
     #     jsondata = json.dumps(request.body)
-    print request.body
     data = json.loads(request.body)
     #     print data''
     userName = data.get("user")
@@ -582,7 +575,6 @@ def register_meter(request):
         loginPage(request)
         return render_to_response('login.html', context_instance=RequestContext(request))
     response = {}
-    print request.body
     data = json.loads(request.body)
     meterName = data.get('meter_name')
     meterEUI = data.get('meter_eui')
@@ -619,7 +611,6 @@ def register_meter(request):
     meter.meter_district = district
     meter.save();
 
-    print "here1"
     indMeter = IdentificationMeter()
     indMeter.meter_eui = meterEUI
     indMeter.outputMax = outMax
@@ -629,13 +620,11 @@ def register_meter(request):
     indMeter.temperatureMax = tempMax
     indMeter.temperatureMin = tempMin
     indMeter.save();
-    print "here2"
     #add user
     user = User();
     user.user_id = meter.user_id
     user.user_company = meter.meter_name
     user.save();
-    print pressMax
     response['status'] = 'SUCCESS'
     response['data'] = {}
     #     print(json.dumps(response))
@@ -665,7 +654,6 @@ def getExcelFile(request):
         if 'user_id' in request.GET:
             #             userID = getUserId(request.GET['user_company'])
             Children = Meter.objects.filter(user_id__startswith = request.GET['user_id'])
-            print "meter num is : "+ str(len(Children))
             for i in range (0, len(Children)):
                 meterID = Meter.objects.filter(user_id = Children[i].user_id)
                 for j in range(0,len(meterID)):
@@ -685,7 +673,8 @@ def getExcelFile(request):
         print('getExcelFile:user is not existed')
 
     workbook.close()
-    wrapper = FileWrapper(file('Data.xlsx'))
+    dataFile = open('Data.xlsx', "wt")
+    wrapper = FileWrapper(dataFile)
     response = HttpResponse(wrapper, content_type='application/x-xls')
     response['Content-Length'] = os.path.getsize('Data.xlsx')
     return response
@@ -722,7 +711,6 @@ def getCompanyInfo(request):
         responsedata.append(each_dict)
         response['status'] = 'SUCCESS'
         response['data'] = responsedata
-        print responsedata
         return HttpResponse(json.dumps(responsedata),content_type ="application/json")
     except:
         print ('user does not exist')
@@ -757,9 +745,6 @@ def getIndentificationMeter(request):
             continue
         if each.next_identify_date:
             next_indetifyDate = each.next_identify_date.strftime("%Y/%m/%d")
-        print '----------------'
-        print each.meter_eui
-        print '----------------'
         meter = Meter.objects.filter( meter_eui = each.meter_eui)
         each_dict = {
             "id": each.pk,
@@ -791,10 +776,8 @@ def addIndentificationMeter(request):
         loginPage(request)
         return render_to_response('login.html', context_instance=RequestContext(request))
     response = {}
-    print request.body
     data = json.loads(request.body)
     meter_eui = data.get('meter_eui')
-    print meter_eui
     identify_date = data.get('identify_date')
     next_identify_date = data.get('next_identify_date')
     medium = data.get('medium')
@@ -965,7 +948,6 @@ def getWarnInfoOld(request):
         meterSet = Meter.objects.filter(user_id__startswith = userID)
         for i in range (0, len(meterSet)):
             warnInfoSet = WarnInfo.objects.filter(meter_eui = meterSet[i].meter_eui)
-            print "shit->" , warnInfoSet
             for j in range(0,len(warnInfoSet)):
                 warnData = DataWarnType.objects.get(data_warn = warnInfoSet[j].data_warn)
                 if 'warn_level' in request.GET:
