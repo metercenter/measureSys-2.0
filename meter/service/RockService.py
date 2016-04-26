@@ -39,7 +39,6 @@ class DataService:
 
     @staticmethod
     def meterDataChart(userID, startDay, endDay):
-        # startDay = startDay - datetime.timedelta(days=1)  # one day before
         data = DataService.execSqlFetchAll(
             '''
             select  a.dtime , sum(a.dMax)   from
@@ -67,9 +66,7 @@ class DataService:
             e = data[i]
             before = data[i - 1]
             if (e[0].date() - before[0].date()).days == 1:  # there must be data the day before
-                result[(e[0].date() - day).days]["data_qb"] = e[1] - before[1]
-        # for dd in result:
-        #     print time.localtime( dd['data_date']/1000) , "    " , dd['data_qb']
+                result[(e[0].date() - day).days]["data_qb"] = e[1] - before[1] if e[1] > before[1] else 0
         return result
 
     @staticmethod
