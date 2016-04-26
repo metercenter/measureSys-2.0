@@ -240,6 +240,7 @@ def getData(request):
                     "data_battery": each.data_battery,
                 }
                 responsedata.append(each_dict)
+            return HttpResponse(json.dumps(responsedata), content_type="application/json")
 
         return HttpResponse(json.dumps(re.__dict__), content_type="application/json")
 
