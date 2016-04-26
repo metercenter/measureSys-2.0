@@ -63,8 +63,9 @@ class DataService:
             day = day + datetime.timedelta(days=1)
         for i in range(1, len(data)):
             e = data[i]
-            if (e[0].date() - data[i - 1][0].date()).days == 1:  # there must be data the day before
-                result[(e[0].date() - day).days]["data_qb"] = e[1]
+            before = data[i-1]
+            if (e[0].date() - before[0].date()).days == 1:  # there must be data the day before
+                result[(e[0].date() - day).days]["data_qb"] = e[1] - before[1]
         return result
 
     @staticmethod
