@@ -39,22 +39,24 @@ class DataService:
 
     @staticmethod
     def meterDataChart(userID, startDay, endDay):
+        startDay = startDay - datetime.timedelta(days=1) # one day before
         data = DataService.execSqlFetchAll(
             '''
-            select  a.time , sum(a.dMax)   from
-              (select data_date as time, max(data_vb) as dMax , meter_eui as eui
+            select  a.dtime , sum(a.dMax)   from
+              (select data_date as dtime, max(data_vb) as dMax , meter_eui as eui
                 from meter_data
                 where meter_eui  in
                         ( select meter_eui from meter_meter where user_id like  %s )
-                     and data_date > %s and data_date < %s
+                     and data_date > %s
                      group by date(data_date),meter_eui) a
-            group by date(a.time) order by a.time asc ;
+            group by date(a.dtime) order by a.dtime asc ;
             ''',
-            userID + "%", startDay, endDay)
+            userID + "%", startDay)
         result = []
         if len(data) == 0:
             return result
-        day = data[0][0].date()  # fetch the first date
+        day = data[1][0].date()  # fetch the first date
+        endDay = data[len(data) - 1][0].date()
         while day <= endDay:
             result.append({
                 "data_date": time.mktime(day.timetuple()) * 1000 - 85680000,
@@ -63,7 +65,7 @@ class DataService:
             day = day + datetime.timedelta(days=1)
         for i in range(1, len(data)):
             e = data[i]
-            before = data[i-1]
+            before = data[i - 1]
             if (e[0].date() - before[0].date()).days == 1:  # there must be data the day before
                 result[(e[0].date() - day).days]["data_qb"] = e[1] - before[1]
         return result
@@ -168,9 +170,11 @@ class DataService:
         re.count = count
         re.data = responsedata
         return re
+
     """
     optimized calculation
     """
+
     @staticmethod
     def _calAmountByPeriod(userID, startDay, endDay):
         data = DataService.execSqlFetchAll(
@@ -190,5 +194,5 @@ class DataService:
             })
             day = day + datetime.timedelta(days=1)
         for e in data:
-            result[(e[0].date()- startDay).days]["data_qb"] = e[1]
+            result[(e[0].date() - startDay).days]["data_qb"] = e[1]
         return result
