@@ -2177,8 +2177,8 @@ app.controller('MapCtrl', ['$scope', '$http', 'globalParams', function ($scope, 
         $scope.myMarkers.push({marker: new AMap.Marker({
                                  map: $scope.myMap,
                                  position: {
-                                   j: entry.meter_latitude,
-                                   l: entry.meter_longitude,
+                                   m: entry.meter_latitude,
+                                   s: entry.meter_longitude,
                                    lat: entry.meter_latitude,
                                    lng: entry.meter_longitude
                                  }
