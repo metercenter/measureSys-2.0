@@ -47,7 +47,7 @@ class DataService:
                 where meter_eui  in
                         ( select meter_eui from meter_meter where user_id like  %s )
                      and data_date > %s and data_date < %s
-                     group by date(data_date),meter_eui  order by data_date desc) a
+                     group by date(data_date),meter_eui) a
             group by date(a.time) order by a.time asc ;
             ''',
             userID + "%", startDay, endDay)
