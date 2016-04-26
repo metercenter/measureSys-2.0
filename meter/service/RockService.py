@@ -39,7 +39,7 @@ class DataService:
 
     @staticmethod
     def meterDataChart(userID, startDay, endDay):
-        startDay = startDay - datetime.timedelta(days=1)  # one day before
+        # startDay = startDay - datetime.timedelta(days=1)  # one day before
         data = DataService.execSqlFetchAll(
             '''
             select  a.dtime , sum(a.dMax)   from
