@@ -1247,34 +1247,9 @@ def meterDataChart(request):
         today = datetime.datetime.now().date()
         before = today -  datetime.timedelta(days=period)
 
-        responsedata = _calAmountByPeriod(userID,before,today)
+        # responsedata = _calAmountByPeriod(userID,before,today)
+        responsedata = DataService.meterDataChart(userID, before, today)
     return HttpResponse(json.dumps(responsedata),content_type ="application/json")
-
-
-"""
-optimized calculation
-"""
-def _calAmountByPeriod(userID, startDay, endDay):
-    data = DataService.execSqlFetchAll(
-        '''
-        select data_date , max(data_vb) - min(data_vb) as data_qb  from meter_data
-            where meter_eui  in ( select meter_eui from meter_meter where user_id like  %s )
-                 and data_date > %s and data_date < %s
-                 group by date(data_date)
-        ''',
-        userID + "%", startDay, endDay)
-    result = []
-    day = startDay
-    while day <= endDay:
-        result.append({
-            "data_date": time.mktime(day.timetuple()) * 1000 - 85680000,
-            "data_qb": 0
-        })
-        day = day + datetime.timedelta(days=1)
-    for e in data:
-        result[(e[0].date()- startDay).days]["data_qb"] = e[1]
-    return result
-
 
 def retrieveCurUser(request):
     if  not 'user_id' in request.session:

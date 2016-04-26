@@ -1,8 +1,13 @@
 from json import JSONEncoder
 from django.db import connection
+import time
+import datetime
+
 import sqlite3
 
 __author__ = 'peng'
+
+
 class PageModal:
     pageNum = 1
     pageSize = 1000
@@ -27,8 +32,43 @@ class DataService:
         cursor.close()
         return re
 
+        #     select data_date , max(data_vb) , min(data_vb) as data_qb  from meter_data
+        #     where meter_eui  in ( select meter_eui from meter_meter where user_id like  %s )
+        # and data_date > %s and data_date < %s
+        # group by date(data_date) order by data_date asc
+
     @staticmethod
-    def getData(user_id,date, page, pageSize):
+    def meterDataChart(userID, startDay, endDay):
+        data = DataService.execSqlFetchAll(
+            '''
+            select  a.time , sum(a.dMax)   from
+              (select data_date as time, max(data_vb) as dMax , meter_eui as eui
+                from meter_data
+                where meter_eui  in
+                        ( select meter_eui from meter_meter where user_id like  %s )
+                     and data_date > %s and data_date < %s
+                     group by date(data_date),meter_eui  order by data_date desc) a
+            group by date(a.time) order by a.time asc ;
+            ''',
+            userID + "%", startDay, endDay)
+        result = []
+        if len(data) == 0:
+            return result
+        day = data[0][0].date()  # fetch the first date
+        while day <= endDay:
+            result.append({
+                "data_date": time.mktime(day.timetuple()) * 1000 - 85680000,
+                "data_qb": 0
+            })
+            day = day + datetime.timedelta(days=1)
+        for i in range(1, len(data)):
+            e = data[i]
+            if (e[0].date() - data[i - 1][0].date()).days == 1:  # there must be data the day before
+                result[(e[0].date() - day).days]["data_qb"] = e[1]
+        return result
+
+    @staticmethod
+    def getData(user_id, date, page, pageSize):
         responsedata = []
         data = DataService.execSqlFetchAll('''
             select id ,data_id , meter_eui,data_date , data_vb,data_vm,data_p,data_t,data_qb , data_qm,data_battery
@@ -127,3 +167,27 @@ class DataService:
         re.count = count
         re.data = responsedata
         return re
+    """
+    optimized calculation
+    """
+    @staticmethod
+    def _calAmountByPeriod(userID, startDay, endDay):
+        data = DataService.execSqlFetchAll(
+            '''
+            select data_date , max(data_vb) - min(data_vb) as data_qb  from meter_data
+                where meter_eui  in ( select meter_eui from meter_meter where user_id like  %s )
+                     and data_date > %s and data_date < %s
+                     group by date(data_date)
+            ''',
+            userID + "%", startDay, endDay)
+        result = []
+        day = startDay
+        while day <= endDay:
+            result.append({
+                "data_date": time.mktime(day.timetuple()) * 1000 - 85680000,
+                "data_qb": 0
+            })
+            day = day + datetime.timedelta(days=1)
+        for e in data:
+            result[(e[0].date()- startDay).days]["data_qb"] = e[1]
+        return result
