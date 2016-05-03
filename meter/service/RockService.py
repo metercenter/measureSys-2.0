@@ -72,6 +72,8 @@ class DataService:
     @staticmethod
     def getData(user_id, date, page, pageSize):
         responsedata = []
+        if page < 1:
+            page = 1
         data = DataService.execSqlFetchAll('''
             select id ,data_id , meter_eui,data_date , data_vb,data_vm,data_p,data_t,data_qb , data_qm,data_battery
                 from meter_data
@@ -79,7 +81,7 @@ class DataService:
                 and data_date >= %s
                 order by data_date DESC
                 limit %s,%s
-            ''', user_id, date, page * pageSize, pageSize)
+            ''', user_id, date, (page - 1) * pageSize, pageSize)
         count = DataService.execSqlFetchOnel('''
             select count(1)
                 from meter_data
