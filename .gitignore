@@ -4,3 +4,4 @@
 .pydevproject
 .settings/
 *.sqlite3
+testpy.iml
