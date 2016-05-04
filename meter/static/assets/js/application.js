@@ -2127,125 +2127,125 @@ app.controller('DataPickerCtrl', function ($scope, $http, globalParams) {
 	    ];
 
 	  $scope.getDayClass = function(date, mode) {
-	    if (mode === 'day') {
-	      var dayToCheck = new Date(date).setHours(0,0,0,0);
+		    if (mode === 'day') {
+		      var dayToCheck = new Date(date).setHours(0,0,0,0);
 
-	      for (var i=0;i<$scope.events.length;i++){
-	        var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+		      for (var i=0;i<$scope.events.length;i++){
+			var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
 
-	        if (dayToCheck === currentDay) {
-	          return $scope.events[i].status;
-	        }
-	      }
-	    }
+			if (dayToCheck === currentDay) {
+			  return $scope.events[i].status;
+			}
+		      }
+		    }
 
-	    return '';
+		    return '';
+		  };
+	});
+
+
+
+
+	app.controller('MapCtrl', ['$scope', '$http', 'globalParams', function ($scope, $http, globalParams) {
+	  $scope.myMarkers = [];
+	  $scope.mapOptions = {
+	    toolbar: true,
+	    scrollzoom: false,
+	    maptype: true,
+	    overview: true,
+	    locatecity: true,
+	    resizeEnable: false,
+	    uiMapCache: true
 	  };
-});
+
+	  $http({
+		  url: '/get-meter',
+		  method: 'GET',
+		  params: {user_id: globalParams.user_id}
+		}).success(function (response) {
+	    $scope.meters = [];
+	    response.forEach(function (entry) {
+	      var field = {
+		key: entry.meter_eui,
+		value: entry.meter_name,
+		meterType: entry.meter_type,
+		meterSeqno: entry.meter_index,
+		meterVersion: entry.meter_version
+	      };
+
+	      if (entry.meter_latitude != '' && entry.meter_longitude != '') {
+		$scope.myMarkers.push({marker: new AMap.Marker({
+					 map: $scope.myMap,
+					 position: {
+					   m: entry.meter_latitude,
+					   s: entry.meter_longitude,
+					   lat: entry.meter_latitude,
+					   lng: entry.meter_longitude
+					 }
+				       }),
+					meter_eui: entry.meter_eui,
+					meter_name: entry.meter_name,
+					meter_version: entry.meter_version});
+	      }
+	      $scope.meters.push(field);
+	    });
+	  });
+
+	  $scope.addMarker = function ($event, $params) {
+	    $scope.myMarkers.push(new AMap.Marker({
+						    map: $scope.myMap,
+						    position: $params[0].lnglat
+						  }));
+	  };
+
+	  $scope.openMarkerInfo = function (marker) {
+	    $scope.currentMarker = marker;
+	    $scope.currentMarkerLat = marker.getPosition().getLat();
+	    $scope.currentMarkerLng = marker.getPosition().getLng();
+	    $scope.myInfoWindow.open($scope.myMap, marker.getPosition());
+	  };
 
 
+	  $scope.openBasicInfo = function (marker) {
+	    $scope.currentMarker = marker;
+	    $scope.meter_eui = marker.meter_eui;
+	    $scope.meter_name = marker.meter_name;
+	    $scope.version = marker.meter_version;
+	    $http({
+		    url: '/get-data',
+		    method: 'GET',
+		    params: {meter_eui: marker.meter_eui, period: 40}
+		  }).success(function (response) {
+	      $scope.meters = [];
+	      $scope.meter_data = {data_date: response[0].data_date,
+		data_vb: response[0].data_vb,
+		data_vm: response[0].data_vm,
+		data_p: response[0].data_p,
+		data_t: response[0].data_t,
+		data_qb: response[0].data_qb,
+		data_qm: response[0].data_qm
+	      }
+	      $scope.ShowBasicInfoWindow.open($scope.myMap, marker.marker.getPosition());
+	    });
+
+	  };
+
+	}]);
 
 
-app.controller('MapCtrl', ['$scope', '$http', 'globalParams', function ($scope, $http, globalParams) {
-  $scope.myMarkers = [];
-  $scope.mapOptions = {
-    toolbar: true,
-    scrollzoom: false,
-    maptype: true,
-    overview: true,
-    locatecity: true,
-    resizeEnable: false,
-    uiMapCache: true
-  };
+	app.controller('gasCollectionbyDistrictCtrl',function($scope, $http, $modal, globalParams){
+	  $scope.companys = [];
+	  $scope.metertypes = [];
+	  $scope.provinces = [];
+	  $scope.cities = [];
+	  $scope.districts = [];
+	  $scope.dependents= ['用户编号','流量计编号'];
+	  $scope.userSelections="";
+	  $scope.warning = ""
 
-  $http({
-          url: '/get-meter',
-          method: 'GET',
-          params: {user_id: globalParams.user_id}
-        }).success(function (response) {
-    $scope.meters = [];
-    response.forEach(function (entry) {
-      var field = {
-        key: entry.meter_eui,
-        value: entry.meter_name,
-        meterType: entry.meter_type,
-        meterSeqno: entry.meter_index,
-        meterVersion: entry.meter_version
-      };
-
-      if (entry.meter_latitude != '' && entry.meter_longitude != '') {
-        $scope.myMarkers.push({marker: new AMap.Marker({
-                                 map: $scope.myMap,
-                                 position: {
-                                   m: entry.meter_latitude,
-                                   s: entry.meter_longitude,
-                                   lat: entry.meter_latitude,
-                                   lng: entry.meter_longitude
-                                 }
-                               }),
-                                meter_eui: entry.meter_eui,
-                                meter_name: entry.meter_name,
-                                meter_version: entry.meter_version});
-      }
-      $scope.meters.push(field);
-    });
-  });
-
-  $scope.addMarker = function ($event, $params) {
-    $scope.myMarkers.push(new AMap.Marker({
-                                            map: $scope.myMap,
-                                            position: $params[0].lnglat
-                                          }));
-  };
-
-  $scope.openMarkerInfo = function (marker) {
-    $scope.currentMarker = marker;
-    $scope.currentMarkerLat = marker.getPosition().getLat();
-    $scope.currentMarkerLng = marker.getPosition().getLng();
-    $scope.myInfoWindow.open($scope.myMap, marker.getPosition());
-  };
-
-
-  $scope.openBasicInfo = function (marker) {
-    $scope.currentMarker = marker;
-    $scope.meter_eui = marker.meter_eui;
-    $scope.meter_name = marker.meter_name;
-    $scope.version = marker.meter_version;
-    $http({
-            url: '/get-data',
-            method: 'GET',
-            params: {meter_eui: marker.meter_eui, period: 40}
-          }).success(function (response) {
-      $scope.meters = [];
-      $scope.meter_data = {data_date: response[0].data_date,
-        data_vb: response[0].data_vb,
-        data_vm: response[0].data_vm,
-        data_p: response[0].data_p,
-        data_t: response[0].data_t,
-        data_qb: response[0].data_qb,
-        data_qm: response[0].data_qm
-      }
-      $scope.ShowBasicInfoWindow.open($scope.myMap, marker.marker.getPosition());
-    });
-
-  };
-
-}]);
-
-
-app.controller('gasCollectionbyDistrictCtrl',function($scope, $http, $modal, globalParams){
-  $scope.companys = [];
-  $scope.metertypes = [];
-  $scope.provinces = [];
-  $scope.cities = [];
-  $scope.districts = [];
-  $scope.dependents= ['用户编号','流量计编号'];
-  $scope.userSelections="";
-  $scope.warning = ""
-
-  //~~~~~~~~~~~~~~~~~~~~~datepick~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
-  $scope.startDate = new Date(new Date().getFullYear(), new Date().getMonth()-1 == 0 ? new Date().getMonth():new Date().getMonth()-1, 1);
-  $scope.stopDate = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+	  //~~~~~~~~~~~~~~~~~~~~~datepick~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+	  $scope.startDate = new Date(new Date().getFullYear(), new Date().getMonth()-1 == 0 ? new Date().getMonth():new Date().getMonth()-1, 1);
+	  $scope.stopDate = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
 
   //~~~~~~~~~~~~~~~~~~~~~datepick~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
   var provinces_id = [];
