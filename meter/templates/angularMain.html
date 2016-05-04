@@ -1483,15 +1483,15 @@
                                         <td ng-if="meter.meter_type != '卓度'">{{row.meter_data_p}}</td>
                                         <td ng-if="meter.meter_type != '卓度'">{{row.meter_data_t}}</td>
                                         <td ng-if="meter.meter_type != '卓度'">
-                                            <div ng-controller="deviationCtrl">
-                                                <button type="button" ng-click="open(row)"
+                                            <div>
+                                                <button type="button" ng-click="openDataChart(row)"
                                                         class="btn btn-sm btn-info">曲线图
                                                 </button>
                                             </div>
                                         </td>
                                         <td ng-if="meter.meter_type != '卓度'">
                                             <div>
-                                                <button type="button" ng-click="open()"
+                                                <button type="button" ng-click="open(row)"
                                                         class="btn btn-sm btn-info">生成报表
                                                 </button>
                                             </div>
@@ -2269,6 +2269,31 @@
                     </div>
                     <div class="panel-body text-center">
                         <div id="reportContent" ng-include="reportPath"></div>
+                        <form class="form-horizontal" role="form" ng-sumbit="submit()">
+
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" ng-click="ok()">打印</button>
+                                <button class="btn btn-primary" ng-click="cancel()">取消</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+
+<script type="text/ng-template" id="dayDataChart.html">
+    <div class="modal-body" class="col-md-10">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">曲線圖</h3>
+                    </div>
+                    <div class="panel-body text-center">
+                        <div id="dayData" ng-include="dayDataChartPath"></div>
                         <form class="form-horizontal" role="form" ng-sumbit="submit()">
 
                             <div class="modal-footer">

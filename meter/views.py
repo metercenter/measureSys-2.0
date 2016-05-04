@@ -1471,7 +1471,7 @@ def getVBtotal(meterEUI, startDate, endDate):
     if dataList[0].data_vb == '' or dataList[len(dataList)-1].data_vb == '':
         return 0
     val = float(dataList[0].data_vb)-float(dataList[len(dataList)-1].data_vb)
-    return val
+    return round(val,2)
 #工况总累计
 def getVMtotal(meterEUI, startDate, endDate):
     val = 0
@@ -1486,7 +1486,7 @@ def getVMtotal(meterEUI, startDate, endDate):
     if dataList[0].data_vm == '' or dataList[len(dataList)-1].data_vm == '':
         return 0
     val = float(dataList[0].data_vm)-float(dataList[len(dataList)-1].data_vm)
-    return val
+    return round(val,2)
 
 
 def getPaAve(meterEUI, startDate, endDate):
@@ -1506,7 +1506,7 @@ def getPaAve(meterEUI, startDate, endDate):
         else:
             sum = sum + float(v.data_p)
     val = sum/len(dataList)
-    return val
+    return round(val,2)
 
 def getTempAve(meterEUI, startDate, endDate):
     val = 0
@@ -1525,7 +1525,7 @@ def getTempAve(meterEUI, startDate, endDate):
         else:
             sum = sum + float(v.data_t)
     val = sum/len(dataList)
-    return val
+    return round(val,2)
 
 def getGasCollection(request):
     if  not 'user_id' in request.session:
@@ -1540,10 +1540,8 @@ def getGasCollection(request):
         userID = request.session['user_id']
         startDate = request.GET['startDate']
         endDate = request.GET['endDate']
-        startDatePreMonth = datetime.datetime.strptime(startDate, "%Y-%m-%d").date() - datetime.timedelta(days=1)
-        endDatePreMonth = startDatePreMonth - datetime.timedelta(days=30)
-        preMonthStart = startDatePreMonth.strftime("%Y-%m-%d")
-        preMonthEnd = endDatePreMonth.strftime("%Y-%m-%d")
+        preMonthStart = request.GET['preMonthStartDate']
+        preMonthEnd = request.GET['preMonthEndDate']
         meters = Meter.objects.filter(user_id__startswith = userID).filter(meter_district = districtID)
         for each in meters:
             each_dict = {
@@ -1569,5 +1567,30 @@ def getGasCollection(request):
                 "meter_company" :getUserCompanyName(each.user_id[0:4])
             }
             responsedata.append(each_dict)
+
+    return HttpResponse(json.dumps(responsedata),content_type ="application/json")
+def getDayDataChart(request):
+    if  not 'user_id' in request.session:
+        loginPage(request)
+        return render_to_response('login.html', context_instance=RequestContext(request))
+    if 'user_id' in request.GET:
+        userID = request.GET['user_id']
+    responsedata = []
+    startDateStr = request.GET['startDate']
+    endDateStr = request.GET['endDate']
+    meterEUI = request.GET['meter_eui']
+
+    startDate = datetime.datetime.strptime(startDateStr, "%Y-%m-%d").date()
+    endDate = datetime.datetime.strptime(endDateStr, "%Y-%m-%d").date()
+    curDate = startDate
+    while curDate <= endDate :
+        dataList = Data.objects.filter(meter_eui = meterEUI).filter(data_date__year=curDate.year, data_date__month=curDate.month, data_date__day=curDate.day).order_by('data_date')
+        if len(dataList) > 0:
+            each_dict = {
+                "data" : round(dataList[len(dataList)-1].data_vb - dataList[0].data_vb,2),
+                "date" : curDate.strftime("%Y-%m-%d")
+            }
+            responsedata.append(each_dict)
+        curDate = curDate + datetime.timedelta(days = 1)
 
     return HttpResponse(json.dumps(responsedata),content_type ="application/json")

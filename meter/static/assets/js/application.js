@@ -2233,19 +2233,6 @@ app.controller('MapCtrl', ['$scope', '$http', 'globalParams', function ($scope, 
 }]);
 
 
-function getLastDay(year,month) {
-             var new_year = year;    //取当前的年份
-             var new_month = month++;//取下一个月的第一天，方便计算（最后一天不固定）
-             if(month>12) {
-              new_month -=12;        //月份减
-              new_year++;            //年份增
-             }
-             var new_date = new Date(new_year,new_month,1);                //取当年当月中的第一天
-             return (new Date(new_date.getTime()-1000*60*60*24)).getDate();//获取当月最后一天日期
-        }
-
-
-
 app.controller('gasCollectionbyDistrictCtrl',function($scope, $http, $modal, globalParams){
   $scope.companys = [];
   $scope.metertypes = [];
@@ -2257,7 +2244,7 @@ app.controller('gasCollectionbyDistrictCtrl',function($scope, $http, $modal, glo
   $scope.warning = ""
 
   //~~~~~~~~~~~~~~~~~~~~~datepick~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
-  $scope.startDate = new Date(new Date().getFullYear(), new Date().getMonth()-1, 1);
+  $scope.startDate = new Date(new Date().getFullYear(), new Date().getMonth()-1 == 0 ? new Date().getMonth():new Date().getMonth()-1, 1);
   $scope.stopDate = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
 
   //~~~~~~~~~~~~~~~~~~~~~datepick~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
@@ -2316,9 +2303,10 @@ app.controller('gasCollectionbyDistrictCtrl',function($scope, $http, $modal, glo
 			    method:'GET',
 			    params:{district_id: districts_id[district],
 
-            startDate: '2016-2-29',
-            endDate:'2016-2-29'
-
+            startDate: $scope.startDate.getFullYear()+'-'+($scope.startDate.getMonth()+1)+'-'+$scope.startDate.getDate(),
+            endDate: $scope.stopDate.getFullYear()+'-'+($scope.stopDate.getMonth()+1)+'-'+$scope.stopDate.getDate(),
+            preMonthStartDate: $scope.startDate.getFullYear()+'-'+$scope.startDate.getMonth()+'-'+$scope.startDate.getDate(),
+            preMonthEndDate: $scope.stopDate.getFullYear()+'-'+$scope.stopDate.getMonth()+'-'+$scope.stopDate.getDate()
           }
 			  }).success(function(response) {
 
@@ -2360,12 +2348,27 @@ app.controller('gasCollectionbyDistrictCtrl',function($scope, $http, $modal, glo
 
 
   $scope.animationsEnabled = true;
-  $scope.open = function(size) {
+  $scope.open = function(row) {
+    $scope.report= {
+            gasCompany : row.meter_company,
+            companyName: row.meter_name,
+            meterType: row.meter_version,
+            meterCode: row.meter_eui,
+            meterBand: row.meter_type,
+            qm1: row.meter_data_vb,
+            qv1:row.meter_data_vm,
+            pa1: row.meter_data_p,
+            temperature1: row.meter_data_t,
+            qm2: row.meter_data_vb1,
+            qv2:row.meter_data_vm1,
+            pa2: row.meter_data_p1,
+            temperature2: row.meter_data_t1,
+            compensate: $scope.compensate
+          };
     var testModalInstance = $modal.open({
       animation: $scope.animationsEnabled,
       templateUrl: 'testModal.html',
       controller: 'testModalInstanceCtrl',
-      size: size,
       resolve: {
         assigner : function () {
           $scope.report.compensate = $scope.compensate;
@@ -2380,4 +2383,160 @@ app.controller('gasCollectionbyDistrictCtrl',function($scope, $http, $modal, glo
 
     }) ;
   }
+  $scope.lll = 'sdfsfsdf';
+
+  var datas = [];
+  var periodTime =7;
+    $http({
+        url:'/meterDataChart',
+        method:'GET',
+        params:{user_id: globalParams.user_id,
+          period: periodTime }
+      }).success(function(response) {
+        for (var i=0;i<response.length;i++)
+        {
+          datas.push([response[i].data_date, response[i].data_qb])
+        }
+        $scope.chartConfig = {
+                options: {
+                    chart: {
+                        type: 'spline',
+                        zoomType: 'x'
+                    },
+                    rangeSelector: {
+                        enabled: true
+                    },
+                    navigator: {
+                        enabled: true
+                    }
+                },
+                title: {
+                    text: '流量计标况统计'
+                },
+//                useHighStocks: true,
+                xAxis: {
+                    startOnTick: true,
+                    type: 'datetime',
+                    tickInterval: 3600 * 1000 * 24,
+                    labels:{
+                        formatter: function() {
+                            var d = new Date(this.value);
+                                 return Highcharts.dateFormat("%Y-%m-%e",this.value); // just month
+
+                        },
+                    rotation: -45
+                    }
+                },
+                yAxis: {
+                    title: {
+                        text: '总流量(Nm3)'
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                },
+                series: [{
+                  name: '总流量',
+                  data: datas
+                }]
+        }
+      });
+
+  $scope.openDataChart = function(row){
+    console.log($scope.startDate);
+    $http({
+      url:'/getDayDataChart',
+        method:'GET',
+        params:{meter_eui: row.meter_eui,
+          startDate: $scope.startDate.getFullYear()+'-'+($scope.startDate.getMonth()+1)+'-'+$scope.startDate.getDate(),
+          endDate: $scope.stopDate.getFullYear()+'-'+($scope.stopDate.getMonth()+1)+'-'+$scope.stopDate.getDate()
+        }
+      }).success(function(response) {
+
+        var datas = [];
+        response.forEach(function(entry){
+          datas.push(entry.date, entry.data);
+        });
+
+        $scope.chartConfig = {
+                options: {
+                    chart: {
+                        type: 'spline',
+                        zoomType: 'x'
+                    },
+                    rangeSelector: {
+                        enabled: true
+                    },
+                    navigator: {
+                        enabled: true
+                    }
+                },
+                title: {
+                    text: '流量计标况统计'
+                },
+//                useHighStocks: true,
+                xAxis: {
+                    startOnTick: true,
+                    type: 'datetime',
+                    tickInterval: 3600 * 1000 * 24,
+                    labels:{
+                        formatter: function() {
+                            var d = new Date(this.value);
+                                 return Highcharts.dateFormat("%Y-%m-%e",this.value); // just month
+
+                        },
+                    rotation: -45
+                    }
+                },
+                yAxis: {
+                    title: {
+                        text: '总流量(Nm3)'
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                },
+                series: [{
+                  name: '总流量',
+                  data: datas
+                }]
+        }
+      });
+    var testModalInstance = $modal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: 'dayDataChart.html',
+      controller: 'dayDataChartModalInstanceCtrl',
+      resolve: {
+        assigner : function () {
+          return $scope.chartConfig;
+        }
+      }
+    });
+
+    testModalInstance.result.then(function (returnVal){
+      console.log(returnVal);
+    },function(){
+
+    }) ;
+  }
  });
+
+
+app.controller('dayDataChartModalInstanceCtrl', function($scope, $modalInstance,assigner){
+  $scope.assignee = assigner;
+  console.log($scope.assignee);
+  $scope.dayDataChartPath = "/static/dayDataChart.html";
+
+  $scope.ok = function(){
+    $modalInstance.close($scope.assignee);
+  };
+
+  $scope.cancel = function() {
+    $modalInstance.dismiss('cancel');
+  }
+
+});
