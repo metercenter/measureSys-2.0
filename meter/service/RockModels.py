@@ -1,9 +1,10 @@
 import datetime
+from inspect import getmodule
 
 __author__ = 'lipeng'
 
 
-class Data:
+class MeterData:
     def __init__(self, data_id=0, meter_eui='', data_date=datetime.datetime.now(), data_warn=0,
                  data_vb=0.0, data_vm=0.0, data_p=0.0, data_t=0.0, data_qb=0.0, data_qm=0.0, data_battery=''):
         self.data_id = data_id
@@ -18,3 +19,6 @@ class Data:
         self.data_p = data_p
         self.data_warn = data_warn
         self.meter_eui = meter_eui
+
+    def __repr__(self):
+        return str(self.__dict__)
