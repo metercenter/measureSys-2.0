@@ -5,6 +5,7 @@ import csv
 import os
 import time
 
+from django.db import connection
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from django.template import RequestContext
@@ -19,9 +20,11 @@ from meter.models import Company, UserFeedback, IdentificationMeter, outputDiff,
 
 # from django.core.servers.basehttp import FileWrapper
 from wsgiref.util import FileWrapper
+
+from meter.service.LeeUtil import LeeUtil
 from meter.service.RockService import DataService, PageModal
 
-
+dataService =DataService()
 def unicode_csv_reader(unicode_csv_data, dialect=csv.excel, **kwargs):
     # csv.py doesn't do Unicode; encode temporarily as UTF-8:
     csv_reader = csv.reader(utf_8_encoder(unicode_csv_data),
@@ -1543,28 +1546,91 @@ def getGasCollection(request):
         preMonthStart = request.GET['preMonthStartDate']
         preMonthEnd = request.GET['preMonthEndDate']
         meters = Meter.objects.filter(user_id__startswith = userID).filter(meter_district = districtID)
+
+        statsMap = LeeUtil.toMap(dataService.queryMeterDataStatistic([m.meter_eui for m in meters], startDate, endDate) , 'meter_eui')
+        statsMapPre = LeeUtil.toMap(dataService.queryMeterDataStatistic([m.meter_eui for m in meters], preMonthStart, preMonthEnd) , 'meter_eui')
+        typesMap = LeeUtil.toMap(MeterType.objects.all(),'meter_type')
+        for each in meters:
+            eui = each.meter_eui
+            if not statsMap.has_key(eui):
+                continue
+            each_dict = {
+                "user_id": each.user_id,
+                "meter_name": each.meter_name,
+                "meter_typenum": each.meter_type,
+                "meter_index": each.meter_index,
+                "meter_version": each.meter_version,
+                "wrapCode": each.wrap_code,
+                "meter_eui": eui,
+                "communication": each.communication,
+
+                #metertype
+                "meter_type": typesMap.get(each.meter_type , '').meter_type_name if typesMap.has_key(each.meter_type)  else '',
+                "meter_revisetype": typesMap.get(each.meter_revisetype , '').meter_type_name if typesMap.has_key(each.meter_revisetype)  else '',
+                #District
+                "meter_district": getDistrictName(each.meter_district),
+                #user
+                "meter_company" :getUserCompanyName(each.user_id[0:4]),
+
+                # Data
+                "meter_data_vb": statsMap[eui].data_vb,
+                "meter_data_vm":statsMap[eui].data_vm,
+                "meter_data_p":statsMap[eui].data_p,
+                "meter_date_t":statsMap[eui].data_t,
+
+                "meter_data_vb1":statsMapPre[eui].data_vb,
+                "meter_data_vm1":statsMapPre[eui].data_vm,
+                "meter_data_p1":statsMapPre[eui].data_p,
+                "meter_date_t1":statsMapPre[eui].data_t
+            }
+            responsedata.append(each_dict)
+
+    return HttpResponse(json.dumps(responsedata),content_type ="application/json")
+def getGasCollection_bak(request):
+    if  not 'user_id' in request.session:
+        loginPage(request)
+        return render_to_response('login.html', context_instance=RequestContext(request))
+    if 'user_id' in request.GET:
+        userID = request.GET['user_id']
+    responsedata = []
+    #开始攒数据
+    if 'district_id' in request.GET:
+        districtID = request.GET['district_id']
+        userID = request.session['user_id']
+        startDate = request.GET['startDate']
+        endDate = request.GET['endDate']
+        preMonthStart = request.GET['preMonthStartDate']
+        preMonthEnd = request.GET['preMonthEndDate']
+        meters = Meter.objects.filter(user_id__startswith = userID).filter(meter_district = districtID)
         for each in meters:
             each_dict = {
                 "user_id": each.user_id,
                 "meter_name": each.meter_name,
                 "meter_typenum": each.meter_type,
-                "meter_type": meterTypeName(each.meter_type),
                 "meter_index": each.meter_index,
                 "meter_version": each.meter_version,
                 "wrapCode": each.wrap_code,
                 "meter_eui": each.meter_eui,
-                "meter_revisetype": meterTypeName(each.meter_revisetype),
                 "communication": each.communication,
+
+                #metertype
+                "meter_type": meterTypeName(each.meter_type),
+                "meter_revisetype": meterTypeName(each.meter_revisetype),
+                #District
                 "meter_district": getDistrictName(each.meter_district),
+                #user
+                "meter_company" :getUserCompanyName(each.user_id[0:4]),
+
+                # Data
                 "meter_data_vb": getVBtotal(each.meter_eui,startDate,endDate),
                 "meter_data_vm":getVMtotal(each.meter_eui,startDate,endDate),
                 "meter_data_p":getPaAve(each.meter_eui,startDate,endDate),
                 "meter_date_t":getTempAve(each.meter_eui,startDate,endDate),
+
                 "meter_data_vb1": getVBtotal(each.meter_eui,preMonthStart,preMonthEnd),
                 "meter_data_vm1":getVMtotal(each.meter_eui,preMonthStart,preMonthEnd),
                 "meter_data_p1":getPaAve(each.meter_eui,preMonthStart,preMonthEnd),
-                "meter_date_t1":getTempAve(each.meter_eui,preMonthStart,preMonthEnd),
-                "meter_company" :getUserCompanyName(each.user_id[0:4])
+                "meter_date_t1":getTempAve(each.meter_eui,preMonthStart,preMonthEnd)
             }
             responsedata.append(each_dict)
 

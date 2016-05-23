@@ -5,6 +5,8 @@ import datetime
 
 import sqlite3
 
+from meter.service.LeeUtil import LeeUtil
+from meter.service.RockModels import MeterData
 from meter.service.SqlExecutor import SqlExecutor
 
 __author__ = 'peng'
@@ -28,6 +30,18 @@ class DataService:
 
     def insertMeterNew(self, meterNew):
         self.ex.insert(meterNew, 'meter_newmeter')
+
+    def queryMeterDataStatistic(self, euis, startDate, endDate):
+        if not euis or len(euis) ==0:
+            return []
+        return self.ex.execSqlAll('''
+        select
+        meter_eui , sum(data_vm) as data_vm,avg(data_p) as data_p,avg(data_t) as data_t ,sum(data_vb) as data_vb
+        from meter_data
+        where
+        meter_eui in ({0})
+        and data_date > ? and data_date < ? group by meter_eui ORDER  BY data_date DESC
+      '''.format(LeeUtil.genPlaceHolders(len(euis))), LeeUtil.merge(euis, startDate, endDate), MeterData)
 
     @staticmethod
     def execSqlFetchAll(sql, *args):
