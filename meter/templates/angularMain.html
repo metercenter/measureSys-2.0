@@ -100,9 +100,8 @@
                 <li><a href={{homepageTitle}}><i class="fa fa-file"></i><span>首页</span></a></li>
                 <li><a href={{warnpageTile}}><i class="fa fa-info"></i><span>报警信息</span></a></li>
                 <li><a href="#/datacenter/00"><i class="fa fa-gears"></i><span>数据分析</span></a></li>
-                <!--<li ng-controller="testModalCtrl" ng-click="open('lg')"><a href="#"><i class="fa fa-bar-chart-o"></i><span>气量抄收</span></a></li>-->
                 <li><a href="{{gascollectionpageTile}}"><i class="fa fa-bar-chart-o"></i><span>气量抄收</span></a></li>
-                <li><a href="{{gascollectionpageTile}}"><i class="fa fa-bar"></i><span>联系我们</span></a></li>
+                <li><a href="{{contractUspageTitle}}"><i class="fa fa-gift"></i><span>联系我们</span></a></li>
             </ul>
         </div>
 
@@ -1540,6 +1539,26 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type=text/ng-template id=contractUs.html>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">联系我们</h3>
+                </div>
+                <div class="panel-body text-left" ng-controller="ContractUsPageCtrl">
+
+                    <p><b>联系电话：</b>025-58818283</p>
+
+                    <p><b>传真：</b>025-58822672</p>
+
+                    <p><b>微信公众号：</b>南京金昇</p>
                 </div>
             </div>
         </div>

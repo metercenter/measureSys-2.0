@@ -47,9 +47,11 @@ app.controller('headerUserCtrl', function($scope, $http, globalParams){
     }else if (globalParams.user_id.length == 8){
       $scope.homepageTitle = "#/userpage/"+globalParams.user_id;
       page = "/userpage/"+globalParams.user_id;
-    }   
+    }
     $scope.warnpageTile = "#/warnpage/"+ globalParams.user_id;
     $scope.gascollectionpageTile = "#/gascollectionpage/"+ globalParams.user_id;
+    $scope.contractUspageTitle = "#/contractUspage/"+globalParams.user_id;
+
     //console.log(globalParams.current_page);
   });
 });
@@ -108,7 +110,11 @@ app.config(['$routeProvider', function($routeProvider){
       when('/gascollectionpage/:id',{
             templateUrl: 'gascollection.html',
             controller: GasCollectionPageCtrl
-	    });
+	    }).
+      when('/contractUspage/:id', {
+            templateUrl: 'contractUs.html',
+            controller: ContractUsPageCtrl
+      });
 	}]);
 
 function HomePageCtrl($scope, $routeParams, globalParams) {
@@ -134,9 +140,10 @@ function WarnPageCtrl($scope, $routeParams,globalParams) {
 
 function GasCollectionPageCtrl($scope, $routeParams,globalParams) {
   globalParams.user_id = $routeParams.id;
+};
 
-
-  //alert('nihao'); 这里完成一些初始化的操作
+function ContractUsPageCtrl($scope, $routeParams,globalParams) {
+  globalParams.user_id = $routeParams.id;
 };
 function ___________ngRoute___________End(){};
 
