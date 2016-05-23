@@ -22,3 +22,12 @@ class MeterData:
 
     def __repr__(self):
         return str(self.__dict__)
+
+
+class MeterNew:
+    def __init__(self, meter_eui='', add_time=datetime.datetime.now()):
+        self.meter_eui = meter_eui
+        self.add_time = add_time
+
+    def __repr__(self):
+        return str(self.__dict__)

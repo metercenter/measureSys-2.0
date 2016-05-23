@@ -2,7 +2,9 @@ import os, sys
 
 from django.db import connection
 
-from meter.service.RockModels import MeterData
+from meter.service import RockService
+from meter.service.RockModels import MeterData, MeterNew
+from meter.service.RockService import DataService
 from meter.service.SqlExecutor import SqlExecutor
 
 sys.path.append('./db_handle')
@@ -26,7 +28,7 @@ ADDR = (HOST, PORT)
 SerSock = socket(AF_INET, SOCK_DGRAM)
 SerSock.bind(ADDR)
 PEER_ADDR = ('218.3.27.162', 20000)
-
+dataservice  = DataService()
 while True:
     #print 'waiting for message...\n\n'
     data, addr = SerSock.recvfrom(BUFSIZE)
@@ -47,11 +49,15 @@ while True:
     print eui_str
 
     try:
-        meter=Meter.objects.get(meter_eui=eui_str)      
+        meter = Meter.objects.get(meter_eui=eui_str)
     except (KeyError, Meter.DoesNotExist):
         print ("meter do not exist\n")
+
+    if not meter:
+        print ("add non-existed meter\n")
+        dataservice.insertMeterNew(MeterNew(eui_str))
         continue
- 
+
     if data_type == 6:
         payload = data[12:(12+length)]
         qb, vb1, vb2, warn, battery = struct.unpack("!IIHHH", payload)
@@ -124,8 +130,7 @@ while True:
         new_data = MeterData(data_id=new_id, meter_eui=eui_str, data_battery=battery_s, data_vb=float(vb_s), data_vm=float(vm_s), data_p=float(p_s), data_t=float(t_s), data_qb=float(qb_s), data_qm=float(qm_s))
         new_data.data_date = datetime.datetime.now()
         try:
-            sqlex = SqlExecutor(connection)
-            sqlex.insert(new_data, 'meter_data')
+            rockservice.insert(new_data, 'meter_data')
         except:
             print ("db busy\n")
 

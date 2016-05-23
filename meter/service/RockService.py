@@ -5,6 +5,8 @@ import datetime
 
 import sqlite3
 
+from meter.service.SqlExecutor import SqlExecutor
+
 __author__ = 'peng'
 
 
@@ -16,6 +18,17 @@ class PageModal:
 
 
 class DataService:
+    ex = SqlExecutor(connection)
+
+    def getSqlExecutor(self):
+        return self.ex
+
+    def insertMeterData(self, meterData):
+        self.ex.insert(meterData, 'meter_data')
+
+    def insertMeterNew(self, meterNew):
+        self.ex.insert(meterNew, 'meter_newmeter')
+
     @staticmethod
     def execSqlFetchAll(sql, *args):
         cursor = connection.cursor()
@@ -171,8 +184,3 @@ class DataService:
         re.count = count
         re.data = responsedata
         return re
-
-    def insertdata(self):
-        DataService.execSqlFetchOnel('''
-        insert into meter_data() values()
-        ''')
