@@ -1,42 +1,33 @@
-import sqlite3
-import datetime
-
-from django.db import connection
-
 __author__ = 'lipeng'
 
 
 class SqlExecutor:
-    convertSql = not False
 
-    def __init__(self, con):
+    def __init__(self, con, convertSql=True):
         self.connection = con
+        # django connection use % instead of ?
+        self.convertSql = convertSql
+        self.fetchOne = lambda x: x.fetchone()
+        self.fetchAll = lambda x: x.fetchall()
 
     def execSqlAll(self, sql, args, clz=None):
         cu = self.__getCusor()
-        sql = self.__processSql(sql)
-        cu.execute(sql, args)
-        return self.__convert(cu.fetchall(), clz, cu)
+        return self.__convert(self.__execRawSql(cu, self.fetchAll, sql, args), clz, cu)
 
     def execSqlSingle(self, sql, args, clz=None):
-        sql = self.__processSql(sql)
         cu = self.__getCusor()
-        cu.execute(sql, args)
-        return self.__convert(cu.fetchone(), clz, cu)
+        return self.__convert(self.__execRawSql(cu, self.fetchOne, sql, args), clz, cu)
 
     def execRawSqlFetchAll(self, sql, *args):
-        sql = self.__processSql(sql)
-        cursor = self.__getCusor()
-        cursor.execute(sql, args)
-        re = cursor.fetchall()
-        cursor.close()
-        return re
+        return self.__execRawSql(self.__getCusor(), self.fetchAll, sql, args)
 
     def execRawSqlFetchOnel(self, sql, *args):
+        return self.__execRawSql(self.__getCusor(), self.fetchOne, sql, args)
+
+    def __execRawSql(self, cursor, lambdaFetch, sql, args):
         sql = self.__processSql(sql)
-        cursor = self.__getCusor()
         cursor.execute(sql, args)
-        re = cursor.fetchone()
+        re = lambdaFetch(cursor)
         cursor.close()
         return re
 
@@ -58,7 +49,6 @@ class SqlExecutor:
         if id:
             fs.remove(id)
         args = [getattr(a, f) for f in fs]
-        # fsInInsert = ",".join(["'" + attr + "'" for attr in fs])
         fsInInsert = ",".join([attr for attr in fs])
         from meter.service.LeeUtil import LeeUtil
         placeHolders = LeeUtil.genPlaceHolders(len(fs))
