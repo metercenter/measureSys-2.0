@@ -8,7 +8,7 @@ Highcharts.setOptions({
 
 function ___________globalParam_______start(){};
 app.factory('globalParams', function($http){
-  var current_company = "金昇公司";
+  var current_company = "金昇能源";
   var current_meter = "1号流量计";
   var current_meter_eui = "36ffd60532573238";
   var user_company = "万达广场";
