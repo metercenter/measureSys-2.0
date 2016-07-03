@@ -32,11 +32,11 @@ class DataService:
         self.ex.insert(meterNew, 'meter_newmeter')
 
     def queryMeterDataStatistic(self, euis, startDate, endDate):
-        if not euis or len(euis) ==0:
+        if not euis or len(euis) == 0:
             return []
         return self.ex.execSqlAll('''
         select
-        meter_eui , sum(data_vm) as data_vm,avg(data_p) as data_p,avg(data_t) as data_t ,sum(data_vb) as data_vb
+        meter_eui , max(data_vm)-min(data_vm) as data_vm,avg(data_p) as data_p,avg(data_t) as data_t ,max(data_vb)-min(data_vb) as data_vb
         from meter_data
         where
         meter_eui in ({0})
