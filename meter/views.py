@@ -1546,7 +1546,8 @@ def getGasCollection(request):
         preMonthStart = request.GET['preMonthStartDate']
         preMonthEnd = request.GET['preMonthEndDate']
         meters = Meter.objects.filter(user_id__startswith = userID).filter(meter_district = districtID)
-
+        if not meters or len(meters) == 0:
+            return toJsonResponse(responsedata)
         statsMap = LeeUtil.toMap(dataService.queryMeterDataStatistic([m.meter_eui for m in meters], startDate, endDate) , 'meter_eui')
         statsMapPre = LeeUtil.toMap(dataService.queryMeterDataStatistic([m.meter_eui for m in meters], preMonthStart, preMonthEnd) , 'meter_eui')
         typesMap = LeeUtil.toMap(MeterType.objects.all(),'meter_type')
@@ -1554,6 +1555,8 @@ def getGasCollection(request):
             eui = each.meter_eui
             if not statsMap.has_key(eui):
                 continue
+            dateCurrent = statsMap[eui]
+            datePre = statsMapPre[eui]
             each_dict = {
                 "user_id": each.user_id,
                 "meter_name": each.meter_name,
@@ -1565,27 +1568,31 @@ def getGasCollection(request):
                 "communication": each.communication,
 
                 #metertype
-                "meter_type": typesMap.get(each.meter_type , '').meter_type_name if typesMap.has_key(each.meter_type)  else '',
-                "meter_revisetype": typesMap.get(each.meter_revisetype , '').meter_type_name if typesMap.has_key(each.meter_revisetype)  else '',
+                "meter_type": typesMap.get(each.meter_type).meter_type_name if typesMap.has_key(each.meter_type)  else '',
+                "meter_revisetype": typesMap.get(each.meter_revisetype).meter_type_name if typesMap.has_key(each.meter_revisetype)  else '',
                 #District
                 "meter_district": getDistrictName(each.meter_district),
                 #user
                 "meter_company" :getUserCompanyName(each.user_id[0:4]),
 
                 # Data
-                "meter_data_vb": statsMap[eui].data_vb,
-                "meter_data_vm":statsMap[eui].data_vm,
-                "meter_data_p":statsMap[eui].data_p,
-                "meter_date_t":statsMap[eui].data_t,
+                "meter_data_vb": dateCurrent.data_vb if dateCurrent else '',
+                "meter_data_vm": dateCurrent.data_vm if dateCurrent else '',
+                "meter_data_p": dateCurrent.data_p if dateCurrent else '',
+                "meter_date_t": dateCurrent.data_t if dateCurrent else '',
 
-                "meter_data_vb1":statsMapPre[eui].data_vb,
-                "meter_data_vm1":statsMapPre[eui].data_vm,
-                "meter_data_p1":statsMapPre[eui].data_p,
-                "meter_date_t1":statsMapPre[eui].data_t
+                "meter_data_vb1": datePre.data_vb if datePre else '',
+                "meter_data_vm1": datePre.data_vm if datePre else '',
+                "meter_data_p1": datePre.data_p if datePre else '',
+                "meter_date_t1": datePre.data_t if datePre else ''
             }
             responsedata.append(each_dict)
 
-    return HttpResponse(json.dumps(responsedata),content_type ="application/json")
+    return toJsonResponse(responsedata)
+
+def toJsonResponse(data):
+    return HttpResponse(json.dumps(data),content_type ="application/json")
+
 def getGasCollection_bak(request):
     if  not 'user_id' in request.session:
         loginPage(request)
