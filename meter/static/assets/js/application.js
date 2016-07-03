@@ -2240,234 +2240,172 @@ app.controller('DataPickerCtrl', function ($scope, $http, globalParams) {
 	}]);
 
 
-	app.controller('gasCollectionbyDistrictCtrl',function($scope, $http, $modal, globalParams){
-	  $scope.companys = [];
-	  $scope.metertypes = [];
-	  $scope.provinces = [];
-	  $scope.cities = [];
-	  $scope.districts = [];
-	  $scope.dependents= ['用户编号','流量计编号'];
-	  $scope.userSelections="nihao";
-	  $scope.warning = ""
+	app.controller('gasCollectionbyDistrictCtrl',function($scope, $http, $modal, globalParams) {
+        $scope.companys = [];
+        $scope.metertypes = [];
+        $scope.provinces = [];
+        $scope.cities = [];
+        $scope.districts = [];
+        $scope.dependents = ['用户编号', '流量计编号'];
+        $scope.userSelections = "nihao";
+        $scope.warning = ""
 
-	  //~~~~~~~~~~~~~~~~~~~~~datepick~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
-	  $scope.startDate = new Date(new Date().getFullYear(), new Date().getMonth()-1 == 0 ? new Date().getMonth():new Date().getMonth()-1, 1);
-	  $scope.stopDate = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+        //~~~~~~~~~~~~~~~~~~~~~datepick~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+        $scope.startDate = new Date(new Date().getFullYear(), new Date().getMonth() - 1 == 0 ? new Date().getMonth() : new Date().getMonth() - 1, 1);
+        $scope.stopDate = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
 
-  //~~~~~~~~~~~~~~~~~~~~~datepick~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
-  var provinces_id = [];
-  var cities_id = [];
-  var districts_id = [];
-    $http({
-	      url:'/getDistrict',
-	      method:'GET'
-	    }).success(function(response) {
-		    response.forEach(function(entry){
-		      $scope.provinces.push(entry.district_name);
-		      provinces_id.push(entry.district_id)
-		    });
-		  });
-
-	  $scope.province_update = function(province) {
-		  $scope.warning = ""
-		  $http({
-			    url:'/getDistrict',
-			    method:'GET',
-			    params:{province_id: provinces_id[province]}
-			  }).success(function(response) {
-				  $scope.cities = [];
-				  cities_id = [];
-			    response.forEach(function(entry){
-			      $scope.cities.push(entry.district_name);
-			      cities_id.push(entry.district_id);
-
-			    });
-			  });
-		  $scope.city = -1;
-	  };
-
-	  $scope.city_update = function(city) {
-		  $scope.warning = ""
-		  $http({
-			    url:'/getDistrict',
-			    method:'GET',
-			    params:{city_id: cities_id[city]}
-			  }).success(function(response) {
-				  $scope.districts = [];
-				  districts_id = [];
-			    response.forEach(function(entry){
-			      $scope.districts.push(entry.district_name);
-			      districts_id.push(entry.district_id);
-			    });
-			  });
-		  $scope.district = -1;
-	  };
-
-	  $scope.district_update = function(district) {
-		  $scope.warning = ""
-		  $http({
-			    url:'/getGasCollection',
-			    method:'GET',
-			    params:{district_id: districts_id[district],
-
-            startDate: $scope.startDate.getFullYear()+'-'+($scope.startDate.getMonth()+1)+'-'+$scope.startDate.getDate(),
-            endDate: $scope.stopDate.getFullYear()+'-'+($scope.stopDate.getMonth()+1)+'-'+$scope.stopDate.getDate(),
-            preMonthStartDate: $scope.startDate.getFullYear()+'-'+$scope.startDate.getMonth()+'-'+$scope.startDate.getDate(),
-            preMonthEndDate: $scope.stopDate.getFullYear()+'-'+$scope.stopDate.getMonth()+'-'+$scope.stopDate.getDate()
-          }
-			  }).success(function(response) {
-
-        //添加grid显示的内容
-				  $scope.meters = [];
-				  meters_id = [];
-				  if (response.length == 0) {
-					  $scope.warning = "当前用户在该区域没有流量计"
-					  return
-				  }
-          $scope.rowCollection = response;
-          $scope.displayedCollection = [].concat($scope.rowCollection);
-          $scope.report= {
-            gasCompany : response[0].meter_company,
-            companyName: response[0].meter_name,
-            meterType: response[0].meter_version,
-            meterCode: response[0].meter_eui,
-            meterBand: response[0].meter_type,
-            qm1: response[0].meter_data_vb,
-            qv1:response[0].meter_data_vm,
-            pa1: response[0].meter_data_p,
-            temperature1: response[0].meter_data_t,
-            qm2: response[0].meter_data_vb1,
-            qv2:response[0].meter_data_vm1,
-            pa2: response[0].meter_data_p1,
-            temperature2: response[0].meter_data_t1,
-            compensate: $scope.compensate
-          }
-			    //response.forEach(function(entry){
-			    //  if (entry.meter_typenum != 2) { //卓度流量计没有压力 温度数据
-			    //	  $scope.meters.push(entry.meter_name)
-			    //	  meters_id.push(entry.meter_eui)
-			    //  }
-			    //});
-			  });
-		  $scope.meter = -1;
-	  };
-
-
-
-  $scope.animationsEnabled = true;
-  $scope.open = function(row) {
-    $scope.report= {
-            gasCompany : row.meter_company,
-            companyName: row.meter_name,
-            meterType: row.meter_version,
-            meterCode: row.meter_eui,
-            meterBand: row.meter_type,
-            qm1: row.meter_data_vb,
-            qv1:row.meter_data_vm,
-            pa1: row.meter_data_p,
-            temperature1: row.meter_data_t,
-            qm2: row.meter_data_vb1,
-            qv2:row.meter_data_vm1,
-            pa2: row.meter_data_p1,
-            temperature2: row.meter_data_t1,
-            compensate: $scope.compensate
-          };
-    var testModalInstance = $modal.open({
-      animation: $scope.animationsEnabled,
-      templateUrl: 'testModal.html',
-      controller: 'testModalInstanceCtrl',
-      resolve: {
-        assigner : function () {
-          $scope.report.compensate = $scope.compensate;
-          return $scope.report;
-        }
-      }
-    });
-
-    testModalInstance.result.then(function (returnVal){
-      console.log(returnVal);
-    },function(){
-
-    }) ;
-  }
-  $scope.lll = 'sdfsfsdf';
-
-  var datas = [];
-  var periodTime =7;
-    $http({
-        url:'/meterDataChart',
-        method:'GET',
-        params:{user_id: globalParams.user_id,
-          period: periodTime }
-      }).success(function(response) {
-        for (var i=0;i<response.length;i++)
-        {
-          datas.push([response[i].data_date, response[i].data_qb])
-        }
-        $scope.chartConfig = {
-                options: {
-                    chart: {
-                        type: 'spline',
-                        zoomType: 'x'
-                    },
-                    rangeSelector: {
-                        enabled: true
-                    },
-                    navigator: {
-                        enabled: true
-                    }
-                },
-                title: {
-                    text: '流量计标况统计'
-                },
-//                useHighStocks: true,
-                xAxis: {
-                    startOnTick: true,
-                    type: 'datetime',
-                    tickInterval: 3600 * 1000 * 24,
-                    labels:{
-                        formatter: function() {
-                            var d = new Date(this.value);
-                                 return Highcharts.dateFormat("%Y-%m-%e",this.value); // just month
-
-                        },
-                    rotation: -45
-                    }
-                },
-                yAxis: {
-                    title: {
-                        text: '总流量(Nm3)'
-                    },
-                    plotLines: [{
-                        value: 0,
-                        width: 1,
-                        color: '#808080'
-                    }]
-                },
-                series: [{
-                  name: '总流量',
-                  data: datas
-                }]
-        }
-      });
-
-  $scope.openDataChart = function(row){
-    console.log($scope.startDate);
-    $http({
-      url:'/getDayDataChart',
-        method:'GET',
-        params:{meter_eui: row.meter_eui,
-          startDate: $scope.startDate.getFullYear()+'-'+($scope.startDate.getMonth()+1)+'-'+$scope.startDate.getDate(),
-          endDate: $scope.stopDate.getFullYear()+'-'+($scope.stopDate.getMonth()+1)+'-'+$scope.stopDate.getDate()
-        }
-      }).success(function(response) {
-
-        var datas = [];
-        response.forEach(function(entry){
-          datas.push(entry.date, entry.data);
+        //~~~~~~~~~~~~~~~~~~~~~datepick~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+        var provinces_id = [];
+        var cities_id = [];
+        var districts_id = [];
+        $http({
+            url: '/getDistrict',
+            method: 'GET'
+        }).success(function (response) {
+            response.forEach(function (entry) {
+                $scope.provinces.push(entry.district_name);
+                provinces_id.push(entry.district_id)
+            });
         });
 
-        $scope.chartConfig = {
+        $scope.province_update = function (province) {
+            $scope.warning = ""
+            $http({
+                url: '/getDistrict',
+                method: 'GET',
+                params: {province_id: provinces_id[province]}
+            }).success(function (response) {
+                $scope.cities = [];
+                cities_id = [];
+                response.forEach(function (entry) {
+                    $scope.cities.push(entry.district_name);
+                    cities_id.push(entry.district_id);
+
+                });
+            });
+            $scope.city = -1;
+        };
+
+        $scope.city_update = function (city) {
+            $scope.warning = ""
+            $http({
+                url: '/getDistrict',
+                method: 'GET',
+                params: {city_id: cities_id[city]}
+            }).success(function (response) {
+                $scope.districts = [];
+                districts_id = [];
+                response.forEach(function (entry) {
+                    $scope.districts.push(entry.district_name);
+                    districts_id.push(entry.district_id);
+                });
+            });
+            $scope.district = -1;
+        };
+
+        $scope.district_update = function (district) {
+            $scope.warning = ""
+            $http({
+                url: '/getGasCollection',
+                method: 'GET',
+                params: {
+                    district_id: districts_id[district],
+
+                    startDate: $scope.startDate.getFullYear() + '-' + ($scope.startDate.getMonth() + 1) + '-' + $scope.startDate.getDate(),
+                    endDate: $scope.stopDate.getFullYear() + '-' + ($scope.stopDate.getMonth() + 1) + '-' + $scope.stopDate.getDate(),
+                    preMonthStartDate: $scope.startDate.getFullYear() + '-' + $scope.startDate.getMonth() + '-' + $scope.startDate.getDate(),
+                    preMonthEndDate: $scope.stopDate.getFullYear() + '-' + $scope.stopDate.getMonth() + '-' + $scope.stopDate.getDate()
+                }
+            }).success(function (response) {
+
+                //添加grid显示的内容
+                $scope.meters = [];
+                meters_id = [];
+                if (response.length == 0) {
+                    $scope.warning = "当前用户在该区域没有流量计"
+                    return
+                }
+                $scope.rowCollection = response;
+                $scope.displayedCollection = [].concat($scope.rowCollection);
+                $scope.report = {
+                    gasCompany: response[0].meter_company,
+                    companyName: response[0].meter_name,
+                    meterType: response[0].meter_version,
+                    meterCode: response[0].meter_eui,
+                    meterBand: response[0].meter_type,
+                    qm1: response[0].meter_data_vb,
+                    qv1: response[0].meter_data_vm,
+                    pa1: response[0].meter_data_p,
+                    temperature1: response[0].meter_data_t,
+                    qm2: response[0].meter_data_vb1,
+                    qv2: response[0].meter_data_vm1,
+                    pa2: response[0].meter_data_p1,
+                    temperature2: response[0].meter_data_t1,
+                    compensate: $scope.compensate
+                }
+                //response.forEach(function(entry){
+                //  if (entry.meter_typenum != 2) { //卓度流量计没有压力 温度数据
+                //	  $scope.meters.push(entry.meter_name)
+                //	  meters_id.push(entry.meter_eui)
+                //  }
+                //});
+            });
+            $scope.meter = -1;
+        };
+
+
+        $scope.animationsEnabled = true;
+        $scope.open = function (row) {
+            $scope.report = {
+                gasCompany: row.meter_company,
+                companyName: row.meter_name,
+                meterType: row.meter_version,
+                meterCode: row.meter_eui,
+                meterBand: row.meter_type,
+                qm1: row.meter_data_vb,
+                qv1: row.meter_data_vm,
+                pa1: row.meter_data_p,
+                temperature1: row.meter_data_t,
+                qm2: row.meter_data_vb1,
+                qv2: row.meter_data_vm1,
+                pa2: row.meter_data_p1,
+                temperature2: row.meter_data_t1,
+                compensate: $scope.compensate
+            };
+            var testModalInstance = $modal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: 'testModal.html',
+                controller: 'testModalInstanceCtrl',
+                resolve: {
+                    assigner: function () {
+                        $scope.report.compensate = $scope.compensate;
+                        return $scope.report;
+                    }
+                }
+            });
+
+            testModalInstance.result.then(function (returnVal) {
+                console.log(returnVal);
+            }, function () {
+
+            });
+        }
+        $scope.lll = 'sdfsfsdf';
+
+        var datas = [];
+        var periodTime = 7;
+        $http({
+            url: '/meterDataChart',
+            method: 'GET',
+            params: {
+                user_id: globalParams.user_id,
+                period: periodTime
+            }
+        }).success(function (response) {
+            for (var i = 0; i < response.length; i++) {
+                datas.push([response[i].data_date, response[i].data_qb])
+            }
+            $scope.chartConfig = {
                 options: {
                     chart: {
                         type: 'spline',
@@ -2488,13 +2426,13 @@ app.controller('DataPickerCtrl', function ($scope, $http, globalParams) {
                     startOnTick: true,
                     type: 'datetime',
                     tickInterval: 3600 * 1000 * 24,
-                    labels:{
-                        formatter: function() {
+                    labels: {
+                        formatter: function () {
                             var d = new Date(this.value);
-                                 return Highcharts.dateFormat("%Y-%m-%e",this.value); // just month
+                            return Highcharts.dateFormat("%Y-%m-%e", this.value); // just month
 
                         },
-                    rotation: -45
+                        rotation: -45
                     }
                 },
                 yAxis: {
@@ -2508,29 +2446,93 @@ app.controller('DataPickerCtrl', function ($scope, $http, globalParams) {
                     }]
                 },
                 series: [{
-                  name: '总流量',
-                  data: datas
+                    name: '总流量',
+                    data: datas
                 }]
+            }
+        });
+
+        $scope.openDataChart = function (row) {
+            console.log($scope.startDate);
+            $http({
+                url: '/getDayDataChart',
+                method: 'GET',
+                params: {
+                    meter_eui: row.meter_eui,
+                    startDate: $scope.startDate.getFullYear() + '-' + ($scope.startDate.getMonth() + 1) + '-' + $scope.startDate.getDate(),
+                    endDate: $scope.stopDate.getFullYear() + '-' + ($scope.stopDate.getMonth() + 1) + '-' + $scope.stopDate.getDate()
+                }
+            }).success(function (response) {
+
+                var datas = [];
+                response.forEach(function (entry) {
+                    datas.push(entry.date, entry.data);
+                });
+
+                $scope.chartConfig = {
+                    options: {
+                        chart: {
+                            type: 'spline',
+                            zoomType: 'x'
+                        },
+                        rangeSelector: {
+                            enabled: true
+                        },
+                        navigator: {
+                            enabled: true
+                        }
+                    },
+                    title: {
+                        text: '流量计标况统计'
+                    },
+//                useHighStocks: true,
+                    xAxis: {
+                        startOnTick: true,
+                        type: 'datetime',
+                        tickInterval: 3600 * 1000 * 24,
+                        labels: {
+                            formatter: function () {
+                                var d = new Date(this.value);
+                                return Highcharts.dateFormat("%Y-%m-%e", this.value); // just month
+
+                            },
+                            rotation: -45
+                        }
+                    },
+                    yAxis: {
+                        title: {
+                            text: '总流量(Nm3)'
+                        },
+                        plotLines: [{
+                            value: 0,
+                            width: 1,
+                            color: '#808080'
+                        }]
+                    },
+                    series: [{
+                        name: '总流量',
+                        data: datas
+                    }]
+                }
+            });
+            var testModalInstance = $modal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: 'dayDataChart.html',
+                controller: 'dayDataChartModalInstanceCtrl',
+                resolve: {
+                    assigner: function () {
+                        return $scope.chartConfig;
+                    }
+                }
+            });
+
+            testModalInstance.result.then(function (returnVal) {
+                console.log(returnVal);
+            }, function () {
+
+            });
         }
-      });
-    var testModalInstance = $modal.open({
-      animation: $scope.animationsEnabled,
-      templateUrl: 'dayDataChart.html',
-      controller: 'dayDataChartModalInstanceCtrl',
-      resolve: {
-        assigner : function () {
-          return $scope.chartConfig;
-        }
-      }
     });
-
-    testModalInstance.result.then(function (returnVal){
-      console.log(returnVal);
-    },function(){
-
-    }) ;
-  }
- });
 
 
 app.controller('dayDataChartModalInstanceCtrl', function($scope, $modalInstance,assigner){
