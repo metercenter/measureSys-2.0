@@ -2247,7 +2247,7 @@ app.controller('DataPickerCtrl', function ($scope, $http, globalParams) {
 	  $scope.cities = [];
 	  $scope.districts = [];
 	  $scope.dependents= ['用户编号','流量计编号'];
-	  $scope.userSelections="";
+	  $scope.userSelections="nihao";
 	  $scope.warning = ""
 
 	  //~~~~~~~~~~~~~~~~~~~~~datepick~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
