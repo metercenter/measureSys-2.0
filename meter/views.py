@@ -985,13 +985,16 @@ def getWarnInfoOld(request):
                     responsedata.append(each_dict)
         return HttpResponse(json.dumps(responsedata),content_type ="application/json")
 
+
 def getWarnInfo(request):
     if 'user_id' in request.GET:
         userID = request.GET['user_id']
+        if 'pageNum' not in request.GET or 'pageSize' not in request.GET:
+            return toJsonResponse([])
         page = int(request.GET['pageNum'])
         pageSize = int(request.GET['pageSize'])
         re = DataService.getWarnInfo(userID, page, pageSize)
-        return HttpResponse(json.dumps(re.__dict__), content_type="application/json")
+        return toJsonResponse(re.__dict__)
 
 def changeCompanyIntro(request):
     if  not 'user_id' in request.session:
