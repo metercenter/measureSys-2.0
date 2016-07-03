@@ -26,7 +26,7 @@ class SqlExecutor:
 
     def __execRawSql(self, cursor, lambdaFetch, sql, args):
         sql = self.__processSql(sql)
-        print sql % tuple(map(lambda x:"'"+x +"'",args))
+        # print sql % tuple(map(lambda x:"'"+x +"'",args))
         cursor.execute(sql, args)
         re = lambdaFetch(cursor)
         cursor.close()
