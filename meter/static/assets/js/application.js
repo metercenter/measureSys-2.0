@@ -382,19 +382,6 @@ function ___________dataAnalyzeModal________end(){};
 
 function ___________importantWarnData________start(){};
 app.controller('WarnCtrl-1', function ($scope, $http, globalParams) {
-	//$http({
-	//	url:'/getWarnInfo',
-	//	method:'GET',
-	//	params:{user_id: globalParams.user_id,
-	//		warn_level: "一级警报"}
-	//}).success(function(response) {
-    //
-	//  $scope.rowCollection = response;
-    //
-	//  //copy the references (you could clone ie angular.copy but then have to go through a dirty checking for the matches)
-	//  $scope.displayedCollection = [].concat($scope.rowCollection);
-    //
-	//  });
     $scope.paginationConf = {
         currentPage: 1,
         totalItems: 1,
@@ -408,7 +395,7 @@ app.controller('WarnCtrl-1', function ($scope, $http, globalParams) {
                 method:'GET',
                 params: {
                     user_id: globalParams.user_id,
-                    warn_level: "一级警报",
+                    warn_level: "1",
                     pageNum: THIS.currentPage,
                     pageSize:  THIS.itemsPerPage
                 }
@@ -430,17 +417,33 @@ function ___________importantWarnData________end(){};
 
 function ___________allWarnData________start(){};
 app.controller('WarnCtrl-all', function ($scope, $http, globalParams) {
-	$http({
-		url:'/getWarnInfo',
-		method:'GET',
-		params:{user_id: globalParams.user_id}
-	}).success(function(response) {
+    $scope.paginationConf = {
+        currentPage: 1,
+        totalItems: 1,
+        itemsPerPage: 15,
+        pagesLength: 15,
+        perPageOptions: [10, 20, 30, 40, 50],
+        onChange: function(){
+            THIS = $scope.paginationConf;
+            $http({
+                url:'/getWarnInfo',
+                method:'GET',
+                params: {
+                    user_id: globalParams.user_id,
+                    // warn_level: "1",
+                    pageNum: THIS.currentPage,
+                    pageSize:  THIS.itemsPerPage
+                }
+            }).success(function(response) {
 
-	  $scope.rowCollection = response;
+                $scope.rowCollection = response.data;
+                THIS.totalItems = response.count
 
-	  //copy the references (you could clone ie angular.copy but then have to go through a dirty checking for the matches)
-	  $scope.displayedCollection = [].concat($scope.rowCollection);
-	  });
+                //copy the references (you could clone ie angular.copy but then have to go through a dirty checking for the matches)
+                $scope.displayedCollection = [].concat($scope.rowCollection);
+            });
+        }
+    }
 });
 function ___________allWarnData________end(){};
 

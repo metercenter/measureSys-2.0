@@ -26,3 +26,9 @@ class LeeUtil:
             else:
                 re.append(a)
         return re
+
+    @staticmethod
+    def wrapString(s):
+        if not s:
+            s = ''
+        return "'" + s + "'"

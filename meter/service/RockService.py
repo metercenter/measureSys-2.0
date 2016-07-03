@@ -138,7 +138,7 @@ class DataService:
         return re
 
     @staticmethod
-    def getWarnInfo(user_id, page, page_size):
+    def getWarnInfo(user_id, page, page_size , warnLevel=None):
         responsedata = []
         data = DataService.execSqlFetchAll(
             '''
@@ -161,9 +161,10 @@ class DataService:
                           on  uu.user_id= substr(m.user_id,1,8)
               left join meter_datawarntype warnType
                           on warnType.data_warn = w.data_warn
+            {0}
             order by  w.warn_date desc
             limit %s , %s
-            ''',
+            '''.format('where warn_level = ' + LeeUtil.wrapString(warnLevel) if warnLevel else ""),
             user_id + "%", (page - 1) * page_size, page_size)
         count = DataService.execSqlFetchOnel(
             '''
@@ -178,7 +179,8 @@ class DataService:
                           on  uu.user_id= substr(m.user_id,1,8)
               left join meter_datawarntype warnType
                           on warnType.data_warn = w.data_warn
-            ''',
+            {0}
+            '''.format('where warn_level = ' + LeeUtil.wrapString(warnLevel) if warnLevel else ""),
             user_id + "%")
         for d in data:
             responsedata.append({
