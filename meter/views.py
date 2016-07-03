@@ -993,7 +993,8 @@ def getWarnInfo(request):
             return toJsonResponse([])
         page = int(request.GET['pageNum'])
         pageSize = int(request.GET['pageSize'])
-        re = DataService.getWarnInfo(userID, page, pageSize)
+        warnLevel= request.GET['warn_level'] if 'warn_level' in request.GET else None
+        re = DataService.getWarnInfo(userID, page, pageSize,warnLevel)
         return toJsonResponse(re.__dict__)
 
 def changeCompanyIntro(request):
