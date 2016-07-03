@@ -3,6 +3,7 @@
 .DS_Store
 .pydevproject
 .settings/
+db.sqlite3
 *.sqlite3
 testpy.iml
 db.sqlite3
