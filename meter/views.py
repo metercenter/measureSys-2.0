@@ -1545,10 +1545,10 @@ def getGasCollection(request):
     if 'district_id' in request.GET:
         districtID = request.GET['district_id']
         userID = request.session['user_id']
-        startDate = request.GET['startDate']
-        endDate = request.GET['endDate']
-        preMonthStart = request.GET['preMonthStartDate']
-        preMonthEnd = request.GET['preMonthEndDate']
+        startDate = datetime.datetime.strptime(request.GET['startDate'], "%Y-%m-%d").strftime("%Y-%m-%d")
+        endDate = datetime.datetime.strptime(request.GET['endDate'], "%Y-%m-%d").strftime("%Y-%m-%d")
+        preMonthStart = datetime.datetime.strptime(request.GET['preMonthStartDate'], "%Y-%m-%d").strftime("%Y-%m-%d")
+        preMonthEnd = datetime.datetime.strptime(request.GET['preMonthEndDate'], "%Y-%m-%d").strftime("%Y-%m-%d")
         meters = Meter.objects.filter(user_id__startswith = userID).filter(meter_district = districtID)
         if not meters or len(meters) == 0:
             return toJsonResponse(responsedata)
@@ -1580,15 +1580,15 @@ def getGasCollection(request):
                 "meter_company" :getUserCompanyName(each.user_id[0:4]),
 
                 # Data
-                "meter_data_vb": dateCurrent.data_vb if dateCurrent else '',
-                "meter_data_vm": dateCurrent.data_vm if dateCurrent else '',
-                "meter_data_p": dateCurrent.data_p if dateCurrent else '',
-                "meter_date_t": dateCurrent.data_t if dateCurrent else '',
+                "meter_data_vb": str(round(float(dateCurrent.data_vb), 2)) if dateCurrent else '',
+                "meter_data_vm": str(round(float(dateCurrent.data_vm), 2)) if dateCurrent else '',
+                "meter_data_p": str(round(float(dateCurrent.data_p), 2)) if dateCurrent else '',
+                "meter_date_t": str(round(float(dateCurrent.data_t), 2)) if dateCurrent else '',
 
-                "meter_data_vb1": datePre.data_vb if datePre else '',
-                "meter_data_vm1": datePre.data_vm if datePre else '',
-                "meter_data_p1": datePre.data_p if datePre else '',
-                "meter_date_t1": datePre.data_t if datePre else ''
+                "meter_data_vb1": str(round(float(datePre.data_vb), 2)) if datePre else '',
+                "meter_data_vm1": str(round(float(datePre.data_vm), 2)) if datePre else '',
+                "meter_data_p1": str(round(float(datePre.data_p), 2)) if datePre else '',
+                "meter_date_t1": str(round(float(datePre.data_t), 2)) if datePre else ''
             }
             responsedata.append(each_dict)
 
