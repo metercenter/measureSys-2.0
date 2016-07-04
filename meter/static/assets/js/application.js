@@ -2317,10 +2317,10 @@ app.controller('DataPickerCtrl', function ($scope, $http, globalParams) {
                     // endDate: $scope.stopDate.getFullYear() + '-' + ($scope.stopDate.getMonth() + 1) + '-' + $scope.stopDate.getDate(),
                     // preMonthStartDate: $scope.startDate.getFullYear() + '-' + $scope.startDate.getMonth() + '-' + $scope.startDate.getDate(),
                     // preMonthEndDate: $scope.stopDate.getFullYear() + '-' + $scope.stopDate.getMonth() + '-' + $scope.stopDate.getDate()
-                    startDate: moment($scope.startDate).add(1,'month').format('YYYY-MM-DD'),
-                    endDate: moment($scope.stopDate).add(1,'month').format('YYYY-MM-DD'),
-                    preMonthStartDate:moment($scope.startDate).format('YYYY-MM-DD'),
-                    preMonthEndDate: moment($scope.stopDate).format('YYYY-MM-DD')
+                    startDate: moment($scope.startDate).format('YYYY-MM-DD'),
+                    endDate: moment($scope.stopDate).format('YYYY-MM-DD'),
+                    preMonthStartDate:moment($scope.startDate).subtract(1,"month").format('YYYY-MM-DD'),
+                    preMonthEndDate: moment($scope.stopDate).subtract(1,"month").format('YYYY-MM-DD')
                 }
             }).success(function (response) {
 
