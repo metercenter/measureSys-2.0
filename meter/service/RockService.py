@@ -40,7 +40,7 @@ class DataService:
         from meter_data
         where
         meter_eui in ({0})
-        and data_date > ? and data_date < ? group by meter_eui ORDER  BY data_date DESC
+        and data_date >= ? and data_date <= ? group by meter_eui ORDER  BY data_date DESC
       '''.format(LeeUtil.genPlaceHolders(len(euis))), LeeUtil.merge(euis, startDate, endDate), MeterData)
 
     @staticmethod
