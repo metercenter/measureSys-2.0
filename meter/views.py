@@ -1577,7 +1577,7 @@ def getGasCollection(request):
                 #District
                 "meter_district": getDistrictName(each.meter_district),
                 #user
-                "meter_company" :getUserCompanyName(each.user_id[0:4]),
+                "meter_company" :getUserCompanyName(each.user_id[0:8]),
 
                 # Data
                 "meter_data_vb": str(round(float(dateCurrent.data_vb), 2)) if dateCurrent else '',

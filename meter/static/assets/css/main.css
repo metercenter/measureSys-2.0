@@ -2955,10 +2955,10 @@ text-align:left;
     background-color: #3498db;
     line-height: 31px;
     float: left;
-    min-width: 75px;
+    min-width: 25px;
     margin-right: 12px;
     text-align:center;
-    height: 75px;
+    height: 25px;
     padding-top: 25px;
 }
 .list-unstyled {

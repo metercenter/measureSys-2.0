@@ -625,7 +625,7 @@
         <div class="col-md-12">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">南京金昇新能源科技股份有限公司</h3>
+                    <h3 class="panel-title">南京金昇能源科技股份有限公司</h3>
                 </div>
                 <div class="panel-body text-left">
                     <!-- <div id="area-chart"></div>
@@ -636,7 +636,10 @@
                         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp公司已建立完整的服务体系，提供从售前、售中到售后全面的技术支持和服务。服务团队由具有丰富实践经验的技术人员组成，具备不同类型的工程和设备安装、调试和应急处理能力。
                     </p>-->
 
-                    <img src="/static/assets/img/Jinsheng.jpg" height="100" width="250"/>
+                    <img src="/static/assets/img/Jinsheng.jpg" height="30" width="110"/>
+                    <br>
+                    <p>南京金昇能源科技股份有限公司</p>
+                    <p><b>地址：</b>南京市建邺区创智路2号瑞泰大厦1楼</p>
 
                     <p><b>联系电话：</b>025-58818283, 58832455</p>
                     <p><b>网址: </b>www.kingsungas.com.cn</p>
@@ -672,7 +675,7 @@
                                                 </div>
                                             </div>
                                             <a ng-click="myMap.panTo(marker.marker.getPosition())">{{ marker.meter_name
-                                                }}</a> <br><a>{{ marker.meter_version }}</a>>
+                                                }}</a>>
                                         </li>
                                     </ul>
                                     <!--在地图上标明位置-->
@@ -843,7 +846,7 @@
                                                 </div>
                                             </div>
                                             <a ng-click="myMap.panTo(marker.marker.getPosition())">{{ marker.meter_name
-                                                }}</a> <br><a>{{ marker.meter_version }}</a>>
+                                                }}</a>>
                                         </li>
                                     </ul>
                                     <!--在地图上标明位置-->
@@ -1455,8 +1458,6 @@
                             <thead>
                             <tr>
                                 <th st-sort="data_id">用户名称</th>
-                                <th st-sort="data_date">流量计品牌</th>
-                                <th st-sort="data_date">流量计型号</th>
                                 <th st-sort="data_vb">标况总累计(Nm³)</th>
                                 <th st-sort="data_vm" ng-if="meter.meter_type != '卓度'">工况总累计(Nm³)</th>
                                 <th st-sort="data_p" ng-if="meter.meter_type != '卓度'">压力(bar)</th>
@@ -1468,8 +1469,6 @@
                             <tbody>
                             <tr ng-repeat="row in displayedCollection">
                                 <td>{{row.meter_company}}</td>
-                                <td>{{row.meter_type}}</td>
-                                <td>{{row.meter_version}}</td>
                                 <td>{{row.meter_data_vb}}</td>
                                 <td ng-if="meter.meter_type != '卓度'">{{row.meter_data_vm}}</td>
                                 <td ng-if="meter.meter_type != '卓度'">{{row.meter_data_p}}</td>
