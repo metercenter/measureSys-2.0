@@ -979,7 +979,7 @@ app.controller('AddFeedbackModalInstanceCtrl', function ($scope, $http, $modalIn
 
 app.controller('ExportData', function($scope, globalParams){
   $scope.open = function(){
-    window.location.href = "/get-excel-file?&user_id="+globalParams.user_id;
+    //window.location.href = "/get-excel-file?&user_id="+globalParams.user_id;
   }
 });
 function add________________Modal______________End(){};
@@ -2243,7 +2243,7 @@ app.controller('DataPickerCtrl', function ($scope, $http, globalParams) {
 	}]);
 
 
-	app.controller('gasCollectionbyDistrictCtrl',function($scope, $http, $modal, globalParams) {
+app.controller('gasCollectionbyDistrictCtrl',function($scope, $http, $modal, globalParams) {
         $scope.companys = [];
         $scope.metertypes = [];
         $scope.provinces = [];
@@ -2550,5 +2550,103 @@ app.controller('dayDataChartModalInstanceCtrl', function($scope, $modalInstance,
   $scope.cancel = function() {
     $modalInstance.dismiss('cancel');
   }
-
 });
+
+app.controller('dayDataChartModalInstanceCtrl', function($scope, $modalInstance,assigner){
+  $scope.assignee = assigner;
+  console.log($scope.assignee);
+  $scope.dayDataChartPath = "/static/dayDataChart.html";
+
+  $scope.ok = function(){
+    $modalInstance.close($scope.assignee);
+  };
+
+  $scope.cancel = function() {
+    $modalInstance.dismiss('cancel');
+  }
+});
+
+
+
+app.controller('ExportDataCtrl',function($scope, $http, $modal, globalParams) {
+        $scope.companys = [];
+        $scope.metertypes = [];
+        $scope.users = [];
+        $scope.cities = [];
+        $scope.districts = [];
+        $scope.dependents = ['用户编号', '流量计编号'];
+        $scope.userSelections = "";
+        $scope.warning = ""
+
+        //~~~~~~~~~~~~~~~~~~~~~datepick~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+        $scope.startDate = new Date(new Date().getFullYear(), new Date().getMonth() - 1 == 0 ? new Date().getMonth() : new Date().getMonth() - 1, 1);
+        $scope.stopDate = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+
+        //~~~~~~~~~~~~~~~~~~~~~datepick~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+        var user_id = [];
+        var company_id = [];
+        $http({
+            url: '/getUserList',
+            method: 'GET',
+            params: {user_id: globalParams.user_id}
+        }).success(function (response) {
+            response.forEach(function (entry) {
+                $scope.users.push(entry.user_company);
+                user_id.push(entry.user_id)
+            });
+        });
+
+        $scope.user_update = function (user) {
+            $scope.warning = ""
+            $http({
+                url: '/getUserList',
+                method: 'GET',
+                params: {user_id: user_id[user]}
+            }).success(function (response) {
+                $scope.companys = [];
+                company_id = [];
+                response.forEach(function (entry) {
+                    $scope.companys.push(entry.user_company);
+                    company_id.push(entry.user_id);
+
+                });
+            });
+            $scope.city = -1;
+        };
+
+        $scope.company_update = function (company) {
+            $scope.warning = ""
+            $http({
+                url: '/getDataCollection',
+                method: 'GET',
+                params: {
+                  user_id: company_id[company],
+                  start_date: $scope.startDate.getFullYear() + '-' + ($scope.startDate.getMonth() + 1) + '-' + $scope.startDate.getDate(),
+                  end_date: $scope.stopDate.getFullYear() + '-' + ($scope.stopDate.getMonth() + 1) + '-' + $scope.stopDate.getDate(),
+                }
+            }).success(function (response) {
+                if (response.length == 0) {
+                      $scope.warning = "当前用户在该区域没有流量计"
+                      return
+                }
+                $scope.displayedCollection = [];
+                $scope.rowCollection = [];
+                response.forEach(function (entry) {
+                  //添加grid显示的内容
+                  $scope.meters = [];
+                  meters_id = [];
+
+                  $scope.rowCollection = response;
+                  $scope.displayedCollection = [].concat($scope.rowCollection);
+                });
+            });
+        };
+
+
+        $scope.animationsEnabled = true;
+        $scope.open = function (row) {
+          window.location.href = "/get-excel-file?&meter_eui=" + row.meter_eui
+            + "&startDate="+ $scope.startDate.getFullYear() + '-' + ($scope.startDate.getMonth() + 1) + '-' + $scope.startDate.getDate()
+            + "&endDate="+ $scope.stopDate.getFullYear() + '-' + ($scope.stopDate.getMonth() + 1) + '-' + $scope.stopDate.getDate()
+        }
+    });

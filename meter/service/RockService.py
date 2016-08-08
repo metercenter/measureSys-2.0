@@ -166,6 +166,7 @@ class DataService:
             limit %s , %s
             '''.format('where warn_level = ' + LeeUtil.wrapString(warnLevel) if warnLevel else ""),
             user_id + "%", (page - 1) * page_size, page_size)
+
         count = DataService.execSqlFetchOnel(
             '''
             select
@@ -200,3 +201,83 @@ class DataService:
         re.count = count
         re.data = responsedata
         return re
+
+
+    @staticmethod
+    def getUserList(user_id, user_id_len):
+        responsedata = []
+
+        data = DataService.execSqlFetchAll(
+            '''
+            SELECT user_id, user_company FROM meter_user WHERE user_id like %s and length(user_id) = %s ORDER By user_id ASC
+            ''', user_id + "%" , user_id_len
+        )
+        for each in data:
+            each_dict = {
+                "user_id": each[0],
+                "user_company": each[1],
+            }
+            responsedata.append(each_dict)
+        return responsedata
+
+    @staticmethod
+    def getDataCollection(user_id, start_date, end_date):
+        responsedata = []
+
+        data = DataService.execSqlFetchAll(
+            '''
+            select max(d.data_vm)-min(d.data_vm) as data_vm,avg(d.data_p) as data_p,avg(d.data_t) as data_t ,max(d.data_vb)-min(d.data_vb) as data_vb, m.meter_name, m.meter_eui
+              from meter_data d
+                inner join meter_meter m
+                on m.meter_eui = d.meter_eui
+              where d.meter_eui in ( SELECT meter_eui from meter_meter where user_id like %s)
+            and data_date >= %s and data_date <= %s group by d.meter_eui order by data_date DESC
+            ''', user_id + "%" , start_date, end_date
+        )
+        for each in data:
+            each_dict = {
+                "data_vm": round(float(each[0])),
+                "data_p": round(float(each[1])) if each[1] < 100 else round(float(each[1]/100)),
+                "data_t": round(float(each[2])),
+                "data_vb": round(float(each[3])),
+                "meter_name": each[4],
+                "meter_eui": each[5]
+            }
+            responsedata.append(each_dict)
+        print(responsedata)
+        return responsedata
+
+    @staticmethod
+    def getDataReport(meter_eui, start_date, end_date):
+        responsedata = []
+
+        data = DataService.execSqlFetchAll(
+            '''
+            select d.meter_eui, d.data_date , d.data_vb, d.data_vm, d.data_p, d.data_t, d.data_qb , d.data_qm, d.data_battery, m.meter_name
+              from meter_data d
+                inner join meter_meter m
+                on m.meter_eui = d.meter_eui
+              where d.meter_eui in (%s)
+            and data_date >= %s and data_date <= %s group by d.meter_eui order by data_date DESC
+            ''', meter_eui + "%" , start_date, end_date
+        )
+        print(meter_eui)
+        print(start_date)
+        print(end_date)
+        for each in data:
+            each_dict = {
+                "meter_eui": each[0],
+                "data_date": each[1],
+                "data_vb": round(float(each[2])),
+                "data_vm": round(float(each[3])),
+                "data_p": round(float(each[4])) if each[1] < 100 else round(float(each[1]/100)),
+                "data_t": round(float(each[5])),
+                "data_qb": round(float(each[6])),
+                "data_qm": round(float(each[7])),
+                "data_battery": round(float(each[8])),
+                "meter_name": each[9]
+            }
+            responsedata.append(each_dict)
+        print(responsedata)
+        return responsedata
+

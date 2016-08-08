@@ -2936,8 +2936,8 @@ text-align:left;
 
 
 .map {
-  height: 400px;
-  width: 600px;
+  height: 440px;
+  /*width: 600px;*/
   margin: auto;
 }
 
@@ -2959,7 +2959,7 @@ text-align:left;
     margin-right: 12px;
     text-align:center;
     height: 25px;
-    padding-top: 25px;
+    /*padding-top:x;*/
 }
 .list-unstyled {
     position: relative;
