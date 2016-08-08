@@ -650,71 +650,30 @@ def getExcelFile(request):
     worksheet.write(0, 7, u'Qm(m3/h)')
     row = 1
     meterEUI = request.GET['meter_eui']
-    startDate = request.GET['startDate']
-    endDate = request.GET['endDate']
+    startDateStr = request.GET['startDate']
+    endDateStr = request.GET['endDate']
+    startDate = datetime.datetime.strptime(startDateStr, "%Y-%m-%d").date()
+    endDate = datetime.datetime.strptime(endDateStr, "%Y-%m-%d").date()
     data_report = dataService.getDataReport(meterEUI, startDate, endDate)
     for each in data_report:
-        worksheet.write(row, 1, each.data_date.strftime("%Y/%m/%d %H:%M:%S"))
-        worksheet.write(row, 2, each[1])
-        worksheet.write(row, 3, each[2])
-        worksheet.write(row, 4, each[3])
-        worksheet.write(row, 5, each[4])
-        worksheet.write(row, 6, each[5])
-        worksheet.write(row, 7, each[6])
+        worksheet.write(row, 0, each['meter_name'])
+        worksheet.write(row, 1, each['data_date'].strftime("%Y/%m/%d %H:%M:%S"))
+        worksheet.write(row, 2, each['data_vb'])
+        worksheet.write(row, 3, each['data_vm'])
+        worksheet.write(row, 4, each['data_p'])
+        worksheet.write(row, 5, each['data_t'])
+        worksheet.write(row, 6, each['data_qb'])
+        worksheet.write(row, 7, each['data_qm'])
         row = row + 1
+
     workbook.close()
 
     output.seek(0)
 
     response = HttpResponse(output.read(), content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-    response['Content-Disposition'] = "attachment; filename=test.xlsx"
+    response['Content-Disposition'] = "attachment; filename=Export-Data.xlsx"
 
     return response
-    # wrapper = FileWrapper(dataFile)
-
-    # workbook = xlsxwriter.Workbook('Data.xlsx')
-    # worksheet = workbook.add_worksheet()
-    #
-    # worksheet.write(0, 0, u'流量计名字')
-    # worksheet.write(0, 1, u'接收时间')
-    # worksheet.write(0, 2, u'Vb(Nm3)')
-    # worksheet.write(0, 3, u'Vm(m3)')
-    # worksheet.write(0, 4, u'P')
-    # worksheet.write(0, 5, u'T')
-    # worksheet.write(0, 6, u'Qb(Nm3/h)')
-    # worksheet.write(0, 7, u'Qm(m3/h)')
-    # row = 1
-    # try:
-    #     meterEUI = request.GET['meter_eui']
-    #     startDate = request.GET['startDate']
-    #     endDate = request.GET['endDate']
-    #     date_report = dataService.getDataReport(meterEUI, startDate, endDate)
-    #
-    #     # if 'meter_eui' in request.GET:
-    #     #     Children = Meter.objects.filter(user_id__startswith = request.GET['user_id'])
-    #     #     for i in range (0, len(Children)):
-    #     #         meterID = Meter.objects.filter(user_id = Children[i].user_id)
-    #     #         for j in range(0,len(meterID)):
-    #     #             meterName = meterID[j].meter_name
-    #     #             worksheet.write(row, 0, meterName)
-    #     #             for each in Data.objects.filter(meter_eui = meterID[j].meter_eui):
-    #     #                 #                         writer.writerow([each.data_date.strftime("%Y/%m/%d %H:%M:%S"), each.data_vb, each.data_vm, each.data_p, each.data_t,each.data_qb,each.data_qm])
-    #     #                 worksheet.write(row, 1, each.data_date.strftime("%Y/%m/%d %H:%M:%S"))
-    #     #                 worksheet.write(row, 2, each.data_vb)
-    #     #                 worksheet.write(row, 3, each.data_vm)
-    #     #                 worksheet.write(row, 4, each.data_p)
-    #     #                 worksheet.write(row, 5, each.data_t)
-    #     #                 worksheet.write(row, 6, each.data_qb)
-    #     #                 worksheet.write(row, 7, each.data_qm)
-    #     #                 row = row + 1
-    # except:
-    #     print('getExcelFile:user is not existed')
-    #
-    # workbook.close()
-    # wrapper = FileWrapper(dataFile)
-    # response = HttpResponse(wrapper, content_type='application/x-xls')
-    # response['Content-Length'] = os.path.getsize('Data.xlsx')
-    # return response
 
 def getMeterType(request):
     responsedata = []
@@ -727,7 +686,6 @@ def getMeterType(request):
     response = {}
     response['status'] = 'SUCCESS'
     response['data'] = responsedata
-    #     print(json.dumps(response))
     return HttpResponse(json.dumps(responsedata),content_type ="application/json")
 
 def getCompanyInfo(request):
@@ -735,8 +693,6 @@ def getCompanyInfo(request):
     response = {}
     response['status'] = 'SUCCESS'
     try:
-        #         if 'user_id' in request.session:
-        #             return render_to_response('index.html', context_instance=RequestContext(request))
         company = Company.objects.all()
         each_dict = {
             "title": company[0].company_title,

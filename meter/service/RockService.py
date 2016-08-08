@@ -258,8 +258,8 @@ class DataService:
                 inner join meter_meter m
                 on m.meter_eui = d.meter_eui
               where d.meter_eui in (%s)
-            and data_date >= %s and data_date <= %s group by d.meter_eui order by data_date DESC
-            ''', meter_eui + "%" , start_date, end_date
+            and data_date >= %s and data_date <= %s order by data_date DESC
+            ''', meter_eui , start_date, end_date
         )
         print(meter_eui)
         print(start_date)
@@ -269,12 +269,12 @@ class DataService:
                 "meter_eui": each[0],
                 "data_date": each[1],
                 "data_vb": round(float(each[2])),
-                "data_vm": round(float(each[3])),
-                "data_p": round(float(each[4])) if each[1] < 100 else round(float(each[1]/100)),
-                "data_t": round(float(each[5])),
+                "data_vm": round(float(each[3])) if each[3] != '' else 0,
+                "data_p": 0 if each[4] == '' else (round(float(each[4])) if each[1] < 100 else round(float(each[1]/100))),
+                "data_t": round(float(each[5])) if each[5] != '' else 0,
                 "data_qb": round(float(each[6])),
-                "data_qm": round(float(each[7])),
-                "data_battery": round(float(each[8])),
+                "data_qm": round(float(each[7])) if each[7] != '' else 0,
+                "data_battery": round(float(each[8])) if each[8] != '' else 0,
                 "meter_name": each[9]
             }
             responsedata.append(each_dict)
