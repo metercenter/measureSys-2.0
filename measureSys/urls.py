@@ -7,7 +7,7 @@ from meter.views import getData, modifyOutputDiff,retrieveNodeNum, getWarnInfo, 
 from meter.views import loginPage, getCompanyInfo, getUserFeedback, getIndentificationMeter,selectPanel,addOutputDiff, outputDiffChart, getIndMeter
 from meter.views import login_view, user_group_show,user_level,register_company,register_meter,meter_level,getExcelFile,warnList,getMeterType, getIndComp
 from meter.views import getDeviationVal,retrieveIndustryOutput,meterDataChart, retrieveCurUser, getDistrict, getAnalyse, changeValve, getValve, changeArtworkMeter
-from meter.views import getMeterArtworkInfo, getFilterArtworkInfo,changeFilterArtworkInfo, getGasCollection, getDayDataChart, getUserList, getDataCollection
+from meter.views import wechatLogin, getMeterArtworkInfo, getFilterArtworkInfo,changeFilterArtworkInfo, getGasCollection, getDayDataChart, getUserList, getDataCollection
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'Measuringsystem.views.home', name='home'),
@@ -60,4 +60,5 @@ urlpatterns = patterns('',
     url(r'^getDayDataChart',getDayDataChart),
     url(r'^getUserList', getUserList),
     url(r'^getDataCollection', getDataCollection),
+    url(r'^wechatLogin', wechatLogin),
 )

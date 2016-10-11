@@ -40,6 +40,18 @@ def utf_8_encoder(unicode_csv_data):
         yield line.encode('utf-8')
 
 # Create your views here.
+def wechatLogin(request):
+    responseData = []
+    if request.method == "POST":
+        try:
+            dbuser = User.objects.get(user_name = request.POST['login-username'], user_password = request.POST['login-password'])
+            request.session['user_id'] = dbuser.user_id
+            responseData.append({'user_id': dbuser.user_id})
+        except User.DoesNotExist:
+                print('user does not exist')
+    return HttpResponse(json.dumps(responseData), content_type="application/json")
+
+
 @login_required(login_url='/login/')
 def mainPage(request):
     #     return render_to_response('index.html')
