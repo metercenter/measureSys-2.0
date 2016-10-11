@@ -326,6 +326,11 @@ def logout_view(request):
     loginPage(request)
     return render_to_response('login.html', context_instance=RequestContext(request))
 
+def wechat_user_group_show(request):
+    userID = '0001'
+    user_group_json = '['+generateTreeJSON(userID)+']';
+    return HttpResponse(user_group_json,content_type ="application/json")
+
 def user_group_show(request):
     if  not 'user_id' in request.session:
         loginPage(request)

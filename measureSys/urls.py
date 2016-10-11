@@ -4,7 +4,7 @@ from meter.views import mainPage, logout_view
 from meter.views import getMeter
 from meter.views import userList
 from meter.views import getData, modifyOutputDiff,retrieveNodeNum, getWarnInfo, changeCompanyIntro,AddUserFeedback , addIndentificationMeter, getIndUser
-from meter.views import loginPage, getCompanyInfo, getUserFeedback, getIndentificationMeter,selectPanel,addOutputDiff, outputDiffChart, getIndMeter
+from meter.views import loginPage, getCompanyInfo, getUserFeedback, getIndentificationMeter,selectPanel,addOutputDiff, outputDiffChart, getIndMeter, wechat_user_group_show
 from meter.views import login_view, user_group_show,user_level,register_company,register_meter,meter_level,getExcelFile,warnList,getMeterType, getIndComp
 from meter.views import getDeviationVal,retrieveIndustryOutput,meterDataChart, retrieveCurUser, getDistrict, getAnalyse, changeValve, getValve, changeArtworkMeter
 from meter.views import wechatLogin, getMeterArtworkInfo, getFilterArtworkInfo,changeFilterArtworkInfo, getGasCollection, getDayDataChart, getUserList, getDataCollection
@@ -23,6 +23,7 @@ urlpatterns = patterns('',
     url(r'^logout',logout_view),
     url(r'^main',login_view),
     url(r'^get-user-group',user_group_show),
+    url(r'^wechat_user_group_show', wechat_user_group_show),
     url(r'^get-user-level',user_level),
     url(r'^get-usermeter-level',meter_level),
     url(r'^register_company',register_company),
