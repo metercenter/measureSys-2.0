@@ -6,7 +6,7 @@ from meter.views import userList
 from meter.views import getData, modifyOutputDiff,retrieveNodeNum, getWarnInfo, changeCompanyIntro,AddUserFeedback , addIndentificationMeter, getIndUser
 from meter.views import loginPage, getCompanyInfo, getUserFeedback, getIndentificationMeter,selectPanel,addOutputDiff, outputDiffChart, getIndMeter, wechat_user_group_show
 from meter.views import login_view, user_group_show,user_level,register_company,register_meter,meter_level,getExcelFile,warnList,getMeterType, getIndComp
-from meter.views import getDeviationVal,retrieveIndustryOutput,meterDataChart, retrieveCurUser, getDistrict, getAnalyse, changeValve, getValve, changeArtworkMeter
+from meter.views import getDeviationVal,retrieveIndustryOutput,meterDataChart, retrieveCurUser, getDistrict, getAnalyse, changeValve, getValve, changeArtworkMeter, wechatMeterDataChart
 from meter.views import wechatLogin, getMeterArtworkInfo, getFilterArtworkInfo,changeFilterArtworkInfo, getGasCollection, getDayDataChart, getUserList, getDataCollection
 urlpatterns = patterns('',
     # Examples:
@@ -62,4 +62,5 @@ urlpatterns = patterns('',
     url(r'^getUserList', getUserList),
     url(r'^getDataCollection', getDataCollection),
     url(r'^wechatLogin', wechatLogin),
+    url(r'^wechatMeterDataChart', wechatMeterDataChart),
 )

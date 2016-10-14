@@ -327,7 +327,10 @@ def logout_view(request):
     return render_to_response('login.html', context_instance=RequestContext(request))
 
 def wechat_user_group_show(request):
-    userID = '0001'
+    if 'user_id' in request.GET:
+        userID = request.GET['user_id']
+    else:
+        userID = '0001'
     user_group_json = '['+generateTreeJSON(userID)+']';
     return HttpResponse(user_group_json,content_type ="application/json")
 
@@ -1229,8 +1232,17 @@ def getAnalyse(request):
         response.append(responsedata)
     return HttpResponse(json.dumps(response),content_type ="application/json")
 
+def wechatMeterDataChart(request):
+    responsedata = []
+    if 'user_id' in request.GET:
+        userID = request.GET['user_id']
+        period = int(request.GET['period']) if 'period' in request.GET else 30
+        today = datetime.datetime.now().date()
+        before = today -  datetime.timedelta(days=period)
 
-
+        # responsedata = _calAmountByPeriod(userID,before,today)
+        responsedata = DataService.meterDataChart(userID, before, today)
+    return HttpResponse(json.dumps(responsedata),content_type ="application/json")
 
 def meterDataChart(request):
     if  not 'user_id' in request.session:
@@ -1246,6 +1258,7 @@ def meterDataChart(request):
         # responsedata = _calAmountByPeriod(userID,before,today)
         responsedata = DataService.meterDataChart(userID, before, today)
     return HttpResponse(json.dumps(responsedata),content_type ="application/json")
+
 
 def retrieveCurUser(request):
     if  not 'user_id' in request.session:
