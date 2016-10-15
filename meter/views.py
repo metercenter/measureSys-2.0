@@ -1056,6 +1056,124 @@ def AddUserFeedback(request):
     #     print(json.dumps(response))
     return HttpResponse(json.dumps(response),content_type ="application/json")
 
+def wechatGetDeviationVal(request):
+    responsedata = []
+    if 'meter_eui' in request.GET:
+        meterEUI = request.GET['meter_eui']
+        dataQm = request.GET['data_qm']
+        meterIdent = IdentificationMeter.objects.filter(meter_eui = meterEUI).order_by('-next_identify_date')
+        if len(meterIdent) == 0:
+            return
+        each_dict = {
+            "deviation_val": round(float(meterIdent[0].Qmax10),2),
+            "qmax_level": 0.1,
+        }
+        responsedata.append(each_dict)
+        each_dict = {
+            "deviation_val": round(float(meterIdent[0].Qmax20),2),
+            "qmax_level": 0.2,
+        }
+        responsedata.append(each_dict)
+        each_dict = {
+            #             "qmax_level": '40%Qmax'+str(round(float(meterIdent[0].outputMax)*0.4,1)),
+            "deviation_val": round(float(meterIdent[0].Qmax40),2),
+            "qmax_level": 0.4,
+        }
+        responsedata.append(each_dict)
+        each_dict = {
+            #             "qmax_level": '60%Qmax'+str(round(float(meterIdent[0].outputMax)*0.6,1)),
+            "deviation_val": round(float(meterIdent[0].Qmax60),2),
+            "qmax_level": 0.6,
+        }
+        responsedata.append(each_dict)
+        each_dict = {
+            #             "qmax_level": '100%Qmax'+str(round(float(meterIdent[0].outputMax),1)),
+            "deviation_val": round(float(meterIdent[0].Qmax100),2),
+            "qmax_level": 1,
+        }
+        responsedata.append(each_dict)
+
+        outputMax = float(meterIdent[0].outputMax)
+        output60 = float(meterIdent[0].outputMax)*60/100
+        output40 = float(meterIdent[0].outputMax)*40/100
+        output20 = float(meterIdent[0].outputMax)*20/100
+        output10 = float(meterIdent[0].outputMax)*10/100
+
+        Qmax100 = float(meterIdent[0].Qmax100)
+        Qmax60 = float(meterIdent[0].Qmax60)
+        Qmax40 = float(meterIdent[0].Qmax40)
+        Qmax20 = float(meterIdent[0].Qmax20)
+        Qmax10 = float(meterIdent[0].Qmax10)
+
+        if float(dataQm) > outputMax:
+            diff = Qmax100 * (float(dataQm)/outputMax)
+        elif float(dataQm) > output60:
+            diff = Qmax60 + (float(dataQm) - output60)/(outputMax-output60)*(Qmax100-Qmax60)
+        elif float(dataQm) > output40:
+            diff = Qmax40 + (float(dataQm) - output40)/(output60-output40)*(Qmax60-Qmax40)
+        elif float(dataQm) > output20:
+            diff = Qmax20 + (float(dataQm) - output20)/(output40-output20)*(Qmax40-Qmax20)
+        elif float(dataQm) > output10:
+            diff = Qmax10 + (float(dataQm) - output10)/(output20-output10)*(Qmax20-Qmax10)
+        else:
+            diff = Qmax10 * (float(dataQm)/output10)
+
+        level = float(dataQm)/float(meterIdent[0].outputMax)
+        if level < 0.2:
+            level = level * 10
+        elif level < 0.6:
+            level = 2 + (level - 0.2)*5
+        else:
+            level = 4 + (level - 0.6)*2.5
+
+        each_dict = {
+            #             "qmax_level": '100%Qmax'+str(round(float(meterIdent[0].outputMax),1)),
+            "single_deviation_val": 0,
+            "single_qm_level": level,
+            "single_qm_diff": diff
+        }
+        responsedata.append(each_dict)
+        each_dict = {
+            #             "qmax_level": '100%Qmax'+str(round(float(meterIdent[0].outputMax),1)),
+            "outputmin": meterIdent[0].outputMin,
+            "outputmax": meterIdent[0].outputMax
+        }
+        responsedata.append(each_dict)
+
+        #出厂检定参数
+        meterIdent = IdentificationMeter.objects.filter(meter_eui = meterEUI).filter(isFactory = 1)
+        if len(meterIdent) == 0:
+            return HttpResponse(json.dumps(responsedata),content_type ="application/json")
+        each_dict = {
+            "deviation_val": round(float(meterIdent[0].Qmax10),2),
+            "qmax_level": 0.1,
+        }
+        responsedata.append(each_dict)
+        each_dict = {
+            "deviation_val": round(float(meterIdent[0].Qmax20),2),
+            "qmax_level": 0.2,
+        }
+        responsedata.append(each_dict)
+        each_dict = {
+            #             "qmax_level": '40%Qmax'+str(round(float(meterIdent[0].outputMax)*0.4,1)),
+            "deviation_val": round(float(meterIdent[0].Qmax40),2),
+            "qmax_level": 0.4,
+        }
+        responsedata.append(each_dict)
+        each_dict = {
+            #             "qmax_level": '60%Qmax'+str(round(float(meterIdent[0].outputMax)*0.6,1)),
+            "deviation_val": round(float(meterIdent[0].Qmax60),2),
+            "qmax_level": 0.6,
+        }
+        responsedata.append(each_dict)
+        each_dict = {
+            #             "qmax_level": '100%Qmax'+str(round(float(meterIdent[0].outputMax),1)),
+            "deviation_val": round(float(meterIdent[0].Qmax100),2),
+            "qmax_level": 1,
+        }
+        responsedata.append(each_dict)
+    return HttpResponse(json.dumps(responsedata),content_type ="application/json")
+
 def getDeviationVal(request):
     if  not 'user_id' in request.session:
         loginPage(request)
