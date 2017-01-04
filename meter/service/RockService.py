@@ -123,7 +123,7 @@ class DataService:
                 "data_date": each[3].strftime("%Y/%m/%d %H:%M:%S"),
                 "data_vb": each[4],
                 "data_vm": each[5],
-                "data_p": round(float(each[6])) if each[6] < 100 else round(float(each[6]/100)),
+                "data_p": round(float(each[6]), 2) if each[6] < 100 else round(float(each[6]/100), 2),
                 "data_t": each[7],
                 "data_qb": each[8],
                 "data_qm": each[9],
